@@ -1,0 +1,13 @@
+name: d-intf-bgp
+prefix: "" 
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.35.0F 
+  nodes:
+    ceos1:
+      kind: ceos 
+    ceos2:
+      kind: ceos
+  links:
+    - endpoints: ["ceos1:eth1", "ceos2:eth1"]
