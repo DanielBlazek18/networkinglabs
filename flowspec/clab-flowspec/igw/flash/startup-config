@@ -1,0 +1,79 @@
+! Startup-config last modified at Wed Nov 19 10:29:45 2025 by admin
+! device: igw (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$wsIf.EoGwo80zHL/$aNi5hSMT9jnQnNWYNEbfxLRHPGmPE.fZBSW.xoAeQ/nK1KinFr3uM2oOk2TYs70vAERTnlIqFpBw8QK0mHW/w0
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname igw
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   description to_ISP
+   no switchport
+   flow-spec ipv4 ipv6
+   ip address 92.0.0.3/31
+!
+interface Ethernet2
+   description to_CUSTOMER
+   no switchport
+   ip address 89.0.0.3/31
+!
+interface Ethernet3
+   no switchport
+   ip address 191.0.0.1/24
+!
+interface Management0
+   ip address 172.20.20.2/24
+   ipv6 address 3fff:172:20:20::2/64
+!
+ip routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+router bgp 65000
+   no bgp default ipv4-unicast
+   neighbor 89.0.0.2 remote-as 89
+   neighbor 89.0.0.2 maximum-routes 12000
+   neighbor 92.0.0.2 remote-as 310
+   neighbor 92.0.0.2 maximum-routes 12000
+   neighbor 191.0.0.2 remote-as 65123
+   !
+   address-family flow-spec ipv4
+      neighbor 191.0.0.2 activate
+   !
+   address-family ipv4
+      neighbor 89.0.0.2 activate
+      neighbor 92.0.0.2 activate
+      no neighbor 191.0.0.2 activate
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

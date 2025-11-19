@@ -1,0 +1,195 @@
+{
+  "name": "flowspec",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "",
+      "mgmt": {
+        "network": "clab",
+        "bridge": "br-932f7e9337ba",
+        "ipv4-subnet": "172.20.20.0/24",
+        "ipv4-gw": "172.20.20.1",
+        "ipv6-subnet": "3fff:172:20:20::/64",
+        "ipv6-gw": "3fff:172:20:20::1",
+        "external-access": true
+      }
+    }
+  },
+  "ssh-pub-keys": [],
+  "nodes": {
+    "customer": {
+      "index": "0",
+      "shortname": "customer",
+      "longname": "customer",
+      "fqdn": "customer.flowspec.io",
+      "group": "",
+      "labdir": "/home/bnetadmin/labs/flowspec/clab-flowspec/customer",
+      "kind": "ceos",
+      "image": "ceos:4.35.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.4",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::4",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:49:96:da",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-932f7e9337ba",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/bnetadmin/labs/flowspec/clab-flowspec/customer",
+        "clab-node-longname": "customer",
+        "clab-node-name": "customer",
+        "clab-node-type": "",
+        "clab-owner": "bnetadmin",
+        "clab-topo-file": "/home/bnetadmin/labs/flowspec/flowspec.yaml",
+        "containerlab": "flowspec"
+      },
+      "port-bindings": [
+      ]
+    },
+    "exabgp": {
+      "index": "1",
+      "shortname": "exabgp",
+      "longname": "exabgp",
+      "fqdn": "exabgp.flowspec.io",
+      "group": "",
+      "labdir": "/home/bnetadmin/labs/flowspec/clab-flowspec/exabgp",
+      "kind": "linux",
+      "image": "bnet/exabgp:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.5",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::5",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-932f7e9337ba",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/bnetadmin/labs/flowspec/clab-flowspec/exabgp",
+        "clab-node-longname": "exabgp",
+        "clab-node-name": "exabgp",
+        "clab-node-type": "",
+        "clab-owner": "bnetadmin",
+        "clab-topo-file": "/home/bnetadmin/labs/flowspec/flowspec.yaml",
+        "containerlab": "flowspec"
+      },
+      "port-bindings": [
+      ]
+    },
+    "igw": {
+      "index": "2",
+      "shortname": "igw",
+      "longname": "igw",
+      "fqdn": "igw.flowspec.io",
+      "group": "",
+      "labdir": "/home/bnetadmin/labs/flowspec/clab-flowspec/igw",
+      "kind": "ceos",
+      "image": "ceos:4.35.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.2",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::2",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:c4:41:23",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-932f7e9337ba",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/bnetadmin/labs/flowspec/clab-flowspec/igw",
+        "clab-node-longname": "igw",
+        "clab-node-name": "igw",
+        "clab-node-type": "",
+        "clab-owner": "bnetadmin",
+        "clab-topo-file": "/home/bnetadmin/labs/flowspec/flowspec.yaml",
+        "containerlab": "flowspec"
+      },
+      "port-bindings": [
+      ]
+    },
+    "isp": {
+      "index": "3",
+      "shortname": "isp",
+      "longname": "isp",
+      "fqdn": "isp.flowspec.io",
+      "group": "",
+      "labdir": "/home/bnetadmin/labs/flowspec/clab-flowspec/isp",
+      "kind": "ceos",
+      "image": "ceos:4.35.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.3",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::3",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:5d:e6:6b",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-932f7e9337ba",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/bnetadmin/labs/flowspec/clab-flowspec/isp",
+        "clab-node-longname": "isp",
+        "clab-node-name": "isp",
+        "clab-node-type": "",
+        "clab-owner": "bnetadmin",
+        "clab-topo-file": "/home/bnetadmin/labs/flowspec/flowspec.yaml",
+        "containerlab": "flowspec"
+      },
+      "port-bindings": [
+      ]
+    }
+  },
+  "links": [
+    {
+      "endpoints": {
+        "a": {
+          "node": "igw",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:90:3e:9b",
+          "peer": "z"
+        },
+        "z": {
+          "node": "isp",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:fb:de:f5",
+          "peer": "a"
+        }
+      }
+    },
+    {
+      "endpoints": {
+        "a": {
+          "node": "customer",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:2f:20:b5",
+          "peer": "z"
+        },
+        "z": {
+          "node": "igw",
+          "interface": "eth2",
+          "mac": "aa:c1:ab:4b:07:15",
+          "peer": "a"
+        }
+      }
+    },
+    {
+      "endpoints": {
+        "a": {
+          "node": "igw",
+          "interface": "eth3",
+          "mac": "aa:c1:ab:c4:06:9a",
+          "peer": "z"
+        },
+        "z": {
+          "node": "exabgp",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:8a:a7:04",
+          "peer": "a"
+        }
+      }
+    }
+  ]
+}

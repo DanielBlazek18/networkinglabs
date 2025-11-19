@@ -1,0 +1,24 @@
+name: flowspec
+prefix: "" 
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.35.0F
+    linux:
+      image: bnet/exabgp
+  nodes:
+    igw:
+      kind: ceos 
+    isp:
+      kind: ceos
+    customer:
+      kind: ceos
+    exabgp:
+      kind: linux
+      image: bnet/exabgp:latest
+      binds:
+        - exabgp:/home
+  links:
+    - endpoints: ["igw:eth1", "isp:eth1"]
+    - endpoints: ["customer:eth1", "igw:eth2"]
+    - endpoints: ["igw:eth3", "exabgp:eth1"]

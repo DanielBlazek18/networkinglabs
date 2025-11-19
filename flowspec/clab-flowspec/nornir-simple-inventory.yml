@@ -1,0 +1,21 @@
+---
+customer:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.4
+igw:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.2
+isp:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.3
+exabgp:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.20.5

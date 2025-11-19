@@ -1,0 +1,101 @@
+{
+  "name": "sample",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "",
+      "mgmt": {
+        "network": "clab",
+        "bridge": "br-d3d7c1fdb478",
+        "ipv4-subnet": "172.20.20.0/24",
+        "ipv4-gw": "172.20.20.1",
+        "ipv6-subnet": "3fff:172:20:20::/64",
+        "ipv6-gw": "3fff:172:20:20::1",
+        "external-access": true
+      }
+    }
+  },
+  "ssh-pub-keys": [],
+  "nodes": {
+    "ceos1": {
+      "index": "0",
+      "shortname": "ceos1",
+      "longname": "ceos1",
+      "fqdn": "ceos1.sample.io",
+      "group": "",
+      "labdir": "/home/bnetadmin/labs/init/clab-sample/ceos1",
+      "kind": "ceos",
+      "image": "ceos:4.35.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.3",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::3",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:d4:2f:01",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-d3d7c1fdb478",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/bnetadmin/labs/init/clab-sample/ceos1",
+        "clab-node-longname": "ceos1",
+        "clab-node-name": "ceos1",
+        "clab-node-type": "",
+        "clab-owner": "bnetadmin",
+        "clab-topo-file": "/home/bnetadmin/labs/init/init.yaml",
+        "containerlab": "sample"
+      },
+      "port-bindings": [
+      ]
+    },
+    "ceos2": {
+      "index": "1",
+      "shortname": "ceos2",
+      "longname": "ceos2",
+      "fqdn": "ceos2.sample.io",
+      "group": "",
+      "labdir": "/home/bnetadmin/labs/init/clab-sample/ceos2",
+      "kind": "ceos",
+      "image": "ceos:4.35.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.2",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::2",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:4e:b0:2c",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-d3d7c1fdb478",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/bnetadmin/labs/init/clab-sample/ceos2",
+        "clab-node-longname": "ceos2",
+        "clab-node-name": "ceos2",
+        "clab-node-type": "",
+        "clab-owner": "bnetadmin",
+        "clab-topo-file": "/home/bnetadmin/labs/init/init.yaml",
+        "containerlab": "sample"
+      },
+      "port-bindings": [
+      ]
+    }
+  },
+  "links": [
+    {
+      "endpoints": {
+        "a": {
+          "node": "ceos1",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:13:fb:5b",
+          "peer": "z"
+        },
+        "z": {
+          "node": "ceos2",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:83:5a:22",
+          "peer": "a"
+        }
+      }
+    }
+  ]
+}
