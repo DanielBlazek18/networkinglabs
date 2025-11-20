@@ -3,9 +3,9 @@ ceos1:
     username: admin
     password: admin
     platform: ceos
-    hostname: 172.20.20.3
+    hostname: 172.20.20.2
 ceos2:
     username: admin
     password: admin
     platform: ceos
-    hostname: 172.20.20.2
+    hostname: 172.20.20.3

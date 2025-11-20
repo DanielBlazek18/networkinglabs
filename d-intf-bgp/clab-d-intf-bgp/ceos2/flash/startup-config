@@ -1,4 +1,4 @@
-! Startup-config last modified at Wed Nov 19 16:44:55 2025 by admin
+! Startup-config last modified at Thu Nov 20 20:55:19 2025 by admin
 ! device: ceos2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -29,16 +29,21 @@ management api netconf
    transport ssh default
 !
 interface Ethernet1
+   description ceos1_Ethernet1
    no switchport
-   ip address 10.0.0.2/24
    ipv6 enable
 !
 interface Loopback0
+   description Router_ID
    ip address 2.2.2.2/32
 !
+interface Loopback1
+   description Cust_B
+   ip address 192.168.2.1/24
+!
 interface Management0
-   ip address 172.20.20.2/24
-   ipv6 address 3fff:172:20:20::2/64
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::3/64
 !
 ip routing
 !
@@ -49,14 +54,14 @@ ip route 0.0.0.0/0 172.20.20.1
 ipv6 route ::/0 3fff:172:20:20::1
 !
 router bgp 65001
-   router-id 10.0.0.2
+   router-id 2.2.2.2
    neighbor ebgp peer group
    neighbor interface Et1 peer-group ebgp remote-as 65000
    !
    address-family ipv4
       neighbor ebgp activate
       neighbor ebgp next-hop address-family ipv6 originate
-      redistribute connected
+      network 192.168.2.0/24
 !
 router multicast
    ipv4
