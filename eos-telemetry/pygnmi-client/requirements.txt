@@ -1,0 +1,8 @@
+cffi==1.17.1
+cryptography==45.0.4
+dictdiffer==0.9.0
+grpcio==1.73.0
+logstash==0.1.dev0
+protobuf==6.31.1
+pycparser==2.22
+pygnmi==0.8.15
