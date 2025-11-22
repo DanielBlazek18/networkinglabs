@@ -3,13 +3,18 @@ customer:
     username: admin
     password: admin
     platform: ceos
-    hostname: 172.20.20.4
+    hostname: 172.20.20.2
 igw:
     username: admin
     password: admin
     platform: ceos
-    hostname: 172.20.20.2
+    hostname: 172.20.20.5
 isp:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.6
+scrubber:
     username: admin
     password: admin
     platform: ceos
@@ -18,4 +23,4 @@ exabgp:
     username: 
     password: 
     platform: linux
-    hostname: 172.20.20.5
+    hostname: 172.20.20.4

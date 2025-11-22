@@ -6,7 +6,7 @@
       "prefix": "",
       "mgmt": {
         "network": "clab",
-        "bridge": "br-932f7e9337ba",
+        "bridge": "br-bd8334e4bc50",
         "ipv4-subnet": "172.20.20.0/24",
         "ipv4-gw": "172.20.20.1",
         "ipv6-subnet": "3fff:172:20:20::/64",
@@ -15,7 +15,7 @@
       }
     }
   },
-  "ssh-pub-keys": [],
+  "ssh-pub-keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCWKaoau5yDEatSmHqaq+xZXI1C5CeQiXhWn3O8do/P4rAyV4Cdj444EhXZx39OixChQUZrOC/6NamO0dbcrDVrOvga8oazNyiXWhHX91K1Djo1XPSTIxBEyuOysyIHJ8D1DCzKMQqWImPYuSNS3fVYzXEOPy3GweEVF0QAWY8vXa4XPLcG7jPF3TF5hPZOUGYKVw9aH4R8qqn3MzCpMkg5REp1IaYRkeDhPIrD4QAwQKQtWtacRivOiSce2Mh80a4M+ZNXG2N24Fj0F8EKVaMORo9pycToPyEeMjI1Fk5RTII24tk71qGH+013gl7HHYfid3OKuC0SxCyTRclc75bOf/GHrzfdqpY7or8gZoIgDwGleSZI1e7FSC9p3j6uEqbmMtsAGZnlt21FdCjLEWmIDvypdhimdN0eqbwTAPjgFTIrxk/LXNebk+dv+IO3RmC8sAd+3ktTalp9CwsSAZoq+AUigTB3u12fnyj+q8YnJfA3qORALuQPmH35f3bCnk1i1dK7dyv5CeK0lAL8IYHro8KUdUFwu30FZDb9sO+yOmnZzxMG9Z2K8OdGLDF7ZSE50T3OGBvKFqYsRwgxk7IK5bE6MKNMsvfRkXPAm/SSJMWNw/zOq4egaGVsOJQEA7kBMmebS4t7kVmvGVV0Mohj6Xp4+dNseyHL8OyA1d6y2w=="],
   "nodes": {
     "customer": {
       "index": "0",
@@ -28,13 +28,13 @@
       "image": "ceos:4.35.0F",
       "mgmt-net": "",
       "mgmt-intf": "Management0",
-      "mgmt-ipv4-address": "172.20.20.4",
+      "mgmt-ipv4-address": "172.20.20.2",
       "mgmt-ipv4-prefix-length": 24,
-      "mgmt-ipv6-address": "3fff:172:20:20::4",
+      "mgmt-ipv6-address": "3fff:172:20:20::2",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:49:96:da",
+      "mac-address": "00:1c:73:b5:00:65",
       "labels": {
-        "clab-mgmt-net-bridge": "br-932f7e9337ba",
+        "clab-mgmt-net-bridge": "br-bd8334e4bc50",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/bnetadmin/labs/flowspec/clab-flowspec/customer",
@@ -59,13 +59,13 @@
       "image": "bnet/exabgp:latest",
       "mgmt-net": "",
       "mgmt-intf": "",
-      "mgmt-ipv4-address": "172.20.20.5",
+      "mgmt-ipv4-address": "172.20.20.4",
       "mgmt-ipv4-prefix-length": 24,
-      "mgmt-ipv6-address": "3fff:172:20:20::5",
+      "mgmt-ipv6-address": "3fff:172:20:20::4",
       "mgmt-ipv6-prefix-length": 64,
       "mac-address": "",
       "labels": {
-        "clab-mgmt-net-bridge": "br-932f7e9337ba",
+        "clab-mgmt-net-bridge": "br-bd8334e4bc50",
         "clab-node-group": "",
         "clab-node-kind": "linux",
         "clab-node-lab-dir": "/home/bnetadmin/labs/flowspec/clab-flowspec/exabgp",
@@ -90,13 +90,13 @@
       "image": "ceos:4.35.0F",
       "mgmt-net": "",
       "mgmt-intf": "Management0",
-      "mgmt-ipv4-address": "172.20.20.2",
+      "mgmt-ipv4-address": "172.20.20.5",
       "mgmt-ipv4-prefix-length": 24,
-      "mgmt-ipv6-address": "3fff:172:20:20::2",
+      "mgmt-ipv6-address": "3fff:172:20:20::5",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:c4:41:23",
+      "mac-address": "00:1c:73:de:86:77",
       "labels": {
-        "clab-mgmt-net-bridge": "br-932f7e9337ba",
+        "clab-mgmt-net-bridge": "br-bd8334e4bc50",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/bnetadmin/labs/flowspec/clab-flowspec/igw",
@@ -121,18 +121,49 @@
       "image": "ceos:4.35.0F",
       "mgmt-net": "",
       "mgmt-intf": "Management0",
-      "mgmt-ipv4-address": "172.20.20.3",
+      "mgmt-ipv4-address": "172.20.20.6",
       "mgmt-ipv4-prefix-length": 24,
-      "mgmt-ipv6-address": "3fff:172:20:20::3",
+      "mgmt-ipv6-address": "3fff:172:20:20::6",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:5d:e6:6b",
+      "mac-address": "00:1c:73:a5:64:75",
       "labels": {
-        "clab-mgmt-net-bridge": "br-932f7e9337ba",
+        "clab-mgmt-net-bridge": "br-bd8334e4bc50",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/bnetadmin/labs/flowspec/clab-flowspec/isp",
         "clab-node-longname": "isp",
         "clab-node-name": "isp",
+        "clab-node-type": "",
+        "clab-owner": "bnetadmin",
+        "clab-topo-file": "/home/bnetadmin/labs/flowspec/flowspec.yaml",
+        "containerlab": "flowspec"
+      },
+      "port-bindings": [
+      ]
+    },
+    "scrubber": {
+      "index": "4",
+      "shortname": "scrubber",
+      "longname": "scrubber",
+      "fqdn": "scrubber.flowspec.io",
+      "group": "",
+      "labdir": "/home/bnetadmin/labs/flowspec/clab-flowspec/scrubber",
+      "kind": "ceos",
+      "image": "ceos:4.35.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.3",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::3",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:73:58:61",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-bd8334e4bc50",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/bnetadmin/labs/flowspec/clab-flowspec/scrubber",
+        "clab-node-longname": "scrubber",
+        "clab-node-name": "scrubber",
         "clab-node-type": "",
         "clab-owner": "bnetadmin",
         "clab-topo-file": "/home/bnetadmin/labs/flowspec/flowspec.yaml",
@@ -148,13 +179,13 @@
         "a": {
           "node": "igw",
           "interface": "eth1",
-          "mac": "aa:c1:ab:90:3e:9b",
+          "mac": "aa:c1:ab:84:ae:a7",
           "peer": "z"
         },
         "z": {
           "node": "isp",
           "interface": "eth1",
-          "mac": "aa:c1:ab:fb:de:f5",
+          "mac": "aa:c1:ab:e3:fc:c9",
           "peer": "a"
         }
       }
@@ -164,13 +195,13 @@
         "a": {
           "node": "customer",
           "interface": "eth1",
-          "mac": "aa:c1:ab:2f:20:b5",
+          "mac": "aa:c1:ab:3f:91:26",
           "peer": "z"
         },
         "z": {
           "node": "igw",
           "interface": "eth2",
-          "mac": "aa:c1:ab:4b:07:15",
+          "mac": "aa:c1:ab:54:dd:b9",
           "peer": "a"
         }
       }
@@ -180,13 +211,29 @@
         "a": {
           "node": "igw",
           "interface": "eth3",
-          "mac": "aa:c1:ab:c4:06:9a",
+          "mac": "aa:c1:ab:37:b4:22",
           "peer": "z"
         },
         "z": {
           "node": "exabgp",
           "interface": "eth1",
-          "mac": "aa:c1:ab:8a:a7:04",
+          "mac": "aa:c1:ab:81:28:53",
+          "peer": "a"
+        }
+      }
+    },
+    {
+      "endpoints": {
+        "a": {
+          "node": "igw",
+          "interface": "eth4",
+          "mac": "aa:c1:ab:09:e8:51",
+          "peer": "z"
+        },
+        "z": {
+          "node": "scrubber",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:2f:7a:73",
           "peer": "a"
         }
       }

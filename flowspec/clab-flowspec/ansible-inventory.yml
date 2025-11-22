@@ -12,12 +12,14 @@ all:
         ansible_password: admin
       hosts:
         customer:
-          ansible_host: 172.20.20.4
-        igw:
           ansible_host: 172.20.20.2
+        igw:
+          ansible_host: 172.20.20.5
         isp:
+          ansible_host: 172.20.20.6
+        scrubber:
           ansible_host: 172.20.20.3
     linux:
       hosts:
         exabgp:
-          ansible_host: 172.20.20.5
+          ansible_host: 172.20.20.4

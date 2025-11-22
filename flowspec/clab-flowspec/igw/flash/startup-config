@@ -1,4 +1,4 @@
-! Startup-config last modified at Wed Nov 19 10:29:45 2025 by admin
+! Startup-config last modified at Sat Nov 22 10:27:10 2025 by root
 ! device: igw (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -43,9 +43,11 @@ interface Ethernet3
    no switchport
    ip address 191.0.0.1/24
 !
+interface Ethernet4
+!
 interface Management0
-   ip address 172.20.20.2/24
-   ipv6 address 3fff:172:20:20::2/64
+   ip address 172.20.20.5/24
+   ipv6 address 3fff:172:20:20::5/64
 !
 ip routing
 !
@@ -68,12 +70,5 @@ router bgp 65000
       neighbor 89.0.0.2 activate
       neighbor 92.0.0.2 activate
       no neighbor 191.0.0.2 activate
-!
-router multicast
-   ipv4
-      software-forwarding kernel
-   !
-   ipv6
-      software-forwarding kernel
 !
 end
