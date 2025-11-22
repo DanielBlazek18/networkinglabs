@@ -1,0 +1,11 @@
+---
+eos1:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.3
+eos2:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.2

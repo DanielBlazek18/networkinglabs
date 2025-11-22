@@ -1,0 +1,59 @@
+! Startup-config last modified at Sat Nov 22 12:30:41 2025 by root
+! device: eos2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$U8aaHFmpbaHxojqb$Sk574a.pdkPYzuFxQlq/fTF7yPn5hChZFzwLMTtoGbI69LkMa71bnkl8dd82vVq.cmyatoJ9LbQIx/rSHLZXR.
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname eos2
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+   !
+   transport grpc openmgmt
+   provider eos-native
+!
+management api models
+   provider bgp
+      bgp-rib
+         ipv4-unicast
+         ipv6-unicast
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+!
+interface Management0
+   ip address 172.20.20.2/24
+   ipv6 address 3fff:172:20:20::2/64
+!
+no ip routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

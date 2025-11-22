@@ -20,8 +20,8 @@ test_logger.addHandler(logstash.TCPLogstashHandler(host, 5044, version=1))
 
 # List of devices
 devices = [
-    {'host': '10.33.95.46', 'port': 6030, 'username': 'cvpadmin', 'password': 'admincvp'},
-    #{'host': '10.33.95.42', 'port': 6030, 'username': 'cvpadmin', 'password': 'admincvp'},
+    {'host': 'eos1', 'port': 6030, 'username': 'admin', 'password': 'admin'},
+    #{'host': 'eos2', 'port': 6030, 'username': 'cvpadmin', 'password': 'admincvp'},
 ]
 
 # Output file path

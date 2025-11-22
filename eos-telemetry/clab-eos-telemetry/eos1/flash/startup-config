@@ -1,0 +1,66 @@
+! Startup-config last modified at Sat Nov 22 12:43:15 2025 by admin
+! device: eos1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$tG4hvqWGNzFfq49i$TBlFBTsRTbvvgyQqozE4n7uhqKmt7ifFziKPV0I3.gs2cEJUkqsPVuFiSXpKahWa/zhvlGoXxCjH6K9QL.PA//
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname eos1
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vrf instance eos-telemetry-vrf-01
+!
+management api gnmi
+   transport grpc default
+   !
+   transport grpc openmgmt
+   provider eos-native
+!
+management api models
+   provider bgp
+      bgp-rib
+         ipv4-unicast
+         ipv6-unicast
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+!
+interface Loopback0
+   vrf eos-telemetry-vrf-01
+   ip address 8.8.8.8/32
+!
+interface Management0
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::3/64
+!
+ip routing
+ip routing vrf eos-telemetry-vrf-01
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

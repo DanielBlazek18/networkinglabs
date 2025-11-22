@@ -1,0 +1,101 @@
+{
+  "name": "eos-telemetry",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "",
+      "mgmt": {
+        "network": "clab",
+        "bridge": "br-89332b5b9058",
+        "ipv4-subnet": "172.20.20.0/24",
+        "ipv4-gw": "172.20.20.1",
+        "ipv6-subnet": "3fff:172:20:20::/64",
+        "ipv6-gw": "3fff:172:20:20::1",
+        "external-access": true
+      }
+    }
+  },
+  "ssh-pub-keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCWKaoau5yDEatSmHqaq+xZXI1C5CeQiXhWn3O8do/P4rAyV4Cdj444EhXZx39OixChQUZrOC/6NamO0dbcrDVrOvga8oazNyiXWhHX91K1Djo1XPSTIxBEyuOysyIHJ8D1DCzKMQqWImPYuSNS3fVYzXEOPy3GweEVF0QAWY8vXa4XPLcG7jPF3TF5hPZOUGYKVw9aH4R8qqn3MzCpMkg5REp1IaYRkeDhPIrD4QAwQKQtWtacRivOiSce2Mh80a4M+ZNXG2N24Fj0F8EKVaMORo9pycToPyEeMjI1Fk5RTII24tk71qGH+013gl7HHYfid3OKuC0SxCyTRclc75bOf/GHrzfdqpY7or8gZoIgDwGleSZI1e7FSC9p3j6uEqbmMtsAGZnlt21FdCjLEWmIDvypdhimdN0eqbwTAPjgFTIrxk/LXNebk+dv+IO3RmC8sAd+3ktTalp9CwsSAZoq+AUigTB3u12fnyj+q8YnJfA3qORALuQPmH35f3bCnk1i1dK7dyv5CeK0lAL8IYHro8KUdUFwu30FZDb9sO+yOmnZzxMG9Z2K8OdGLDF7ZSE50T3OGBvKFqYsRwgxk7IK5bE6MKNMsvfRkXPAm/SSJMWNw/zOq4egaGVsOJQEA7kBMmebS4t7kVmvGVV0Mohj6Xp4+dNseyHL8OyA1d6y2w=="],
+  "nodes": {
+    "eos1": {
+      "index": "0",
+      "shortname": "eos1",
+      "longname": "eos1",
+      "fqdn": "eos1.eos-telemetry.io",
+      "group": "",
+      "labdir": "/home/bnetadmin/labs/eos-telemetry/clab-eos-telemetry/eos1",
+      "kind": "ceos",
+      "image": "ceos:4.35.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.3",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::3",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:68:d6:be",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-89332b5b9058",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/bnetadmin/labs/eos-telemetry/clab-eos-telemetry/eos1",
+        "clab-node-longname": "eos1",
+        "clab-node-name": "eos1",
+        "clab-node-type": "",
+        "clab-owner": "bnetadmin",
+        "clab-topo-file": "/home/bnetadmin/labs/eos-telemetry/eos-telemetry.yaml",
+        "containerlab": "eos-telemetry"
+      },
+      "port-bindings": [
+      ]
+    },
+    "eos2": {
+      "index": "1",
+      "shortname": "eos2",
+      "longname": "eos2",
+      "fqdn": "eos2.eos-telemetry.io",
+      "group": "",
+      "labdir": "/home/bnetadmin/labs/eos-telemetry/clab-eos-telemetry/eos2",
+      "kind": "ceos",
+      "image": "ceos:4.35.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.2",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::2",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:a8:5e:eb",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-89332b5b9058",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/bnetadmin/labs/eos-telemetry/clab-eos-telemetry/eos2",
+        "clab-node-longname": "eos2",
+        "clab-node-name": "eos2",
+        "clab-node-type": "",
+        "clab-owner": "bnetadmin",
+        "clab-topo-file": "/home/bnetadmin/labs/eos-telemetry/eos-telemetry.yaml",
+        "containerlab": "eos-telemetry"
+      },
+      "port-bindings": [
+      ]
+    }
+  },
+  "links": [
+    {
+      "endpoints": {
+        "a": {
+          "node": "eos1",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:4f:79:ce",
+          "peer": "z"
+        },
+        "z": {
+          "node": "eos2",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:13:2b:2c",
+          "peer": "a"
+        }
+      }
+    }
+  ]
+}
