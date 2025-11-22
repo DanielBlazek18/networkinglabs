@@ -1,0 +1,13 @@
+name: eos-telemetry
+prefix: "" 
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.35.0F
+  nodes:
+    eos1:
+      kind: ceos 
+    eos2:
+      kind: ceos
+  links:
+    - endpoints: ["eos1:eth1", "eos2:eth1"]
