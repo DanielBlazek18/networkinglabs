@@ -42,6 +42,7 @@ devices = [
 subscription_paths = [
     'eos_native:/Smash/routing/vrf/status',
     'eos_native:/Smash/forwardingGen/unifiedStatus/fec'
+    #eos_native:/Smash/tunnel/table/evpnVxlan/entry'
 ]
  
 # TLS context (insecure for example)
