@@ -9,7 +9,7 @@ Telemetry data is streamed from the following gNMI paths:
 - `eos_native:/Smash/routing/vrf/status`  
 - `eos_native:/Smash/forwardingGen/unifiedStatus/fec`  
 
-`Logstash` processes telemetry messages from the `pygnmi-client` (using gRPC) and stores them in Elasticsearch. **Kibana**, the web-based GUI, is used to visualize the data.
+`Logstash` processes telemetry messages from the `pygnmi-client` and stores them in Elasticsearch. **Kibana**, the web-based GUI, is used to visualize the data.
 
 ---
 
