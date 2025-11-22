@@ -2,7 +2,7 @@
 
 ## Overview
 
-This lab demonstrates streaming telemetry from Arista EOS devices. Subscribed using gNMI (gRPC) client `pygnmi-client`, and furher visualizing the telemetry data in an ELK (Elasticsearch, Logstash, Kibana) stack. The lab is built using **Containerlab (CLab)** with two Arista EOS hosts (`eos1` and `eos2`).
+This lab demonstrates streaming telemetry from Arista EOS devices. Subscriptions to telemetry paths are done using gRPC Network Management Interface (gNMI) client `pygnmi-client`. The telemetry data is further visualized in an ELK (Elasticsearch, Logstash, Kibana) stack. The lab is built using **Containerlab (CLab)** with two Arista EOS hosts (`eos1` and `eos2`).
 
 Telemetry data is streamed from the following gNMI paths:
 
