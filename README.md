@@ -6,7 +6,7 @@
 
 List of the existing LABs and short description:
 * **d-intf-bgp**: Interface-based BGP neighbors established over IPv6 link-local addresses. The IPv4 address family is enabled to exchange prefixes.
-* **flowspec**: BGP FlowSpec address family used to test and demonstrate <ins>drop</ins> and <ins>redirect to VRF</ins> actions.
+* **flowspec**: BGP FlowSpec address family used to test and demonstrate <ins>drop</ins> and <ins>redirect to VRF</ins> actions. ExaBGP used to advertise traffic flow specifications (flow routes) throughout a network.
   * Action drop has been tested in the LAB.
   * Action redirect to VRF has not been tested yet.
   * Other actions to be added on the list.
