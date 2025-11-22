@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+
+
+"""
+Author: Daniel Blazek
+Purpose: Pygnmi client used for connecting to EOS devices via gRPC.
+         The data are parsed and sent to Logstash for further proccessing.
+Status: In-progress
+"""
+
+
 import grpc
 import threading
 import ssl
