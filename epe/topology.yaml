@@ -1,0 +1,22 @@
+name: epe
+prefix: "" 
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.35.0F 
+  nodes:
+    pe1:
+      kind: ceos 
+    p1:
+      kind: ceos
+    pe2:
+      kind: ceos
+    peer1:
+      kind: ceos
+    peer2:
+      kind: ceos
+  links:
+    - endpoints: ["pe1:eth1", "p1:eth1"]
+    - endpoints: ["p1:eth2", "pe2:eth1"]
+    - endpoints: ["pe2:eth2", "peer1:eth1"]
+    - endpoints: ["pe2:eth3", "peer2:eth1"]

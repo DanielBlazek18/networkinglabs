@@ -1,4 +1,4 @@
-! Startup-config last modified at Thu Nov 20 20:53:50 2025 by admin
+! Startup-config last modified at Sun Nov 23 14:43:41 2025 by root
 ! device: ceos1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root

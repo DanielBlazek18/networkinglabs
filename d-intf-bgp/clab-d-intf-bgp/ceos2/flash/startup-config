@@ -1,4 +1,4 @@
-! Startup-config last modified at Thu Nov 20 20:55:19 2025 by admin
+! Startup-config last modified at Sun Nov 23 14:43:30 2025 by root
 ! device: ceos2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -62,12 +62,5 @@ router bgp 65001
       neighbor ebgp activate
       neighbor ebgp next-hop address-family ipv6 originate
       network 192.168.2.0/24
-!
-router multicast
-   ipv4
-      software-forwarding kernel
-   !
-   ipv6
-      software-forwarding kernel
 !
 end
