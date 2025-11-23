@@ -1,0 +1,126 @@
+! Startup-config last modified at Sun Nov 23 17:10:31 2025 by admin
+! device: egress-pe (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$QhgjHqF.ENtd5Ojx$jOvSxzrtn5MGSbZm7jjrixCNRHmUXf/wI/zfjamR55abdBkDWqkSKG./.WimJtS71x4Crr78I1Sr.SsPE/teA/
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname egress-pe
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   description bb_Ethernet2
+   no switchport
+   ip address 10.2.3.3/24
+   isis enable LAB
+   isis circuit-type level-2
+   isis network point-to-point
+!
+interface Ethernet2
+   description peer1_Ethernet1
+   no switchport
+   ip address 10.3.4.3/24
+!
+interface Ethernet3
+   description peer1_Ethernet2
+   no switchport
+   ip address 10.4.3.3/24
+!
+interface Ethernet4
+   description peer2_Ethernet1
+   no switchport
+   ip address 10.3.5.3/24
+!
+interface Loopback0
+   description Router_ID
+   ip address 100.64.0.3/32
+   node-segment ipv4 index 3
+   isis enable LAB
+   isis passive
+!
+interface Management0
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::3/64
+!
+ip routing
+!
+ip prefix-list AS-65004 seq 10 permit 192.168.0.0/24
+ip prefix-list AS-65005 seq 10 permit 192.168.0.0/24
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+mpls ip
+!
+route-map AS-65004 permit 10
+   match ip address prefix-list AS-65004
+!
+route-map AS-65005 permit 10
+   match ip address prefix-list AS-65005
+!
+router bgp 65000
+   no bgp default ipv4-unicast
+   neighbor 10.3.4.4 remote-as 65004
+   neighbor 10.3.4.4 route-map AS-65004 out
+   neighbor 10.3.5.5 remote-as 65005
+   neighbor 10.3.5.5 route-map AS-65005 out
+   neighbor 10.4.3.4 remote-as 65004
+   neighbor 10.4.3.4 route-map AS-65004 out
+   neighbor 100.64.0.1 remote-as 65000
+   neighbor 100.64.0.1 update-source Loopback0
+   neighbor 100.64.0.1 maximum-routes 12000
+   !
+   address-family ipv4
+      bgp additional-paths send limit 3
+      neighbor 10.3.4.4 activate
+      neighbor 10.3.4.4 next-hop labeled-unicast originate
+      neighbor 10.3.5.5 activate
+      neighbor 10.3.5.5 next-hop labeled-unicast originate
+      neighbor 10.4.3.4 activate
+      neighbor 10.4.3.4 next-hop labeled-unicast originate
+      neighbor 100.64.0.1 activate
+   !
+   address-family ipv4 labeled-unicast
+      neighbor 100.64.0.1 activate
+!
+router isis LAB
+   net 49.0000.0000.0000.0003.00
+   router-id ipv4 100.64.0.3
+   is-type level-2
+   log-adjacency-changes
+   !
+   address-family ipv4 unicast
+      maximum-paths 4
+   !
+   segment-routing mpls
+      no shutdown
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

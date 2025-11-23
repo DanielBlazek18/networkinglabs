@@ -1,0 +1,26 @@
+---
+bb:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.5
+egress-pe:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.3
+ingress-pe:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.6
+peer1:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.4
+peer2:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.2

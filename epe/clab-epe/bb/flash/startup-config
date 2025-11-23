@@ -1,0 +1,85 @@
+! Startup-config last modified at Sun Nov 23 17:10:31 2025 by admin
+! device: bb (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$2J/.byHUVleIel8q$sTNZi4au95A3WSiLHY3c81iSZiYPZhdKrhoeYQorLby/40enI69UllEiRlb7zRou8ZpADeCxfhasTDuszfftB0
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname bb
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   description ingress-pe_Ethernet1
+   no switchport
+   ip address 10.1.2.2/24
+   isis enable LAB
+   isis circuit-type level-2
+   isis network point-to-point
+!
+interface Ethernet2
+   description egress-pe_Ethernet1
+   no switchport
+   ip address 10.2.3.1/24
+   isis enable LAB
+   isis circuit-type level-2
+   isis network point-to-point
+!
+interface Loopback0
+   description Router_ID
+   ip address 100.64.0.2/32
+   node-segment ipv4 index 2
+   isis enable LAB
+   isis passive
+!
+interface Management0
+   ip address 172.20.20.5/24
+   ipv6 address 3fff:172:20:20::5/64
+!
+ip routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+mpls ip
+!
+router isis LAB
+   net 49.0000.0000.0000.0002.00
+   router-id ipv4 100.64.0.2
+   is-type level-2
+   log-adjacency-changes
+   !
+   address-family ipv4 unicast
+      maximum-paths 4
+   !
+   segment-routing mpls
+      no shutdown
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

@@ -5,18 +5,19 @@ topology:
     ceos:
       image: ceos:4.35.0F 
   nodes:
-    pe1:
+    ingress-pe:
       kind: ceos 
-    p1:
+    bb:
       kind: ceos
-    pe2:
+    egress-pe:
       kind: ceos
     peer1:
       kind: ceos
     peer2:
       kind: ceos
   links:
-    - endpoints: ["pe1:eth1", "p1:eth1"]
-    - endpoints: ["p1:eth2", "pe2:eth1"]
-    - endpoints: ["pe2:eth2", "peer1:eth1"]
-    - endpoints: ["pe2:eth3", "peer2:eth1"]
+    - endpoints: ["ingress-pe:eth1", "bb:eth1"]
+    - endpoints: ["bb:eth2", "egress-pe:eth1"]
+    - endpoints: ["egress-pe:eth2", "peer1:eth1"]
+    - endpoints: ["egress-pe:eth3", "peer1:eth2"]
+    - endpoints: ["egress-pe:eth4", "peer2:eth1"]

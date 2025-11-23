@@ -1,0 +1,105 @@
+! Startup-config last modified at Sun Nov 23 17:10:31 2025 by admin
+! device: ingress-pe (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$KyJACaVynn2ai2rD$kc9DgtvHQlOZsfmKT6WF7aQM2FowLzuDiH5o3fDMCreqiDB922VlUCv8hPVtK8hhE3JjNtQQHIO5.mFV4sqGC1
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname ingress-pe
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   description bb_Ethernet1
+   no switchport
+   ip address 10.1.2.1/24
+   isis enable LAB
+   isis circuit-type level-2
+   isis network point-to-point
+!
+interface Loopback0
+   description Router_ID
+   ip address 100.64.0.1/32
+   node-segment ipv4 index 1
+   isis enable LAB
+   isis passive
+!
+interface Loopback1
+   description Cust-A
+   ip address 192.168.0.1/24
+!
+interface Management0
+   ip address 172.20.20.6/24
+   ipv6 address 3fff:172:20:20::6/64
+!
+ip routing
+!
+ip prefix-list EPE-NHOP-10.3.5.5 seq 10 permit 10.3.5.5/32
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+mpls ip
+!
+route-map EPE-NHOP-SET-PREFERENCE permit 10
+   match ip next-hop prefix-list EPE-NHOP-10.3.5.5
+   set local-preference 120
+!
+route-map EPE-NHOP-SET-PREFERENCE permit 65535
+!
+router bgp 65000
+   bgp labeled-unicast rib ip
+   no bgp default ipv4-unicast
+   neighbor 100.64.0.3 remote-as 65000
+   neighbor 100.64.0.3 update-source Loopback0
+   neighbor 100.64.0.3 maximum-routes 12000
+   !
+   address-family ipv4
+      bgp additional-paths receive
+      neighbor 100.64.0.3 activate
+      neighbor 100.64.0.3 route-map EPE-NHOP-SET-PREFERENCE in
+      network 192.168.0.0/24
+   !
+   address-family ipv4 labeled-unicast
+      neighbor 100.64.0.3 activate
+!
+router isis LAB
+   net 49.0000.0000.0000.0001.00
+   router-id ipv4 100.64.0.1
+   is-type level-2
+   log-adjacency-changes
+   !
+   address-family ipv4 unicast
+      maximum-paths 4
+   !
+   segment-routing mpls
+      no shutdown
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end
