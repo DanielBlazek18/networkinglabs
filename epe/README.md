@@ -16,6 +16,8 @@ This LAB demostrate Egress Peer Engineering Using BGP-LU on cEOS.
 ## Baseline Behavior
 * Prefix 192.168.1.0/24 is advertised by both peers.
 * Initial best path is via **10.4.3.4**, label **116386**, resolved to **Ethernet3** (`peer1`) on `egress-pe`.
+
+BGP and routing table on `ingress-pe`:
 ```
 ingress-pe#sh ip bgp 192.168.1.0/24
 BGP routing table information for VRF default
@@ -43,14 +45,17 @@ BGP routing table entry for 192.168.1.0/24
       Rx path id: 0x3
       Rx SAFI: Unicast
       Tunnel RIB eligible
-
+```
+```
 ingress-pe#sh ip route 192.168.1.0/24
 [omitted]
  B I      192.168.1.0/24 [200/0]
            via BGP LU Forwarding tunnel index 24
               via IS-IS SR tunnel index 2, label 116386
                  via 10.1.2.2, Ethernet1, label 900003
-
+```
+Ping test from `ingress-pe`:
+```
 ingress-pe#ping 192.168.1.1 source lo1
 PING 192.168.1.1 (192.168.1.1) from 192.168.0.1 : 72(100) bytes of data.
 80 bytes from 192.168.1.1: icmp_seq=1 ttl=62 time=2.69 ms
@@ -58,7 +63,11 @@ PING 192.168.1.1 (192.168.1.1) from 192.168.0.1 : 72(100) bytes of data.
 80 bytes from 192.168.1.1: icmp_seq=3 ttl=62 time=1.45 ms
 80 bytes from 192.168.1.1: icmp_seq=4 ttl=62 time=1.36 ms
 80 bytes from 192.168.1.1: icmp_seq=5 ttl=62 time=1.37 ms
-
+```
+Tcpdump taken from `bb` router. Label stack:
+* **900003** (SR-MPLS transport label, prefix SID, to `egress-pe`)
+* **116386** (BGP-LU label for nhop 10.4.3.4)**
+```
 bb#bash tcpdump -i eth1
 tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
 listening on eth1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
@@ -74,7 +83,9 @@ listening on eth1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 17:03:13.578642 aa:c1:ab:3c:ec:95 (oui Unknown) > aa:c1:ab:f8:b7:cc (oui Unknown), ethertype MPLS unicast (0x8847), length 122: MPLS (label 900003, tc 0, ttl 65) (label 116386, tc 0, [S], ttl 65) 192.168.0.1 > 192.168.1.1: ICMP echo request, id 22, seq 5, length 80
 17:03:13.579741 aa:c1:ab:f8:b7:cc (oui Unknown) > aa:c1:ab:3c:ec:95 (oui Unknown), ethertype IPv4 (0x0800), length 114: 192.168.1.1 > 192.168.0.1: ICMP echo reply, id 22, seq 5, length 80
 [omitted]
-
+```
+Lfib route taken from `egress-pe` for label **116386**. 
+```
 egress-pe#sh mpls lfib route 116386
 [omitted]
  BL    116386   [1], 10.4.3.4/32
@@ -84,7 +95,8 @@ egress-pe#sh mpls lfib route 116386
 ```
 
 ## Applying Local Preference to Prefer `peer2` (10.3.5.5)
-* To prefer the path via **10.3.5.5**, apply a route-map to the inbound BGP session on `ingress-pe`.
+
+To prefer the path via **10.3.5.5**, apply a route-map to the inbound BGP session on `ingress-pe`.
 ```
 ingress-pe#conf t
 ingress-pe(config)#router bgp 65000 
@@ -105,7 +117,9 @@ route-map EPE-NHOP-SET-PREFERENCE permit 65535
   Match clauses:
   SubRouteMap:
   Set clauses:
-
+```
+BGP and routing table on `ingress-pe`:
+```
 ingress-pe#sh ip bgp 192.168.1.0/24
 BGP routing table information for VRF default
 Router identifier 100.64.0.1, local AS number 65000
@@ -132,14 +146,17 @@ BGP routing table entry for 192.168.1.0/24
       Rx path id: 0x3
       Rx SAFI: Unicast
       Tunnel RIB eligible
-
+```
+```
 ingress-pe#sh ip route 192.168.1.0/24
 [omitted]
  B I      192.168.1.0/24 [200/0]
            via BGP LU Forwarding tunnel index 23
               via IS-IS SR tunnel index 2, label 116385
                  via 10.1.2.2, Ethernet1, label 900003
-
+```
+Ping test from `ingress-pe` (same result):
+```
 ingress-pe#ping 192.168.1.1 source lo1
 PING 192.168.1.1 (192.168.1.1) from 192.168.0.1 : 72(100) bytes of data.
 80 bytes from 192.168.1.1: icmp_seq=1 ttl=62 time=2.80 ms
@@ -147,8 +164,11 @@ PING 192.168.1.1 (192.168.1.1) from 192.168.0.1 : 72(100) bytes of data.
 80 bytes from 192.168.1.1: icmp_seq=3 ttl=62 time=2.03 ms
 80 bytes from 192.168.1.1: icmp_seq=4 ttl=62 time=1.80 ms
 80 bytes from 192.168.1.1: icmp_seq=5 ttl=62 time=1.78 ms
-
-
+```
+Tcpdump taken from `bb` router. Label stack:
+* **900003** (SR-MPLS transport label, prefix SID, to `egress-pe`)
+* **116385** (BGP-LU label for nhop 10.3.5.5)**
+```
 bb#bash tcpdump -i eth1
 tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
 listening on eth1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
@@ -162,7 +182,9 @@ listening on eth1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 17:04:18.832297 aa:c1:ab:f8:b7:cc (oui Unknown) > aa:c1:ab:3c:ec:95 (oui Unknown), ethertype IPv4 (0x0800), length 114: 192.168.1.1 > 192.168.0.1: ICMP echo reply, id 23, seq 4, length 80
 17:04:18.833776 aa:c1:ab:3c:ec:95 (oui Unknown) > aa:c1:ab:f8:b7:cc (oui Unknown), ethertype MPLS unicast (0x8847), length 122: MPLS (label 900003, tc 0, ttl 65) (label 116385, tc 0, [S], ttl 65) 192.168.0.1 > 192.168.1.1: ICMP echo request, id 23, seq 5, length 80
 17:04:18.835281 aa:c1:ab:f8:b7:cc (oui Unknown) > aa:c1:ab:3c:ec:95 (oui Unknown), ethertype IPv4 (0x0800), length 114: 192.168.1.1 > 192.168.0.1: ICMP echo reply, id 23, seq 5, length 80
-
+```
+Lfib route taken from `egress-pe` for label **116385**. 
+```
 egress-pe#sh mpls lfib route 116385 
 [omitted]
  BL    116385   [1], 10.3.5.5/32
