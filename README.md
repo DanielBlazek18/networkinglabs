@@ -1,6 +1,6 @@
 # Overview
 
-`BNET networkinglabs` is a repository containing practical networking lab exercises focused on Arista EOS, SONiC and other platforms. Python, Ansible, Docker and additional automation tools are frequently used throughout the examples.
+`Networkinglabs` is a repository containing practical networking lab exercises built with **containerlab**. The labs focus on Arista EOS, SONiC and other network platforms. Python, Ansible, Docker and additional automation tools are frequently used throughout the examples.
 
 ---
 
