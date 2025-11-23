@@ -14,3 +14,5 @@ List of the existing LABs and short description:
   * Arista cEOS
   * pyGNMI: Python gNMI client
   * ELK stack (Elasticsearch, Logstash, and Kibana)
+* **epe**: Egress Peer Engineering Using BGP-LU
+ 
