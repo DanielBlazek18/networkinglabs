@@ -11,9 +11,9 @@ Telemetry data is streamed from the following gNMI paths:
 
 `Logstash` processes telemetry messages from the `pygnmi-client` and stores them in Elasticsearch. **Kibana**, the web-based GUI, is used to visualize the data.
 
-- Prerequisites
-- Setup
-- Verification
+- [Prerequisites](https://github.com/DanielBlazek18/networkinglabs/blob/main/eos-telemetry/README.md#prerequisites)
+- [Setup](https://github.com/DanielBlazek18/networkinglabs/blob/main/eos-telemetry/README.md#setup)
+- [Verification](https://github.com/DanielBlazek18/networkinglabs/blob/main/eos-telemetry/README.md#verification)
 
 ---
 
