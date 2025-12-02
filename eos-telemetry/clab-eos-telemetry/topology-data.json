@@ -6,7 +6,7 @@
       "prefix": "",
       "mgmt": {
         "network": "clab",
-        "bridge": "br-89332b5b9058",
+        "bridge": "br-f57cb1b87b0e",
         "ipv4-subnet": "172.20.20.0/24",
         "ipv4-gw": "172.20.20.1",
         "ipv6-subnet": "3fff:172:20:20::/64",
@@ -32,9 +32,9 @@
       "mgmt-ipv4-prefix-length": 24,
       "mgmt-ipv6-address": "3fff:172:20:20::3",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:68:d6:be",
+      "mac-address": "00:1c:73:1d:10:0f",
       "labels": {
-        "clab-mgmt-net-bridge": "br-89332b5b9058",
+        "clab-mgmt-net-bridge": "br-f57cb1b87b0e",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/bnetadmin/labs/eos-telemetry/clab-eos-telemetry/eos1",
@@ -42,7 +42,7 @@
         "clab-node-name": "eos1",
         "clab-node-type": "",
         "clab-owner": "bnetadmin",
-        "clab-topo-file": "/home/bnetadmin/labs/eos-telemetry/eos-telemetry.yaml",
+        "clab-topo-file": "/home/bnetadmin/labs/eos-telemetry/topology.yaml",
         "containerlab": "eos-telemetry"
       },
       "port-bindings": [
@@ -63,9 +63,9 @@
       "mgmt-ipv4-prefix-length": 24,
       "mgmt-ipv6-address": "3fff:172:20:20::2",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:a8:5e:eb",
+      "mac-address": "00:1c:73:ff:53:ce",
       "labels": {
-        "clab-mgmt-net-bridge": "br-89332b5b9058",
+        "clab-mgmt-net-bridge": "br-f57cb1b87b0e",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/bnetadmin/labs/eos-telemetry/clab-eos-telemetry/eos2",
@@ -73,7 +73,7 @@
         "clab-node-name": "eos2",
         "clab-node-type": "",
         "clab-owner": "bnetadmin",
-        "clab-topo-file": "/home/bnetadmin/labs/eos-telemetry/eos-telemetry.yaml",
+        "clab-topo-file": "/home/bnetadmin/labs/eos-telemetry/topology.yaml",
         "containerlab": "eos-telemetry"
       },
       "port-bindings": [
@@ -86,13 +86,13 @@
         "a": {
           "node": "eos1",
           "interface": "eth1",
-          "mac": "aa:c1:ab:4f:79:ce",
+          "mac": "aa:c1:ab:55:a1:89",
           "peer": "z"
         },
         "z": {
           "node": "eos2",
           "interface": "eth1",
-          "mac": "aa:c1:ab:13:2b:2c",
+          "mac": "aa:c1:ab:00:fd:8c",
           "peer": "a"
         }
       }

@@ -1,4 +1,4 @@
-! Startup-config last modified at Sat Nov 22 12:43:15 2025 by admin
+! Startup-config last modified at Wed Nov 26 07:51:45 2025 by root
 ! device: eos1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -55,12 +55,5 @@ ip routing vrf eos-telemetry-vrf-01
 ip route 0.0.0.0/0 172.20.20.1
 !
 ipv6 route ::/0 3fff:172:20:20::1
-!
-router multicast
-   ipv4
-      software-forwarding kernel
-   !
-   ipv6
-      software-forwarding kernel
 !
 end
