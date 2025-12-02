@@ -213,3 +213,4 @@ bnetadmin@bnet-containerlab:~/labs/eos-telemetry$ docker logs -n30 elk-logstash0
     "source_host" => "eos1"
 }
 ```
+
