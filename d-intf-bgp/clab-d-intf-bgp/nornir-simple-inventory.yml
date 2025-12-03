@@ -1,11 +1,16 @@
 ---
-ceos1:
+peer1:
     username: admin
     password: admin
     platform: ceos
-    hostname: 172.20.20.2
-ceos2:
+    hostname: 172.20.20.4
+peer2:
     username: admin
     password: admin
     platform: ceos
     hostname: 172.20.20.3
+rtr:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.2

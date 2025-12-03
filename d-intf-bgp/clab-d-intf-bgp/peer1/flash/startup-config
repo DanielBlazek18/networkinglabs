@@ -1,9 +1,9 @@
-! Startup-config last modified at Sun Nov 23 14:43:41 2025 by root
-! device: ceos1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+! Startup-config last modified at Wed Dec  3 11:05:40 2025 by admin
+! device: peer1 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$yhu9TqQomXunq7HB$pR3ThFfRUkt20pPMpM9GnykgGbNkYV1wupufayZJhDyGAxrz8JpBvD6VUU/rgaz4BBY3iI1t0vZtBFUBZPfQu.
+username admin privilege 15 role network-admin secret sha512 $6$/syCVq4jNGaEco32$LtgWtbwtq8hSH6tIFWFVJmMsOYTdhdAtlCFtGPoe1c5XKbyB8tH/3IVpU8eCLh.AAgGm2nk1q5b4bC7.3VTOK1
 !
 management api http-commands
    no shutdown
@@ -14,7 +14,7 @@ transceiver qsfp default-mode 4x10G
 !
 service routing protocols model multi-agent
 !
-hostname ceos1
+hostname peer1
 !
 spanning-tree mode mstp
 !
@@ -29,21 +29,21 @@ management api netconf
    transport ssh default
 !
 interface Ethernet1
-   description ceos2_Ethernet1
+   description rtr_Ethernet1
    no switchport
    ipv6 enable
 !
 interface Loopback0
    description Router_ID
-   ip address 1.1.1.1/32
+   ip address 100.64.0.2/32
 !
 interface Loopback1
    description Cust_A
-   ip address 192.168.1.1/24
+   ip address 192.168.0.1/24
 !
 interface Management0
-   ip address 172.20.20.2/24
-   ipv6 address 3fff:172:20:20::2/64
+   ip address 172.20.20.4/24
+   ipv6 address 3fff:172:20:20::4/64
 !
 ip routing
 !
@@ -53,15 +53,15 @@ ip route 0.0.0.0/0 172.20.20.1
 !
 ipv6 route ::/0 3fff:172:20:20::1
 !
-router bgp 65000
-   router-id 1.1.1.1
-   neighbor ebgp peer group
-   neighbor interface Et1 peer-group ebgp remote-as 65001
+router bgp 65002
+   router-id 100.64.0.2
+   neighbor EBGP-D-INTF peer group
+   neighbor interface Et1 peer-group EBGP-D-INTF remote-as 65001
    !
    address-family ipv4
-      neighbor ebgp activate
-      neighbor ebgp next-hop address-family ipv6 originate
-      network 192.168.1.0/24
+      neighbor EBGP-D-INTF activate
+      neighbor EBGP-D-INTF next-hop address-family ipv6 originate
+      network 192.168.0.0/24
 !
 router multicast
    ipv4

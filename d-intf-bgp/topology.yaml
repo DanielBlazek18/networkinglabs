@@ -5,9 +5,12 @@ topology:
     ceos:
       image: ceos:4.35.0F 
   nodes:
-    ceos1:
+    rtr:
       kind: ceos 
-    ceos2:
+    peer1:
+      kind: ceos
+    peer2:
       kind: ceos
   links:
-    - endpoints: ["ceos1:eth1", "ceos2:eth1"]
+    - endpoints: ["rtr:eth1", "peer1:eth1"]
+    - endpoints: ["rtr:eth2", "peer2:eth1"]

@@ -1,9 +1,9 @@
-! Startup-config last modified at Sun Nov 23 14:43:30 2025 by root
-! device: ceos2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+! Startup-config last modified at Wed Dec  3 11:06:48 2025 by admin
+! device: peer2 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$oBdSgtsMA/h9vbrV$pVbS5CaHdecFPqjBdaF9DKpSXu.YFAjxIRNOQeDF6471fQa3ly2AhQGjIWOrBYOqrJV/VhrTHDBrsF.TiNcIc1
+username admin privilege 15 role network-admin secret sha512 $6$cKqvYkJZ.lEAesvV$fzEc1yl9zLPDjBIiWM0UxpPdk.Yr0MNEAgbPDS2BcWHIj.jFY0jBO7fZ3xPqSIDNPvMhpyuOmN.i/KccjRBbv/
 !
 management api http-commands
    no shutdown
@@ -14,7 +14,7 @@ transceiver qsfp default-mode 4x10G
 !
 service routing protocols model multi-agent
 !
-hostname ceos2
+hostname peer2
 !
 spanning-tree mode mstp
 !
@@ -29,17 +29,17 @@ management api netconf
    transport ssh default
 !
 interface Ethernet1
-   description ceos1_Ethernet1
+   description rtr_Ethernet2
    no switchport
    ipv6 enable
 !
 interface Loopback0
    description Router_ID
-   ip address 2.2.2.2/32
+   ip address 100.64.0.3/24
 !
 interface Loopback1
    description Cust_B
-   ip address 192.168.2.1/24
+   ip address 192.168.1.1/24
 !
 interface Management0
    ip address 172.20.20.3/24
@@ -53,14 +53,21 @@ ip route 0.0.0.0/0 172.20.20.1
 !
 ipv6 route ::/0 3fff:172:20:20::1
 !
-router bgp 65001
-   router-id 2.2.2.2
-   neighbor ebgp peer group
-   neighbor interface Et1 peer-group ebgp remote-as 65000
+router bgp 65003
+   router-id 100.64.0.3
+   neighbor EBGP-D-INTF peer group
+   neighbor interface Et1 peer-group EBGP-D-INTF remote-as 65001
    !
    address-family ipv4
-      neighbor ebgp activate
-      neighbor ebgp next-hop address-family ipv6 originate
-      network 192.168.2.0/24
+      neighbor EBGP-D-INTF activate
+      neighbor EBGP-D-INTF next-hop address-family ipv6 originate
+      network 192.168.1.0/24
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
 !
 end
