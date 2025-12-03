@@ -1,7 +1,7 @@
 # Overview
-This LAB demostrate Egress Peer Engineering Using BGP-LU on cEOS.
+This LAB demonstrate Egress Peer Engineering Using BGP-LU on cEOS.
 
-## LAB consist of following routers:
+## LAB consists of following routers:
 * `ingress-pe`
 * `bb` (backbone)
 * `egress-pe`
