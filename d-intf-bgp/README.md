@@ -74,7 +74,7 @@ BGP routing table entry for 192.168.1.0/24
 
 ```
 
-Ping tests (it's imported to have configured **ip routing ipv6 interfaces** on `rtr`):
+Ping tests (it's imported to have configured `ip routing ipv6 interfaces` on `rtr`):
 ```
 peer1#sh ip route 192.168.1.0/24
 [omitted]
