@@ -1,4 +1,4 @@
-! Startup-config last modified at Wed Dec  3 11:05:40 2025 by admin
+! Startup-config last modified at Wed Dec  3 11:18:09 2025 by admin
 ! device: peer1 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
 !
 no aaa root

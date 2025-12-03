@@ -1,4 +1,4 @@
-! Startup-config last modified at Wed Dec  3 11:06:48 2025 by admin
+! Startup-config last modified at Wed Dec  3 11:12:58 2025 by root
 ! device: peer2 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
 !
 no aaa root
@@ -62,12 +62,5 @@ router bgp 65003
       neighbor EBGP-D-INTF activate
       neighbor EBGP-D-INTF next-hop address-family ipv6 originate
       network 192.168.1.0/24
-!
-router multicast
-   ipv4
-      software-forwarding kernel
-   !
-   ipv6
-      software-forwarding kernel
 !
 end
