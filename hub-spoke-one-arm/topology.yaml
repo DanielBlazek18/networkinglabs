@@ -1,0 +1,20 @@
+name: hub-spoke-one-arm
+prefix: "" 
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.35.0F 
+  nodes:
+    hub:
+      kind: ceos 
+    spoke1:
+      kind: ceos
+    spoke2:
+      kind: ceos
+    bb:
+      kind: ceos
+  links:
+    - endpoints: ["hub:eth1", "bb:eth1"]
+    - endpoints: ["spoke1:eth1", "bb:eth2"]
+    - endpoints: ["spoke2:eth1", "bb:eth3"]
+

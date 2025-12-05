@@ -1,0 +1,50 @@
+! Startup-config last modified at Fri Dec  5 18:26:45 2025 by root
+! device: hub (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$IhlNpc2mwBxRNl2f$V.y4P0RNSEJpPlP.hKzJU8XRFmgGi7RNv8d9HJKr0FgmgEv.NsF7LbEWyFrAZnuYXS1Ck8kan5GbF8IxSbdZ/0
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname hub
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+!
+interface Management0
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::3/64
+!
+no ip routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end
