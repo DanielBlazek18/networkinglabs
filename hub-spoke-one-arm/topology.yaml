@@ -13,8 +13,11 @@ topology:
       kind: ceos
     bb:
       kind: ceos
+    service:
+      kind: ceos
   links:
     - endpoints: ["hub:eth1", "bb:eth1"]
     - endpoints: ["spoke1:eth1", "bb:eth2"]
     - endpoints: ["spoke2:eth1", "bb:eth3"]
+    - endpoints: ["hub:eth2", "service:eth1"]
 
