@@ -1,4 +1,4 @@
-! Startup-config last modified at Fri Dec  5 18:43:48 2025 by admin
+! Startup-config last modified at Fri Dec  5 21:50:36 2025 by admin
 ! device: bb (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
 !
 no aaa root
@@ -32,16 +32,22 @@ interface Ethernet1
    description hub_Ethernet1
    no switchport
    ip address 10.1.2.2/24
+   isis enable LAB
+   isis network point-to-point
 !
 interface Ethernet2
    description spoke1_Ethernet1
    no switchport
    ip address 10.2.3.2/24
+   isis enable LAB
+   isis network point-to-point
 !
 interface Ethernet3
    description spoke2_Ethernet1
    no switchport
    ip address 10.2.4.2/24
+   isis enable LAB
+   isis network point-to-point
 !
 interface Loopback0
    description Router_ID

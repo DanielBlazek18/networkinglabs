@@ -1,4 +1,4 @@
-! Startup-config last modified at Fri Dec  5 18:34:27 2025 by root
+! Startup-config last modified at Fri Dec  5 21:59:00 2025 by admin
 ! device: spoke1 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
 !
 no aaa root
@@ -29,16 +29,43 @@ management api netconf
    transport ssh default
 !
 interface Ethernet1
+   description bb_Ethernet2
+   no switchport
+   ip address 10.2.3.3/24
+   isis enable LAB
+   isis network point-to-point
+!
+interface Loopback0
+   description Router_ID
+   ip address 100.64.0.3/32
+   node-segment ipv4 index 3
+   isis enable LAB
+   isis passive
 !
 interface Management0
    ip address 172.20.20.4/24
    ipv6 address 3fff:172:20:20::4/64
 !
-no ip routing
+ip routing
 !
 ip route 0.0.0.0/0 172.20.20.1
 !
 ipv6 route ::/0 3fff:172:20:20::1
+!
+mpls ip
+!
+router isis LAB
+   net 49.0000.0000.0003.00
+   router-id ipv4 100.64.0.3
+   is-type level-2
+   log-adjacency-changes
+   spf-interval 500 milliseconds 100 milliseconds 200 milliseconds
+   !
+   address-family ipv4 unicast
+      maximum-paths 4
+   !
+   segment-routing mpls
+      no shutdown
 !
 router multicast
    ipv4
