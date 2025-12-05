@@ -6,7 +6,7 @@
       "prefix": "",
       "mgmt": {
         "network": "clab",
-        "bridge": "br-ba10011934dc",
+        "bridge": "br-03f905eff401",
         "ipv4-subnet": "172.20.20.0/24",
         "ipv4-gw": "172.20.20.1",
         "ipv6-subnet": "3fff:172:20:20::/64",
@@ -32,9 +32,9 @@
       "mgmt-ipv4-prefix-length": 24,
       "mgmt-ipv6-address": "3fff:172:20:20::5",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:ad:6b:75",
+      "mac-address": "00:1c:73:af:53:0e",
       "labels": {
-        "clab-mgmt-net-bridge": "br-ba10011934dc",
+        "clab-mgmt-net-bridge": "br-03f905eff401",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/danielblazek/networkinglabs/hub-spoke-one-arm/clab-hub-spoke-one-arm/bb",
@@ -63,9 +63,9 @@
       "mgmt-ipv4-prefix-length": 24,
       "mgmt-ipv6-address": "3fff:172:20:20::3",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:d0:21:e1",
+      "mac-address": "00:1c:73:d2:26:1b",
       "labels": {
-        "clab-mgmt-net-bridge": "br-ba10011934dc",
+        "clab-mgmt-net-bridge": "br-03f905eff401",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/danielblazek/networkinglabs/hub-spoke-one-arm/clab-hub-spoke-one-arm/hub",
@@ -90,13 +90,13 @@
       "image": "ceos:4.35.0F",
       "mgmt-net": "",
       "mgmt-intf": "Management0",
-      "mgmt-ipv4-address": "172.20.20.2",
+      "mgmt-ipv4-address": "172.20.20.4",
       "mgmt-ipv4-prefix-length": 24,
-      "mgmt-ipv6-address": "3fff:172:20:20::2",
+      "mgmt-ipv6-address": "3fff:172:20:20::4",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:05:9c:0e",
+      "mac-address": "00:1c:73:59:97:4b",
       "labels": {
-        "clab-mgmt-net-bridge": "br-ba10011934dc",
+        "clab-mgmt-net-bridge": "br-03f905eff401",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/danielblazek/networkinglabs/hub-spoke-one-arm/clab-hub-spoke-one-arm/spoke1",
@@ -121,13 +121,13 @@
       "image": "ceos:4.35.0F",
       "mgmt-net": "",
       "mgmt-intf": "Management0",
-      "mgmt-ipv4-address": "172.20.20.4",
+      "mgmt-ipv4-address": "172.20.20.2",
       "mgmt-ipv4-prefix-length": 24,
-      "mgmt-ipv6-address": "3fff:172:20:20::4",
+      "mgmt-ipv6-address": "3fff:172:20:20::2",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:d7:ed:d3",
+      "mac-address": "00:1c:73:6a:18:43",
       "labels": {
-        "clab-mgmt-net-bridge": "br-ba10011934dc",
+        "clab-mgmt-net-bridge": "br-03f905eff401",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/danielblazek/networkinglabs/hub-spoke-one-arm/clab-hub-spoke-one-arm/spoke2",
@@ -148,13 +148,13 @@
         "a": {
           "node": "hub",
           "interface": "eth1",
-          "mac": "aa:c1:ab:3e:c2:c8",
+          "mac": "aa:c1:ab:11:67:f3",
           "peer": "z"
         },
         "z": {
           "node": "bb",
           "interface": "eth1",
-          "mac": "aa:c1:ab:26:f1:00",
+          "mac": "aa:c1:ab:d3:22:d2",
           "peer": "a"
         }
       }
@@ -164,13 +164,13 @@
         "a": {
           "node": "spoke1",
           "interface": "eth1",
-          "mac": "aa:c1:ab:36:90:e8",
+          "mac": "aa:c1:ab:ef:bc:e4",
           "peer": "z"
         },
         "z": {
           "node": "bb",
           "interface": "eth2",
-          "mac": "aa:c1:ab:2e:d6:f2",
+          "mac": "aa:c1:ab:69:1c:21",
           "peer": "a"
         }
       }
@@ -180,13 +180,13 @@
         "a": {
           "node": "spoke2",
           "interface": "eth1",
-          "mac": "aa:c1:ab:56:46:3c",
+          "mac": "aa:c1:ab:7f:07:13",
           "peer": "z"
         },
         "z": {
           "node": "bb",
           "interface": "eth3",
-          "mac": "aa:c1:ab:e3:5b:8a",
+          "mac": "aa:c1:ab:91:43:03",
           "peer": "a"
         }
       }
