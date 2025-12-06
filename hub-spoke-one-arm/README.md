@@ -27,7 +27,7 @@ BGP routing table entry for IPv4 prefix 0.0.0.0/0, Route Distinguisher: 100.64.0
     100.64.0.1 from 100.64.0.1 (100.64.0.1)
       Origin INCOMPLETE, metric -, localpref 100, weight 0, tag 0, valid, internal, best
       Extended Community: Route-Target-AS:1000:1000
-      Remote MPLS label: **116384**
+      Remote MPLS label: 116384
 ```
 
 Label `116384` is resolved to VRF `HUB` on `hub` router (per-vrf allocation):
@@ -58,7 +58,7 @@ BGP routing table entry for IPv4 prefix 0.0.0.0/0, Route Distinguisher: 100.64.0
     100.64.0.1 from 100.64.0.1 (100.64.0.1)
       Origin INCOMPLETE, metric -, localpref 100, weight 0, tag 0, valid, internal, best
       Extended Community: Route-Target-AS:1000:1000
-      Remote MPLS label: **116385**
+      Remote MPLS label: 116385
 
 spoke1#sh bgp vpn-ipv4 192.168.4.0/24 detail
 BGP routing table information for VRF default
