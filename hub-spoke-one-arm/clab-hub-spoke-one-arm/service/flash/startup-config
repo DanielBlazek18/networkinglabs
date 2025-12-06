@@ -1,0 +1,59 @@
+! Startup-config last modified at Sat Dec  6 08:51:02 2025 by admin
+! device: service (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$BTnxbCq7aTdJeOtq$06gA1VVgNhP2sDYC4R7LDcS.OvKTBcHc/fS6VNi2bs5.L6qgxw8NnAQbtLennlihAafUkslpQ2zbyMyGeWPgp1
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname service
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   description hub_Ethernet2
+   no switchport
+   ip address 172.16.0.1/31
+!
+interface Loopback0
+   description Router_ID
+   ip address 100.64.0.5/32
+!
+interface Management0
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::3/64
+!
+ip routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+ip route 192.168.1.0/24 172.16.0.0 name CUST-A
+ip route 192.168.2.0/24 172.16.0.0 name CUST-B
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

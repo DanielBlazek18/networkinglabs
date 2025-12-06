@@ -6,7 +6,7 @@
       "prefix": "",
       "mgmt": {
         "network": "clab",
-        "bridge": "br-03f905eff401",
+        "bridge": "br-3b45a14f21dc",
         "ipv4-subnet": "172.20.20.0/24",
         "ipv4-gw": "172.20.20.1",
         "ipv6-subnet": "3fff:172:20:20::/64",
@@ -28,13 +28,13 @@
       "image": "ceos:4.35.0F",
       "mgmt-net": "",
       "mgmt-intf": "Management0",
-      "mgmt-ipv4-address": "172.20.20.5",
+      "mgmt-ipv4-address": "172.20.20.2",
       "mgmt-ipv4-prefix-length": 24,
-      "mgmt-ipv6-address": "3fff:172:20:20::5",
+      "mgmt-ipv6-address": "3fff:172:20:20::2",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:af:53:0e",
+      "mac-address": "00:1c:73:30:4d:54",
       "labels": {
-        "clab-mgmt-net-bridge": "br-03f905eff401",
+        "clab-mgmt-net-bridge": "br-3b45a14f21dc",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/danielblazek/networkinglabs/hub-spoke-one-arm/clab-hub-spoke-one-arm/bb",
@@ -59,13 +59,13 @@
       "image": "ceos:4.35.0F",
       "mgmt-net": "",
       "mgmt-intf": "Management0",
-      "mgmt-ipv4-address": "172.20.20.3",
+      "mgmt-ipv4-address": "172.20.20.4",
       "mgmt-ipv4-prefix-length": 24,
-      "mgmt-ipv6-address": "3fff:172:20:20::3",
+      "mgmt-ipv6-address": "3fff:172:20:20::4",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:d2:26:1b",
+      "mac-address": "00:1c:73:b1:f6:6a",
       "labels": {
-        "clab-mgmt-net-bridge": "br-03f905eff401",
+        "clab-mgmt-net-bridge": "br-3b45a14f21dc",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/danielblazek/networkinglabs/hub-spoke-one-arm/clab-hub-spoke-one-arm/hub",
@@ -79,8 +79,39 @@
       "port-bindings": [
       ]
     },
-    "spoke1": {
+    "service": {
       "index": "2",
+      "shortname": "service",
+      "longname": "service",
+      "fqdn": "service.hub-spoke-one-arm.io",
+      "group": "",
+      "labdir": "/home/danielblazek/networkinglabs/hub-spoke-one-arm/clab-hub-spoke-one-arm/service",
+      "kind": "ceos",
+      "image": "ceos:4.35.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.3",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::3",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:05:d1:63",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-3b45a14f21dc",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/danielblazek/networkinglabs/hub-spoke-one-arm/clab-hub-spoke-one-arm/service",
+        "clab-node-longname": "service",
+        "clab-node-name": "service",
+        "clab-node-type": "",
+        "clab-owner": "danielblazek",
+        "clab-topo-file": "/home/danielblazek/networkinglabs/hub-spoke-one-arm/topology.yaml",
+        "containerlab": "hub-spoke-one-arm"
+      },
+      "port-bindings": [
+      ]
+    },
+    "spoke1": {
+      "index": "3",
       "shortname": "spoke1",
       "longname": "spoke1",
       "fqdn": "spoke1.hub-spoke-one-arm.io",
@@ -90,13 +121,13 @@
       "image": "ceos:4.35.0F",
       "mgmt-net": "",
       "mgmt-intf": "Management0",
-      "mgmt-ipv4-address": "172.20.20.4",
+      "mgmt-ipv4-address": "172.20.20.6",
       "mgmt-ipv4-prefix-length": 24,
-      "mgmt-ipv6-address": "3fff:172:20:20::4",
+      "mgmt-ipv6-address": "3fff:172:20:20::6",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:59:97:4b",
+      "mac-address": "00:1c:73:58:07:ef",
       "labels": {
-        "clab-mgmt-net-bridge": "br-03f905eff401",
+        "clab-mgmt-net-bridge": "br-3b45a14f21dc",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/danielblazek/networkinglabs/hub-spoke-one-arm/clab-hub-spoke-one-arm/spoke1",
@@ -111,7 +142,7 @@
       ]
     },
     "spoke2": {
-      "index": "3",
+      "index": "4",
       "shortname": "spoke2",
       "longname": "spoke2",
       "fqdn": "spoke2.hub-spoke-one-arm.io",
@@ -121,13 +152,13 @@
       "image": "ceos:4.35.0F",
       "mgmt-net": "",
       "mgmt-intf": "Management0",
-      "mgmt-ipv4-address": "172.20.20.2",
+      "mgmt-ipv4-address": "172.20.20.5",
       "mgmt-ipv4-prefix-length": 24,
-      "mgmt-ipv6-address": "3fff:172:20:20::2",
+      "mgmt-ipv6-address": "3fff:172:20:20::5",
       "mgmt-ipv6-prefix-length": 64,
-      "mac-address": "00:1c:73:6a:18:43",
+      "mac-address": "00:1c:73:37:a8:35",
       "labels": {
-        "clab-mgmt-net-bridge": "br-03f905eff401",
+        "clab-mgmt-net-bridge": "br-3b45a14f21dc",
         "clab-node-group": "",
         "clab-node-kind": "ceos",
         "clab-node-lab-dir": "/home/danielblazek/networkinglabs/hub-spoke-one-arm/clab-hub-spoke-one-arm/spoke2",
@@ -148,13 +179,13 @@
         "a": {
           "node": "hub",
           "interface": "eth1",
-          "mac": "aa:c1:ab:11:67:f3",
+          "mac": "aa:c1:ab:58:db:91",
           "peer": "z"
         },
         "z": {
           "node": "bb",
           "interface": "eth1",
-          "mac": "aa:c1:ab:d3:22:d2",
+          "mac": "aa:c1:ab:52:6f:f8",
           "peer": "a"
         }
       }
@@ -164,13 +195,13 @@
         "a": {
           "node": "spoke1",
           "interface": "eth1",
-          "mac": "aa:c1:ab:ef:bc:e4",
+          "mac": "aa:c1:ab:ba:a4:0b",
           "peer": "z"
         },
         "z": {
           "node": "bb",
           "interface": "eth2",
-          "mac": "aa:c1:ab:69:1c:21",
+          "mac": "aa:c1:ab:82:64:4e",
           "peer": "a"
         }
       }
@@ -180,13 +211,29 @@
         "a": {
           "node": "spoke2",
           "interface": "eth1",
-          "mac": "aa:c1:ab:7f:07:13",
+          "mac": "aa:c1:ab:3b:3e:d8",
           "peer": "z"
         },
         "z": {
           "node": "bb",
           "interface": "eth3",
-          "mac": "aa:c1:ab:91:43:03",
+          "mac": "aa:c1:ab:3d:67:f0",
+          "peer": "a"
+        }
+      }
+    },
+    {
+      "endpoints": {
+        "a": {
+          "node": "hub",
+          "interface": "eth2",
+          "mac": "aa:c1:ab:ee:89:4e",
+          "peer": "z"
+        },
+        "z": {
+          "node": "service",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:1b:44:c9",
           "peer": "a"
         }
       }

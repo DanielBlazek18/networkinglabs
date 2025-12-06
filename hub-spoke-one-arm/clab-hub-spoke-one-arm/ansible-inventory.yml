@@ -12,10 +12,12 @@ all:
         ansible_password: admin
       hosts:
         bb:
-          ansible_host: 172.20.20.5
+          ansible_host: 172.20.20.2
         hub:
+          ansible_host: 172.20.20.4
+        service:
           ansible_host: 172.20.20.3
         spoke1:
-          ansible_host: 172.20.20.4
+          ansible_host: 172.20.20.6
         spoke2:
-          ansible_host: 172.20.20.2
+          ansible_host: 172.20.20.5
