@@ -1,0 +1,26 @@
+---
+bb:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.2
+hub:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.4
+service:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.3
+spoke1:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.6
+spoke2:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.5
