@@ -10,8 +10,8 @@ This feature requires configuration of per-CE (per-nexthop in Arista terminology
 * `service`
 
 ## Key protocols used:
-* **SR-MPLS** with **IS-IS** between hub, spokes and bb.
-* **BGP-VPNv4** between hub and spokes.
+* **SR-MPLS** with **IS-IS** between `hub`, `spokes` and `bb`.
+* **BGP-VPNv4** between `hub` and `spokes`.
 
 ## Baseline Behavior
 By default, traffic between the `CUST-A` prefix 192.168.1.0/24 and `CUST-B` prefix 192.168.2.0/24 **is not** routed through the `service` router (which would represent a firewall, load balancer, etc. in a real deployment).
