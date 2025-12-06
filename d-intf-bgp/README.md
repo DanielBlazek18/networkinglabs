@@ -7,7 +7,7 @@ This LAB demonstrate direct interface BGP neighbors established over IPv6 link-l
 * `peer2`
 
 ## Key protocols used:
-* BGP (important feature [rfc8950](https://datatracker.ietf.org/doc/html/rfc8950))
+* BGP (important feature [rfc8950](https://datatracker.ietf.org/doc/html/rfc8950)).
 
 ## BGP config on `rtr`
 
