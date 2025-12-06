@@ -9,9 +9,9 @@ This LAB demonstrate Egress Peer Engineering Using BGP-LU on cEOS.
 * `peer2`
 
 ## Key protocols used:
-* **SR-MPLS** with **IS-IS** between pe routers and bb
+* **SR-MPLS** with **IS-IS** between pe routers and bb.
 * **BGP-LU** between pe routers. BGP next-hops origination for peers must be explicitly configured.
-* **BGP Add-Path** (send from `egress-pe`, recived on `ingress-pe`)
+* **BGP Add-Path** (send from `egress-pe`, recived on `ingress-pe`).
 
 ## Baseline Behavior
 * Prefix 192.168.1.0/24 is advertised by both peers.
