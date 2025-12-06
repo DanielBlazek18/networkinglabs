@@ -15,4 +15,4 @@ List of the existing LABs and short description:
   * pyGNMI: Python gNMI client
   * ELK stack (Elasticsearch, Logstash, and Kibana)
 * **epe**: Egress Peer Engineering Using BGP-LU
-* **hub-spoke-one-arm**: One-Arm Hub-and-Spoke VPN (focused on label allocation mode on the HUB for default route).
+* **hub-spoke-one-arm**: One-Arm Hub-and-Spoke VPN, enabling inter-spoke traffic to pass through a service router when the label allocation mode for the default route is changed.
