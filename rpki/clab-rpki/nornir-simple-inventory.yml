@@ -1,16 +1,26 @@
 ---
-inet-r1:
+core:
     username: admin
     password: admin
     platform: ceos
     hostname: 172.20.20.2
-isp:
+inet-r1:
     username: admin
     password: admin
     platform: ceos
     hostname: 172.20.20.3
+inet-r2:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.5
+isp:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.4
 rpki-rp:
     username: 
     password: 
     platform: linux
-    hostname: 172.20.20.4
+    hostname: 172.20.20.6
