@@ -9,7 +9,7 @@ topology:
     linux:
       image: nlnetlabs/routinator:latest
   nodes:
-    inet-gw:
+    inet-r1:
       kind: ceos
     isp:
       kind: ceos
@@ -19,4 +19,4 @@ topology:
         - 8323:8323
         - 3323:3323
   links:
-    - endpoints: ["inte-gw:eth1", "isp:eth1"]
+    - endpoints: ["inet-r1:eth1", "isp:eth1"]
