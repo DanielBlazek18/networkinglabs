@@ -1,0 +1,28 @@
+name: rpki
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.35.0F
+    linux:
+      image: nlnetlabs/routinator:latest
+  nodes:
+    inet-r1:
+      kind: ceos
+    inet-r2:
+      kind: ceos
+    core:
+      kind: ceos
+    isp:
+      kind: ceos
+    rpki-rp:
+      kind: linux
+      mgmt-ipv4: 172.20.20.6
+      ports:
+        - 8323:8323
+        - 3323:3323
+  links:
+    - endpoints: ["inet-r1:eth1", "isp:eth1"]
+    - endpoints: ["inet-r2:eth1", "isp:eth2"]
+    - endpoints: ["inet-r1:eth2", "core:eth1"]
+    - endpoints: ["inet-r2:eth2", "core:eth2"]
+    - endpoints: ["inet-r1:eth3", "inet-r2:eth3"]
