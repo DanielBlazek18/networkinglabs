@@ -1,5 +1,5 @@
 # Overview
-This lab is testing BGP RPKI on Arista. Routinator has been used for Relying Party software.
+This lab demonstrates BGP RPKI on Arista cEOS. [Routinator](https://github.com/NLnetLabs/routinator) is used as the Relying Party (RP) software, installation guide is [here](https://routinator.docs.nlnetlabs.nl/en/stable/installation.html).
 
 ## LAB consists of following routers:
 * `inet-r1`
@@ -10,10 +10,10 @@ This lab is testing BGP RPKI on Arista. Routinator has been used for Relying Par
 ## Key protocols used:
 * BGP
 * Resource Public Key Infrastructure (RPKI)
-* Routing control functions (RCF) and standard route-maps
+* [Routing control functions (RCF)](https://www.arista.com/en/um-eos/eos-routing-control-functions) and standard route-maps
 
 ## Setup and test results:
-`isp` router is advertising three prefixes:
+The `isp` router is advertising three prefixes:
 ```
 interface Loopback1
    description Internet-prefix-8.8.8.0m24_demonstration_of_valid
@@ -26,7 +26,7 @@ interface Loopback3
    ip address 220.150.206.1/23
 ```
 
-Prefixes as advertised to `inet-r1` and `inet-r2`:
+Prefixes advertised to `inet-r1` and `inet-r2`:
 ```
 isp#sh ip bgp neighbors 192.0.0.3 advertised-routes
 [omitted]
@@ -36,7 +36,7 @@ isp#sh ip bgp neighbors 192.0.0.3 advertised-routes
  * >      220.150.206.0/23       192.0.0.2             -       -          -       -       15169 i
 ```
 
-`inet-r1` was configured with standard route-map:
+RPKI validation with standard route-map on `inet-r1`:
 ```
 route-map rpki-filter permit 10
    description permit valid prefixes
@@ -52,7 +52,7 @@ router bgp 65000
       neighbor 192.0.0.0 route-map rpki-filter in
 ```
 
-As expected, we can see valid and unknow prefixes in the table:
+As expected, `inet-r1` install valid and unknown prefixes:
 ```
 inet-r1#sh bgp ipv4 unicast 
 [omitted]
@@ -63,7 +63,7 @@ inet-r1#sh bgp ipv4 unicast
  *        220.150.206.0/23       100.64.0.2            0       -          100     0       15169 i
 ```
 
-And invalid prefix 9.9.9.9/24 can be seen in `recieved-routes`:
+The invalid prefix (9.9.9.9/24) is not installed but visible in `recieved-routes`:
 ```
 inet-r1#sh ip bgp neighbors 192.0.0.0 received-routes 
 [omitted]
@@ -73,7 +73,7 @@ inet-r1#sh ip bgp neighbors 192.0.0.0 received-routes
  * >    U 220.150.206.0/23       192.0.0.0             -       -          -       -       15169 i
 ```
 
-`inet-r2` was configured with Routing Control Function (RCF):
+Routing Control Function (RCF) on `inet-r2`:
 ```
 router general
    control-functions
@@ -96,7 +96,7 @@ router bgp 65000
       neighbor 192.0.0.2 rcf in rpkiFilter()
 ```
 
-Same as with `inet-r1`, we can see valid and unknow prefixes in the table:
+Valid and unknown prefixes are installed:
 ```
 inet-r2#sh bgp ipv4 unicast 
 [omitted]
@@ -106,7 +106,7 @@ inet-r2#sh bgp ipv4 unicast
  *        220.150.206.0/23       100.64.0.1            0       -          100     0       15169 i
 ```
 
-And invalid prefix 9.9.9.9/24 can be seen in `recieved-routes`:
+The invalid prefix is only visible in `recieved-routes`:
 ```
 [omitted]
           Network                Next Hop              Metric  AIGP       LocPref Weight  Path
