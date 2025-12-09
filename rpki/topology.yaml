@@ -1,0 +1,22 @@
+name: rpki
+  #mgmt:
+  #network: static
+  #ipv4-subnet: 172.31.0.0/24
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.35.0F
+    linux:
+      image: nlnetlabs/routinator:latest
+  nodes:
+    inet-gw:
+      kind: ceos
+    isp:
+      kind: ceos
+    rpki-rp:
+      kind: linux
+      ports:
+        - 8323:8323
+        - 3323:3323
+  links:
+    - endpoints: ["inte-gw:eth1", "isp:eth1"]
