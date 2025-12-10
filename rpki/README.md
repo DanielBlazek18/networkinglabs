@@ -1,11 +1,12 @@
 # Overview
 This lab demonstrates BGP RPKI on Arista cEOS. [Routinator](https://github.com/NLnetLabs/routinator) is used as the Relying Party (RP) software, installation guide is [here](https://routinator.docs.nlnetlabs.nl/en/stable/installation.html).
 
-## LAB consists of following routers:
+## LAB consists of following devices:
 * `inet-r1`
 * `inet-r2`
 * `isp`
 * `core`
+* `rpki-rp`
 
 ## Key protocols used:
 * BGP
