@@ -15,6 +15,7 @@
 **/clab-*/authorized_keys
 **/clab-*/nornir-simple-inventory.yml
 **/clab-*/topology-data.json
+**/clab-*/.tls/ca/**
 
 ######################################
 # Do not ignore .gitignore itself
