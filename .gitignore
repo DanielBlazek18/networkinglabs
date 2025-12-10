@@ -9,6 +9,14 @@
 !**/flash/startup-config
 
 ######################################
+# Ignore clab topology related files
+######################################
+**/clab-*/ansible-inventory.yml
+**/clab-*/authorized_keys
+**/clab-*/nornir-simple-inventory.yml
+**/clab-*/topology-data.json
+
+######################################
 # Do not ignore .gitignore itself
 ######################################
 !.gitignore
