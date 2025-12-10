@@ -1,4 +1,4 @@
-! Startup-config last modified at Tue Dec  9 21:57:44 2025 by admin
+! Startup-config last modified at Wed Dec 10 08:23:49 2025 by admin
 ! device: inet-r1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -55,8 +55,8 @@ interface Loopback0
    isis passive
 !
 interface Management0
-   ip address 172.20.20.3/24
-   ipv6 address 3fff:172:20:20::4/64
+   ip address 172.20.20.4/24
+   ipv6 address 3fff:172:20:20::5/64
 !
 ip routing
 !
@@ -95,7 +95,7 @@ router bgp 65000
    neighbor 192.0.0.0 local-as 60101 no-prepend replace-as
    neighbor 192.0.0.0 description isp
    neighbor 192.0.0.0 maximum-routes 0
-   neighbor 2000:: remote-as 60104
+   neighbor 2000:: remote-as 15169
    neighbor 2000:: local-as 60101 no-prepend replace-as
    neighbor 2000:: description isp
    neighbor 2000:: maximum-routes 0
@@ -107,7 +107,9 @@ router bgp 65000
    !
    address-family ipv6
       neighbor CORE activate
+      neighbor CORE next-hop-self
       neighbor 2000:: activate
+      neighbor 2000:: route-map rpki-filter in
    !
    rpki cache routinator
       host 172.20.20.6 port 3323
