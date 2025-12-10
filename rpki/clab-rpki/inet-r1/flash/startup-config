@@ -1,4 +1,4 @@
-! Startup-config last modified at Wed Dec 10 08:23:49 2025 by admin
+! Startup-config last modified at Wed Dec 10 08:43:19 2025 by admin
 ! device: inet-r1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -51,12 +51,13 @@ interface Ethernet3
 interface Loopback0
    description Router_ID
    ip address 100.64.0.1/32
+   node-segment ipv4 index 1
    isis enable LAB
    isis passive
 !
 interface Management0
-   ip address 172.20.20.4/24
-   ipv6 address 3fff:172:20:20::5/64
+   ip address 172.20.20.2/24
+   ipv6 address 3fff:172:20:20::3/64
 !
 ip routing
 !
@@ -65,6 +66,8 @@ ipv6 unicast-routing
 ip route 0.0.0.0/0 172.20.20.1
 !
 ipv6 route ::/0 3fff:172:20:20::1
+!
+mpls ip
 !
 route-map rpki-filter permit 10
    description permit valid prefixes
@@ -106,7 +109,7 @@ router bgp 65000
       neighbor 192.0.0.0 route-map rpki-filter in
    !
    address-family ipv6
-      neighbor CORE activate
+      neighbor CORE activate 6pe
       neighbor CORE next-hop-self
       neighbor 2000:: activate
       neighbor 2000:: route-map rpki-filter in
@@ -130,6 +133,9 @@ router isis LAB
    !
    address-family ipv4 unicast
       maximum-paths 4
+   !
+   segment-routing mpls
+      no shutdown
 !
 router multicast
    ipv4

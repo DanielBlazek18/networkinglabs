@@ -1,4 +1,4 @@
-! Startup-config last modified at Wed Dec 10 08:25:21 2025 by admin
+! Startup-config last modified at Wed Dec 10 08:46:03 2025 by admin
 ! device: core (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -45,6 +45,7 @@ interface Ethernet2
 interface Loopback0
    description Router_ID
    ip address 100.64.0.3/32
+   node-segment ipv4 index 3
    isis enable LAB
    isis passive
 !
@@ -59,6 +60,8 @@ ipv6 unicast-routing
 ip route 0.0.0.0/0 172.20.20.1
 !
 ipv6 route ::/0 3fff:172:20:20::1
+!
+mpls ip
 !
 router bgp 65000
    router-id 100.64.0.3
@@ -78,7 +81,7 @@ router bgp 65000
       neighbor CORE activate
    !
    address-family ipv6
-      neighbor CORE activate
+      neighbor CORE activate 6pe
 !
 router isis LAB
    net 49.0000.0000.0000.0003.00
@@ -89,6 +92,9 @@ router isis LAB
    !
    address-family ipv4 unicast
       maximum-paths 4
+   !
+   segment-routing mpls
+      no shutdown
 !
 router multicast
    ipv4

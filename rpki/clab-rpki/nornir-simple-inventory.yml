@@ -8,17 +8,17 @@ inet-r1:
     username: admin
     password: admin
     platform: ceos
-    hostname: 172.20.20.4
+    hostname: 172.20.20.2
 inet-r2:
     username: admin
     password: admin
     platform: ceos
-    hostname: 172.20.20.5
+    hostname: 172.20.20.4
 isp:
     username: admin
     password: admin
     platform: ceos
-    hostname: 172.20.20.2
+    hostname: 172.20.20.5
 rpki-rp:
     username: 
     password: 
