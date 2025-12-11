@@ -1,4 +1,4 @@
-! Startup-config last modified at Wed Dec 10 08:36:52 2025 by root
+! Startup-config last modified at Thu Dec 11 06:39:19 2025 by admin
 ! device: isp (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -57,12 +57,20 @@ interface Loopback3
    ip address 220.150.206.1/23
 !
 interface Loopback4
-   description Internet-prefix-2001:4860:4820::m48_demonstration_of_valid
-   ipv6 address 2001:4860:4820::1/48
+   description Internet-prefix-2001:4860::m32_demonstration_of_valid
+   ipv6 address 2001:4860:4860::8888/32
+!
+interface Loopback5
+   description Internet-prefix-2620:fe::m48_demonstration_of_invalid
+   ipv6 address 2620:fe::9999/48
+!
+interface Loopback6
+   description Internet-prefix-2332:1234::m32_demonstration_of_unknown
+   ipv6 address 2332:1234::1/32
 !
 interface Management0
-   ip address 172.20.20.5/24
-   ipv6 address 3fff:172:20:20::6/64
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::4/64
 !
 ip routing
 !
@@ -102,12 +110,21 @@ router bgp 60104
    address-family ipv6
       neighbor 2000::1 activate
       neighbor 2000::3 activate
-      network 2001:4860:4820::/48
+      network 2001:4860::/32
+      network 2332:1234::/32
+      network 2620:fe::/48
 !
 router general
    control-functions
       code
       
       EOF
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
 !
 end
