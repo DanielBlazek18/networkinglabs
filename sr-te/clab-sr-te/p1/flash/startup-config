@@ -1,4 +1,4 @@
-! Startup-config last modified at Tue Dec 16 16:03:50 2025 by admin
+! Startup-config last modified at Tue Dec 16 16:53:53 2025 by admin
 ! device: p1 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
 !
 no aaa root
@@ -39,6 +39,7 @@ interface Ethernet1
 interface Ethernet2
    description pe2_Ethernet1
    no switchport
+   ip address unnumbered Loopback0
    ipv6 enable
    isis enable LAB
    isis network point-to-point
@@ -46,6 +47,7 @@ interface Ethernet2
 interface Ethernet3
    description pe3_Ethernet1
    no switchport
+   ip address unnumbered Loopback0
    ipv6 enable
    isis enable LAB
    isis network point-to-point
@@ -53,6 +55,7 @@ interface Ethernet3
 interface Ethernet4
    description pe4_Ethernet1
    no switchport
+   ip address unnumbered Loopback0
    ipv6 enable
    isis enable LAB
    isis network point-to-point
@@ -60,6 +63,7 @@ interface Ethernet4
 interface Ethernet5
    description p2_Ethernet5
    no switchport
+   ip address unnumbered Loopback0
    ipv6 enable
    isis enable LAB
    isis network point-to-point
