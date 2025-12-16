@@ -1,0 +1,105 @@
+! Startup-config last modified at Tue Dec 16 16:07:17 2025 by admin
+! device: pe1 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$SRKCo4qO4Rjqm7ma$O7JOsDzIm8ZbwemqCpPPfg1zBDBydUiCFgbVN6dygagqyroYnghuwj9QOb3CCGDbsyphgN0FXI3MGl3kGur7g.
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname pe1
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   description p1_Ethernet1
+   no switchport
+   ip address unnumbered Loopback0
+   ipv6 enable
+   isis enable LAB
+   isis network point-to-point
+!
+interface Ethernet2
+   description pe2_Ethernet1
+   no switchport
+   ip address unnumbered Loopback0
+   ipv6 enable
+   isis enable LAB
+   isis network point-to-point
+!
+interface Ethernet3
+   description pe2_Ethernet3
+   no switchport
+   ip address unnumbered Loopback0
+   ipv6 enable
+   isis enable LAB
+   isis network point-to-point
+!
+interface Ethernet4
+!
+interface Loopback0
+   description Router_ID
+   ip address 100.64.0.1/32
+   ipv6 address 2000::100:64:0:1/128
+   node-segment ipv4 index 1
+   node-segment ipv6 index 2001
+   isis enable LAB
+   isis passive
+!
+interface Management0
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::3/64
+!
+ip routing
+!
+ipv6 unicast-routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+mpls ip
+!
+router bgp 65000
+   router-id 100.64.0.1
+!
+router isis LAB
+   net 49.0000.0000.0000.0001.00
+   router-id ipv4 100.64.0.1
+   is-type level-2
+   log-adjacency-changes
+   spf-interval 500 milliseconds 100 milliseconds 200 milliseconds
+   !
+   address-family ipv4 unicast
+   !
+   address-family ipv6 unicast
+      multi-topology
+   !
+   segment-routing mpls
+      no shutdown
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

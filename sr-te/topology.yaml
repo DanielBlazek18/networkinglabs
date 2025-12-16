@@ -1,0 +1,39 @@
+name: sr-te
+prefix: "" 
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.35.0F  
+  nodes:
+    pe1:
+      kind: ceos 
+    pe2:
+      kind: ceos
+    pe3:
+      kind: ceos 
+    pe4:
+      kind: ceos
+    p1:
+      kind: ceos 
+    p2:
+      kind: ceos
+    ce1:
+      kind: ceos
+    ce2:
+      kind: ceos
+  links:
+    - endpoints: ["pe1:eth1", "p1:eth1"]
+    - endpoints: ["pe1:eth2", "p2:eth1"]
+    - endpoints: ["pe1:eth3", "pe2:eth3"]
+    - endpoints: ["pe1:eth4", "ce1:eth1"]
+    - endpoints: ["pe2:eth1", "p1:eth2"]
+    - endpoints: ["pe2:eth2", "p2:eth2"]
+    - endpoints: ["pe2:eth4", "ce1:eth2"]
+    - endpoints: ["pe3:eth1", "p1:eth3"]
+    - endpoints: ["pe3:eth2", "p2:eth3"]
+    - endpoints: ["pe3:eth3", "pe4:eth3"]
+    - endpoints: ["pe3:eth4", "ce2:eth1"]
+    - endpoints: ["pe4:eth1", "p1:eth4"]
+    - endpoints: ["pe4:eth2", "p2:eth4"]
+    - endpoints: ["pe4:eth4", "ce2:eth2"]
+    - endpoints: ["p1:eth5", "p2:eth5"]
