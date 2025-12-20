@@ -1,0 +1,122 @@
+! Startup-config last modified at Sat Dec 20 20:12:03 2025 by admin
+! device: pe2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$ny05TzPu2CL1rW6T$aFM9.JLce7Z2/KtjU9I31zxk4Vor818XXCFIuIMqSNHf.dOWw17shuRRwEwQEX8H/.9omCa0idDskO1qvDae/1
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname pe2
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   description p1_Ethernet2
+   no switchport
+   ip address unnumbered Loopback0
+   ipv6 enable
+   isis enable LAB
+   isis network point-to-point
+!
+interface Ethernet2
+   description p2_Ethernet2
+   no switchport
+   ip address unnumbered Loopback0
+   ipv6 enable
+   isis enable LAB
+   isis network point-to-point
+!
+interface Ethernet3
+   description pe1_Ethernet3
+   no switchport
+   ip address unnumbered Loopback0
+   ipv6 enable
+   isis enable LAB
+   isis network point-to-point
+!
+interface Ethernet4
+   description ce1_Ethernet2
+   no switchport
+   ip address 10.2.7.2/24
+!
+interface Loopback0
+   description Router_ID
+   ip address 100.64.0.2/32
+   ipv6 address 2000::100:64:0:2/128
+   node-segment ipv4 index 2
+   node-segment ipv6 index 2002
+   isis enable LAB
+   isis passive
+!
+interface Management0
+   ip address 172.20.20.4/24
+   ipv6 address 3fff:172:20:20::4/64
+!
+ip routing
+!
+ipv6 unicast-routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+mpls ip
+!
+router bgp 65000
+   router-id 100.64.0.2
+   no bgp default ipv4-unicast
+   neighbor VPNV4 peer group
+   neighbor VPNV4 remote-as 65000
+   neighbor VPNV4 next-hop-self
+   neighbor VPNV4 update-source Loopback0
+   neighbor VPNV4 timers 10 30
+   neighbor VPNV4 send-community
+   neighbor VPNV4 maximum-routes 0
+   neighbor 100.64.0.1 peer group VPNV4
+   neighbor 100.64.0.3 peer group VPNV4
+   neighbor 100.64.0.4 peer group VPNV4
+   !
+   address-family vpn-ipv4
+      neighbor VPNV4 activate
+!
+router isis LAB
+   net 49.0000.0000.0000.0002.00
+   router-id ipv4 100.64.0.2
+   is-type level-2
+   log-adjacency-changes
+   spf-interval 500 milliseconds 100 milliseconds 200 milliseconds
+   !
+   address-family ipv4 unicast
+   !
+   address-family ipv6 unicast
+      multi-topology
+   !
+   segment-routing mpls
+      no shutdown
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

@@ -1,0 +1,63 @@
+! Startup-config last modified at Sat Dec 20 20:12:13 2025 by admin
+! device: ce1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$5qxFIMq6aJvcOXMc$KZ7MkfJllR9QmIUUdp8FT//DgxMdldJtAmUeERLGaCSNF3aeGvFB8ydsdHujWgUDNlTxPKF1P7j8smsm0aIVh.
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname ce1
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   description pe1_Ethernet4
+   no switchport
+   ip address 10.1.7.7/24
+!
+interface Ethernet2
+   description pe2_Ethernet4
+   no switchport
+   ip address 10.2.7.7/24
+!
+interface Loopback0
+   description ce1_test_prefix_7.0.0.0m24
+   ip address 7.0.0.7/24
+!
+interface Management0
+   ip address 172.20.20.8/24
+   ipv6 address 3fff:172:20:20::8/64
+!
+ip routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+ip route 8.0.0.0/24 10.1.7.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end
