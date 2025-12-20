@@ -1,5 +1,5 @@
-! Startup-config last modified at Tue Dec 16 16:54:28 2025 by admin
-! device: pe1 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
+! Startup-config last modified at Sat Dec 20 20:12:00 2025 by admin
+! device: pe1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
 !
@@ -21,6 +21,8 @@ spanning-tree mode mstp
 system l1
    unsupported speed action error
    unsupported error-correction action error
+!
+vrf instance LAB-TEST-1
 !
 management api gnmi
    transport grpc default
@@ -51,8 +53,13 @@ interface Ethernet3
    ipv6 enable
    isis enable LAB
    isis network point-to-point
+   adjacency-segment ipv4 p2p label 965537
 !
 interface Ethernet4
+   description ce1_Ethernet1
+   no switchport
+   vrf LAB-TEST-1
+   ip address 10.1.7.1/24
 !
 interface Loopback0
    description Router_ID
@@ -64,14 +71,16 @@ interface Loopback0
    isis passive
 !
 interface Management0
-   ip address 172.20.20.3/24
-   ipv6 address 3fff:172:20:20::3/64
+   ip address 172.20.20.6/24
+   ipv6 address 3fff:172:20:20::6/64
 !
 ip routing
+ip routing vrf LAB-TEST-1
 !
 ipv6 unicast-routing
 !
 ip route 0.0.0.0/0 172.20.20.1
+ip route vrf LAB-TEST-1 7.0.0.0/24 10.1.7.7
 !
 ipv6 route ::/0 3fff:172:20:20::1
 !
@@ -79,6 +88,36 @@ mpls ip
 !
 router bgp 65000
    router-id 100.64.0.1
+   no bgp default ipv4-unicast
+   neighbor VPNV4 peer group
+   neighbor VPNV4 remote-as 65000
+   neighbor VPNV4 next-hop-self
+   neighbor VPNV4 update-source Loopback0
+   neighbor VPNV4 timers 10 30
+   neighbor VPNV4 send-community
+   neighbor VPNV4 maximum-routes 0
+   neighbor 100.64.0.2 peer group VPNV4
+   neighbor 100.64.0.3 peer group VPNV4
+   neighbor 100.64.0.4 peer group VPNV4
+   !
+   address-family vpn-ipv4
+      neighbor VPNV4 activate
+   !
+   vrf LAB-TEST-1
+      rd 100.64.0.1:10
+      route-target import vpn-ipv4 10:10
+      route-target export vpn-ipv4 10:10
+      network 7.0.0.0/24
+!
+router traffic-engineering
+   segment-routing
+      rib system-colored-tunnel-rib
+      !
+      policy endpoint 100.64.0.3 color 30
+         binding-sid 1000003
+         !
+         path-group preference 100
+            segment-list label-stack 965537 900012 900004 900003
 !
 router isis LAB
    net 49.0000.0000.0000.0001.00

@@ -1,5 +1,5 @@
-! Startup-config last modified at Tue Dec 16 16:57:21 2025 by admin
-! device: p2 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
+! Startup-config last modified at Sat Dec 20 17:14:06 2025 by root
+! device: p2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
 !
@@ -105,12 +105,5 @@ router isis LAB
    !
    segment-routing mpls
       no shutdown
-!
-router multicast
-   ipv4
-      software-forwarding kernel
-   !
-   ipv6
-      software-forwarding kernel
 !
 end

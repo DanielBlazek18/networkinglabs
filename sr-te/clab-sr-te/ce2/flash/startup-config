@@ -1,5 +1,5 @@
-! Startup-config last modified at Tue Dec 16 16:40:21 2025 by root
-! device: ce2 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
+! Startup-config last modified at Sat Dec 20 19:14:17 2025 by admin
+! device: ce2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
 !
@@ -29,16 +29,27 @@ management api netconf
    transport ssh default
 !
 interface Ethernet1
+   description pe3_Ethernet4
+   no switchport
+   ip address 10.3.8.8/24
 !
 interface Ethernet2
+   description pe4_Ethernet4
+   no switchport
+   ip address 10.4.8.8/24
+!
+interface Loopback0
+   description ce1_test_prefix_8.0.0.0m24
+   ip address 8.0.0.8/24
 !
 interface Management0
-   ip address 172.20.20.8/24
-   ipv6 address 3fff:172:20:20::8/64
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::3/64
 !
-no ip routing
+ip routing
 !
 ip route 0.0.0.0/0 172.20.20.1
+ip route 7.0.0.0/24 10.3.8.3
 !
 ipv6 route ::/0 3fff:172:20:20::1
 !
