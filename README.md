@@ -17,3 +17,4 @@ List of the existing LABs and short description:
   * Other actions to be added on the list.
 * **hub-spoke-one-arm**: One-Arm Hub-and-Spoke VPN, enabling inter-spoke traffic to pass through a service router when the label allocation mode for the default route is changed.
 * **rpki**: Implements BGP RPKI validation using Routinator as the Relying Party (RP). Route policies on Internet routers are enforced using standard route-maps along with the Routing Control Function (RCF).
+* **sr-te**: Multiple lab exercises to explore Segment Routing Traffic Engineering (SR-TE) on cEOS.
