@@ -20,6 +20,7 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on cEOS. It exp
 * BGP Color Extended Commnuity with value **30** is attached to the VPNv4 prefix **8.0.0.0/24**.
 * SR-TE policy with label stack **965537 900012 900004 900003** is configured to forward traffic from `pe1` -> `pe2` -> `p2` -> `pe4` -> `pe3`.
 * Label **965537** has been explicitly configured as an adjacency label on the `pe1` `Ethernet3` interface.
+
 ![sr-te-exercise-1.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/sr-te-exercise-1.png)
 
 Prefix-list, route-map and BGP VRF configuration:
