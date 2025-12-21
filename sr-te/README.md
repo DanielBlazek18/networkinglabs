@@ -15,6 +15,10 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on cEOS. It exp
 * **SR-MPLS** with **IS-IS** in the core. All adjacencies are established over IPv4 unnumbered interfaces and IPv6 link-local addresses.
 * **BGP VPNv4** between **PE** routers.
 
+## Lab exercises:
+* [Exercise #1 - Steer traffic on the `pe1` (ingress PE) for VPNv4 prefix advertised by `pe3` (egress PE)](https://github.com/DanielBlazek18/networkinglabs/tree/main/sr-te#exercise-1---steer-traffic-on-the-pe1-ingress-pe-for-vpnv4-prefix-advertised-by-pe3-egress-pe)
+* Exercise #2 ... to be added
+
 ## Exercise #1 - Steer traffic on the `pe1` (ingress PE) for VPNv4 prefix advertised by `pe3` (egress PE)
 * Prefix **8.0.0.0/24** advertised by `pe3`.
 * BGP Color Extended Commnuity with value **30** is attached to the VPNv4 prefix **8.0.0.0/24**.
