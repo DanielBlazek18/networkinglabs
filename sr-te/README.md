@@ -19,7 +19,7 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on cEOS. It exp
 * [Exercise #1 - Steer traffic on the `pe1` (ingress PE) for VPNv4 prefix advertised by `pe3` (egress PE)](https://github.com/DanielBlazek18/networkinglabs/tree/main/sr-te#exercise-1---steer-traffic-on-the-pe1-ingress-pe-for-vpnv4-prefix-advertised-by-pe3-egress-pe)
 * Exercise #2 ... to be added
 
-## Exercise #1 - Steer traffic on the `pe1` (ingress PE) for VPNv4 prefix advertised by `pe3` (egress PE)
+## Exercise #1 - Steer traffic on the `pe1` (ingress PE) for VPNv4 prefix advertised by `pe3` (egress PE):
 * Prefix **8.0.0.0/24** advertised by `pe3`.
 * BGP Color Extended Commnuity with value **30** is attached to the VPNv4 prefix **8.0.0.0/24**.
 * SR-TE policy with label stack **965537 900012 900004 900003** is configured to forward traffic from `pe1` -> `pe2` -> `p2` -> `pe4` -> `pe3`.
