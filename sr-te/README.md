@@ -16,13 +16,13 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on cEOS. It exp
 * **BGP VPNv4** between **PE** routers.
 
 ## Lab exercises:
-* [Exercise #1 - Steer traffic on the `pe1` (ingress PE) for VPNv4 prefix advertised by `pe3` (egress PE)](https://github.com/DanielBlazek18/networkinglabs/tree/main/sr-te#exercise-1---steer-traffic-on-the-pe1-ingress-pe-for-vpnv4-prefix-advertised-by-pe3-egress-pe)
-* Exercise #2 ... to be added
+* [Lab #1 - Explicit SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`]()
+* [Lab #2 - Explicit (backup) SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe4`]()
 
-## Exercise #1 - Steer traffic on the `pe1` (ingress PE) for VPNv4 prefix advertised by `pe3` (egress PE):
-* Prefix **8.0.0.0/24** advertised by `pe3`.
-* BGP Color Extended Commnuity with value **30** is attached to the VPNv4 prefix **8.0.0.0/24**.
-* SR-TE policy with label stack **965537 900012 900004 900003** is configured to forward traffic from `pe1` -> `pe2` -> `p2` -> `pe4` -> `pe3`.
+## Lab #1 - Explicit SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`:
+* The VPNv4 prefix **8.0.0.0/24** is advertised by `pe3`.
+* BGP Color Extended Community is used to steer traffic (automated steering) into an SR-TE policy; color value **30** is attached to the VPNv4 prefix **8.0.0.0/24**.
+* SR-TE policy with label stack **965537 900012 900004 900003** is configured to forward traffic along the path `pe1` -> `pe2` -> `p2` -> `pe4` -> `pe3`.
 * Label **965537** has been explicitly configured as an adjacency label on the `pe1` `Ethernet3` interface.
 
 ![sr-te-lab-exercise-1.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/drawings/sr-te-lab-exercise-1.png)
