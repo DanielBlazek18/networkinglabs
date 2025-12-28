@@ -25,7 +25,7 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on cEOS. It exp
 * The VPNv4 prefix **8.0.0.0/24** is advertised by `pe3`.
 * BGP Color Extended Community is used to steer traffic (automated steering) into an SR-TE policy; color value **30** is attached to the VPNv4 prefix **8.0.0.0/24**.
 * SR-TE policy with label stack **965537 900012 900004 900003** is configured to forward traffic along the path `pe1` -> `pe2` -> `p2` -> `pe4` -> `pe3`.
-* Label **965537** has been explicitly configured as an adjacency label on the `pe1` `Ethernet3` interface.
+* Label **965537** has been explicitly configured as an adjacency label on the `pe1` interface `Ethernet3`.
 
 ![sr-te-lab-exercise-1.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/drawings/sr-te-lab-exercise-1.png)
 
@@ -140,7 +140,7 @@ pe2#bash tcpdump -i eth3
 19:59:42.174718 aa:c1:ab:aa:11:6a (oui Unknown) > aa:c1:ab:72:5c:34 (oui Unknown), ethertype MPLS unicast (0x8847), length 130: MPLS (label 900012, tc 0, ttl 63) (label 900004, tc 0, ttl 63) (label 900003, tc 0, ttl 63) (label 116384, tc 0, [S], ttl 63) 7.0.0.7 > 8.0.0.8: ICMP echo request, id 9, seq 5, length 80
 ```
 Observations:
-* Label stack observed: **900012 900004 900003 116384** in tcpdump.
+* Label stack observed: **900012 900004 900003 116384** from tcpdump.
 * Adjacency label **965537** is popped by `pe1` before sending to `pe2`.
 * Label **116384** corresponds VPNv4 label advertised by `pe3`.
 * Traffic flows along the SR-TE path as intended.
