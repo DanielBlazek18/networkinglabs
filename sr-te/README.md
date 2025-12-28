@@ -104,7 +104,7 @@ Endpoint 100.64.0.3 Color 30, Counters: not available
                         Resolved Label Stack: [900012 900004 900003], Next hop: 100.64.0.2, Interface: Ethernet3
 ```
 
-IP route for the VPNv4 prefix 8.0.0.0/24 on `pe1`:
+IP routing entry on `pe1` for VPNv4 prefix **8.0.0.0/24**:
 ```
 pe1#sh ip route vrf LAB-TEST-1 8.0.0.0/24
 
