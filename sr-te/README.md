@@ -29,7 +29,7 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on cEOS. It exp
 
 ![sr-te-lab-exercise-1.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/drawings/sr-te-lab-exercise-1.png)
 
-Prefix-list, route-map and BGP VRF configuration:
+Prefix-list, route-map and BGP VRF configuration on `pe3`:
 ```
 pe3#sh ip prefix-list SET-COLOR
 ip prefix-list SET-COLOR seq 10 permit 8.0.0.0/24
@@ -154,4 +154,142 @@ Observations:
 
 ![sr-te-lab-exercise-2.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/drawings/sr-te-lab-exercise-2.png)
 
-to be continued ...
+**Backup** Explicit SR-TE path policy configuration on `pe1`:
+```
+pe1#sh run sec color 40
+router traffic-engineering
+   segment-routing
+      policy endpoint 100.64.0.4 color 40
+         binding-sid 1000004
+         !
+         path-group preference 100
+            segment-list label
+```
+
+Both SR-TE policies are installed in **system-colored-tunnel-rib**. Default IGP preference is **3**, and IGP metric **0**:
+```
+pe1#sh tunnel rib colored brief 
+Tunnel RIB: system-colored-tunnel-rib
+ Endpoint         Color    Tunnel Type     Index(es)    Tunnel Preference    IGP Preference    IGP Metric   Metric Type
+---------------- -------- --------------- ------------ -------------------- ----------------- ------------- -----------
+ 100.64.0.3/32    30       SR-TE Policy    0            35                   3                 0            metric     
+ 100.64.0.4/32    40       SR-TE Policy    2            35                   3                 0            metric     
+
+```
+
+The VPNv4 prefix **8.0.0.0/24** is learned from both `pe3` and `pe4`, each carrying a different Color Extended Community:
+```
+pe1#sh ip bgp 8.0.0.0/24 detail vrf LAB-TEST-1 
+BGP routing table information for VRF LAB-TEST-1
+Router identifier 10.1.7.1, local AS number 65000
+BGP routing table entry for 8.0.0.0/24
+ Paths: 2 available
+  Local
+    100.64.0.4 from 100.64.0.4 (100.64.0.4), imported VPN-IPv4 route, RD 100.64.0.4:10
+      Origin INCOMPLETE, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
+      Received 00:08:27 ago, valid, internal, ECMP head, ECMP, best, ECMP contributor
+      Extended Community: Route-Target-AS:10:10 Color:CO(00):40
+      Remote MPLS label: 100000
+      Rx SAFI: Unicast
+      Tunnel RIB eligible
+  Local
+    100.64.0.3 from 100.64.0.3 (100.64.0.3), imported VPN-IPv4 route, RD 100.64.0.3:10
+      Origin INCOMPLETE, metric 0, localpref 100, IGP metric 0, weight 0, tag 0
+      Received 00:10:33 ago, valid, internal, ECMP, ECMP contributor
+      Not best: ECMP-Fast configured
+      Extended Community: Route-Target-AS:10:10 Color:CO(00):30
+      Remote MPLS label: 100000
+      Rx SAFI: Unicast
+      Tunnel RIB eligible
+ Not advertised to any peer.
+```
+> [!Note]
+> The `maximum-paths 2` is configured under BGP to enable ECMP and allow PE routers to install and use two equal-cost paths. This configuration is used to demonstrate that both SR-TE policies can forward traffic toward the destination when all relevant path attributes are equal.
+
+The routing table on `pe1` confirms that **both SR-TE policies** are used to forward traffic toward **8.0.0.0/24**:
+```
+pe1#sh ip route vrf LAB-TEST-1 8.0.0.0/24
+
+VRF: LAB-TEST-1
+[omitted]
+ B I      8.0.0.0/24 [200/0]
+           via SR-TE Policy 100.64.0.3, color 30, label 100000
+              via SR-TE tunnel index 1, weight 1
+                 via 100.64.0.2, Ethernet3, label 900012 900004 900003
+           via SR-TE Policy 100.64.0.4, color 40, label 100000
+              via SR-TE tunnel index 2, weight 1
+                 via 100.64.0.2, Ethernet3, label 900012 900004
+```
+
+An IGP preference of **115** with **dynamic** cost calculation is configured globally under SR-TE, affecting all policies. The **backup SR-TE policy** is explicitly configured with an additional IGP cost of 10, ensuring it is less preferred than the primary policy. 
+
+Final configuration for the lab #2:
+```
+router traffic-engineering
+   segment-routing
+      rib system-colored-tunnel-rib
+      igp-cost preference 115 metric dynamic
+      !
+      policy endpoint 100.64.0.3 color 30
+         binding-sid 1000003
+         !
+         path-group preference 100
+            segment-list label-stack 965537 900012 900004 900003
+      !
+      policy endpoint 100.64.0.4 color 40
+         binding-sid 1000004
+         igp-cost metric dynamic + 10
+         !
+         path-group preference 100
+            segment-list label-stack 965537 900012 900004
+   router-id ipv4 100.64.0.1
+```
+
+**Colored** Tunnel RIB state (After IGP Cost Adjustment):
+```
+pe1#sh tunnel rib colored brief 
+Tunnel RIB: system-colored-tunnel-rib
+ Endpoint         Color    Tunnel Type     Index(es)    Tunnel Preference    IGP Preference    IGP Metric   Metric Type
+---------------- -------- --------------- ------------ -------------------- ----------------- ------------- -----------
+ 100.64.0.3/32    30       SR-TE Policy    0            35                   115               30           metric     
+ 100.64.0.4/32    40       SR-TE Policy    2            35                   115               40           metric     
+```
+
+Both VPNv4 prefixes now carry non-zero **IGP metrics**, with the lower metric being preferred:
+```
+pe1#sh ip bgp 8.0.0.0/24 detail vrf LAB-TEST-1 
+BGP routing table information for VRF LAB-TEST-1
+Router identifier 10.1.7.1, local AS number 65000
+BGP routing table entry for 8.0.0.0/24
+ Paths: 2 available
+  Local
+    100.64.0.3 from 100.64.0.3 (100.64.0.3), imported VPN-IPv4 route, RD 100.64.0.3:10
+      Origin INCOMPLETE, metric 0, localpref 100, IGP metric 30, weight 0, tag 0
+      Received 00:19:11 ago, valid, internal, best
+      Extended Community: Route-Target-AS:10:10 Color:CO(00):30
+      Remote MPLS label: 100000
+      Rx SAFI: Unicast
+      Tunnel RIB eligible
+  Local
+    100.64.0.4 from 100.64.0.4 (100.64.0.4), imported VPN-IPv4 route, RD 100.64.0.4:10
+      Origin INCOMPLETE, metric 0, localpref 100, IGP metric 40, weight 0, tag 0
+      Received 00:17:05 ago, valid, internal
+      Not best: IGP metric
+      Extended Community: Route-Target-AS:10:10 Color:CO(00):40
+      Remote MPLS label: 100000
+      Rx SAFI: Unicast
+      Tunnel RIB eligible
+ Not advertised to any peer.
+```
+
+Traffic toward **8.0.0.0/24** is forwarded via the **primary SR-TE path policy**:
+```
+pe1#sh ip route vrf LAB-TEST-1 8.0.0.0/24
+
+VRF: LAB-TEST-1
+[omitted]
+ B I      8.0.0.0/24 [200/0]
+           via SR-TE Policy 100.64.0.3, color 30, label 100000
+              via SR-TE tunnel index 1, weight 1
+                 via 100.64.0.2, Ethernet3, label 900012 900004 900003
+```
