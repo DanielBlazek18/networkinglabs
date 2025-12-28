@@ -19,7 +19,7 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on cEOS. It exp
 ## Lab exercises:
 * [Lab #1 - Explicit SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-1---explicit-sr-te-path-policy-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe3)
 * [Lab #2 - Explicit (backup) SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe4`](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-2---explicit-backup-sr-te-path-policy-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe4)
-* [Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies](https://github.com/DanielBlazek18/networkinglabs/tree/main/sr-te#lab-3---enable-seamless-bidirectional-forwarding-detection-s-bfd-for-sr-te-path-policies)
+* [Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-3---enable-seamless-bidirectional-forwarding-detection-s-bfd-for-sr-te-path-policies)
 * Lab #4 - Remove the requirement for a Binding-SID (BSID)
 
 ## Lab #1 - Explicit SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`:
