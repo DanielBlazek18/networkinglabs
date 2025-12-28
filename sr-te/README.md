@@ -14,11 +14,12 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on cEOS. It exp
 ## Key protocols used:
 * **SR-MPLS** with **IS-IS** in the core. IPv4 unnumbered and IPv6 link-local addresses are used on poit-to-point interfaces.
 * **BGP VPNv4** between **PE** routers.
+* **Seamless Bidirectional Forwarding Detection** (S-BFD)
 
 ## Lab exercises:
 * [Lab #1 - Explicit SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-1---explicit-sr-te-path-policy-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe3)
 * [Lab #2 - Explicit (backup) SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe4`](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-2---explicit-backup-sr-te-path-policy-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe4)
-* Lab #3 - Enable Seamless Bidirectional Forwarding Detection (SBFD) for SR-TE path policies
+* [Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies](https://github.com/DanielBlazek18/networkinglabs/edit/main/sr-te/README.md#lab-3---enable-seamless-bidirectional-forwarding-detection-s-bfd-for-sr-te-path-policies)
 * Lab #4 - Remove the requirement for a Binding-SID (BSID)
 
 ## Lab #1 - Explicit SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`:
@@ -328,3 +329,6 @@ VRF: LAB-TEST-1
               via SR-TE tunnel index 1, weight 1
                  via 100.64.0.2, Ethernet3, label 900012 900004 900003
 ```
+
+## Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies
+To be continued...
