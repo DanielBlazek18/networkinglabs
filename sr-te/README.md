@@ -30,7 +30,7 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on cEOS. It exp
 
 ![sr-te-lab-exercise-1.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/drawings/sr-te-lab-exercise-1.png)
 
-Prefix-list, route-map and BGP VRF configuration on `pe3`:
+Configuration - prefix-list, route-map and BGP VRF on `pe3`. The following configuration propagates the VPNv4 prefix **8.0.0.0/24** along with a **Color Extended Community**, enabling SR-TE path steering on `pe1`:
 ```
 pe3#sh ip prefix-list SET-COLOR
 ip prefix-list SET-COLOR seq 10 permit 8.0.0.0/24
@@ -52,7 +52,7 @@ sh run sec bgp | b VRF-1
       network 8.0.0.0/24 route-map SET-COLOR
 ```
 
-Verification - Color Extended Community with value **30** added as expected:
+The Color Extended Community value **30** is correctly attached to the VPNv4 prefix **8.0.0.0/24** on `pe3`:
 ```
 pe3#sh bgp vpn-ipv4 8.0.0.0/24 detail 
 BGP routing table information for VRF default
@@ -66,7 +66,7 @@ BGP routing table entry for IPv4 prefix 8.0.0.0/24, Route Distinguisher: 100.64.
       Local MPLS label (VRF based): 116384
 ```
 
-SR-TE policy configuration on `pe1`:
+The **Explicit SR-TE path policy** toward **endpoint 100.64.0.3** (color **30**) is configured on `pe1`:
 ```
 router traffic-engineering
    segment-routing
@@ -79,13 +79,13 @@ router traffic-engineering
             segment-list label-stack 965537 900012 900004 900003
 ```
 
-Adjacency label explicitly setup on `pe1` interface `Ethernet3`:
+The **adjacency label** is explicitly configured on `pe1` interface `Ethernet3`:
 ```
 pe1#sh run int e3 | i label
    adjacency-segment ipv4 p2p label 965537
 ```
 
-SR-TE policy verification:
+Verification of SR-TE policy on `pe1`:
 ```
 pe1#sh traffic-engineering segment-routing policy endpoint 100.64.0.3 color 30
 Endpoint 100.64.0.3 Color 30, Counters: not available
@@ -105,7 +105,7 @@ Endpoint 100.64.0.3 Color 30, Counters: not available
                         Resolved Label Stack: [900012 900004 900003], Next hop: 100.64.0.2, Interface: Ethernet3
 ```
 
-IP routing entry on `pe1` for VPNv4 prefix **8.0.0.0/24**:
+Traffic toward the VPNv4 prefix **8.0.0.0/24** is forwarded via the **SR-TE policy** as indicated by the IP routing table on `pe1`:
 ```
 pe1#sh ip route vrf LAB-TEST-1 8.0.0.0/24
 
@@ -117,7 +117,7 @@ VRF: LAB-TEST-1
                  via 100.64.0.2, Ethernet3, label 900012 900004 900003
 ```
 
-Ping verification from `ce1` to `ce2` (8.0.0.8):
+Data plane verification - ping from `ce1` to `ce2` (8.0.0.8):
 ```
 ce1#ping 8.0.0.8 source lo0
 PING 8.0.0.8 (8.0.0.8) from 7.0.0.7 : 72(100) bytes of data.
@@ -132,7 +132,7 @@ PING 8.0.0.8 (8.0.0.8) from 7.0.0.7 : 72(100) bytes of data.
 rtt min/avg/max/mdev = 2.481/2.940/4.213/0.647 ms, ipg/ewma 4.079/3.550 ms
 ```
 
-Tcpdump on `pe2` interface `Ethernet3`:
+Tcpdump captured on `pe2` interface `Ethernet3`:
 ```
 pe2#bash tcpdump -i eth3
 19:59:42.162774 aa:c1:ab:aa:11:6a (oui Unknown) > aa:c1:ab:72:5c:34 (oui Unknown), ethertype MPLS unicast (0x8847), length 130: MPLS (label 900012, tc 0, ttl 63) (label 900004, tc 0, ttl 63) (label 900003, tc 0, ttl 63) (label 116384, tc 0, [S], ttl 63) 7.0.0.7 > 8.0.0.8: ICMP echo request, id 9, seq 2, length 80
