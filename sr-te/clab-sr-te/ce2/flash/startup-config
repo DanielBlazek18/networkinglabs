@@ -1,4 +1,4 @@
-! Startup-config last modified at Sat Dec 20 19:14:17 2025 by admin
+! Startup-config last modified at Sun Dec 28 16:41:58 2025 by admin
 ! device: ce2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -43,13 +43,14 @@ interface Loopback0
    ip address 8.0.0.8/24
 !
 interface Management0
-   ip address 172.20.20.3/24
-   ipv6 address 3fff:172:20:20::3/64
+   ip address 172.20.20.8/24
+   ipv6 address 3fff:172:20:20::8/64
 !
 ip routing
 !
 ip route 0.0.0.0/0 172.20.20.1
 ip route 7.0.0.0/24 10.3.8.3
+ip route 7.0.0.0/24 10.4.8.4
 !
 ipv6 route ::/0 3fff:172:20:20::1
 !

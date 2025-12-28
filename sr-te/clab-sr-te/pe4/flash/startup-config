@@ -1,4 +1,4 @@
-! Startup-config last modified at Sat Dec 20 20:12:09 2025 by admin
+! Startup-config last modified at Sun Dec 28 16:50:47 2025 by admin
 ! device: pe4 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -21,6 +21,8 @@ spanning-tree mode mstp
 system l1
    unsupported speed action error
    unsupported error-correction action error
+!
+vrf instance LAB-VRF-1
 !
 management api gnmi
    transport grpc default
@@ -55,6 +57,7 @@ interface Ethernet3
 interface Ethernet4
    description ce2_Ethernet2
    no switchport
+   vrf LAB-VRF-1
    ip address 10.4.8.4/24
 !
 interface Loopback0
@@ -67,22 +70,31 @@ interface Loopback0
    isis passive
 !
 interface Management0
-   ip address 172.20.20.5/24
-   ipv6 address 3fff:172:20:20::5/64
+   ip address 172.20.20.4/24
+   ipv6 address 3fff:172:20:20::4/64
 !
 ip routing
+ip routing vrf LAB-VRF-1
+!
+ip prefix-list SET-COLOR seq 10 permit 8.0.0.0/24
 !
 ipv6 unicast-routing
 !
 ip route 0.0.0.0/0 172.20.20.1
+ip route vrf LAB-VRF-1 8.0.0.0/24 10.4.8.8
 !
 ipv6 route ::/0 3fff:172:20:20::1
 !
 mpls ip
 !
+route-map SET-COLOR permit 10
+   match ip address prefix-list SET-COLOR
+   set extcommunity color 40
+!
 router bgp 65000
    router-id 100.64.0.4
    no bgp default ipv4-unicast
+   maximum-paths 2
    neighbor VPNV4 peer group
    neighbor VPNV4 remote-as 65000
    neighbor VPNV4 next-hop-self
@@ -96,6 +108,12 @@ router bgp 65000
    !
    address-family vpn-ipv4
       neighbor VPNV4 activate
+   !
+   vrf LAB-VRF-1
+      rd 100.64.0.4:10
+      route-target import vpn-ipv4 10:10
+      route-target export vpn-ipv4 10:10
+      network 8.0.0.0/24 route-map SET-COLOR
 !
 router isis LAB
    net 49.0000.0000.0000.0004.00

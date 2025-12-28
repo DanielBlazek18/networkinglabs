@@ -1,4 +1,4 @@
-! Startup-config last modified at Sat Dec 20 20:12:06 2025 by admin
+! Startup-config last modified at Sun Dec 28 16:50:33 2025 by admin
 ! device: pe3 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -94,6 +94,7 @@ route-map SET-COLOR permit 10
 router bgp 65000
    router-id 100.64.0.3
    no bgp default ipv4-unicast
+   maximum-paths 2
    neighbor VPNV4 peer group
    neighbor VPNV4 remote-as 65000
    neighbor VPNV4 next-hop-self

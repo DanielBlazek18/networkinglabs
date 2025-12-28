@@ -149,7 +149,7 @@ Observations:
 * The `ce2` router is now dual-homed to both `pe3` and `pe4`, and the VPNv4 prefix **8.0.0.0/24** is advertised by `pe4`.
 * BGP Color Extended Community is used to steer traffic (automated steering) into an SR-TE policy; color value **40** is attached to the VPNv4 prefix **8.0.0.0/24** advertised by `pe4`.
 * SR-TE policy with label stack **965537 900012 900004** is configured to forward traffic along the path `pe1` -> `pe2` -> `p2` -> `pe4`.
-* An IGP preference of **115** with **dynamic** cost calculation is configured globally under SR-TE, affecting all policies. The SR-TE policy toward `pe3` (color **30**) is preferred over the policy toward `pe4` (color **40**).
+* An IGP preference of **115** with **dynamic** cost calculation is configured globally under SR-TE, affecting all policies. The SR-TE policy toward `pe3` (color **30**) is preferred over the policy toward `pe4` (color **40**), by assigning a higher cost to the backup policy.
 * All other configuration elements remain unchanged from **Lab #1**.
 
 ![sr-te-lab-exercise-2.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/drawings/sr-te-lab-exercise-2.png)
