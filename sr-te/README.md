@@ -12,7 +12,7 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on cEOS. It exp
 * `ce2`
 
 ## Key protocols used:
-* **SR-MPLS** with **IS-IS** in the core. All adjacencies are established over IPv4 unnumbered interfaces and IPv6 link-local addresses.
+* **SR-MPLS** with **IS-IS** in the core. IPv4 unnumbered and IPv6 link-local addresses are used on poit-to-point interfaces.
 * **BGP VPNv4** between **PE** routers.
 
 ## Lab exercises:
