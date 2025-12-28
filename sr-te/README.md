@@ -154,7 +154,7 @@ Observations:
 
 ![sr-te-lab-exercise-2.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/drawings/sr-te-lab-exercise-2.png)
 
-**Backup** Explicit SR-TE path policy configuration on `pe1`:
+**Backup Explicit SR-TE path policy** configuration on `pe1`:
 ```
 pe1#sh run sec color 40
 router traffic-engineering
@@ -282,7 +282,7 @@ BGP routing table entry for 8.0.0.0/24
  Not advertised to any peer.
 ```
 
-Traffic toward **8.0.0.0/24** is forwarded via the **primary SR-TE path policy**:
+Traffic toward **8.0.0.0/24** is forwarded via the **primary SR-TE path policy** configured in lab #1:
 ```
 pe1#sh ip route vrf LAB-TEST-1 8.0.0.0/24
 
