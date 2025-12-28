@@ -164,7 +164,7 @@ router traffic-engineering
          binding-sid 1000004
          !
          path-group preference 100
-            segment-list label
+            segment-list label-stack 965537 900012 900004
 ```
 
 Both SR-TE policies are installed in **system-colored-tunnel-rib**. Default IGP preference is **3**, and IGP metric **0**:
