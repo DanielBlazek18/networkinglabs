@@ -255,6 +255,41 @@ Tunnel RIB: system-colored-tunnel-rib
  100.64.0.4/32    40       SR-TE Policy    2            35                   115               40           metric     
 ```
 
+Detailed SR-TE policy view (**Primary** and **Backup**) - showing **State** status, **IGP metric**, **Resolved Label Stack**, etc.:
+```
+pe1#sh traffic-engineering segment-routing policy 
+Endpoint 100.64.0.3 Color 30, Counters: not available
+        Path group: State: active (for 00:13:51), modified: 00:14:21 ago
+                Protocol: Static
+                Endpoint provisioning: Static
+                Originator: 0.0.0.0(AS0)
+                Discriminator: 32769
+                Preference: 100
+                IGP metric: 30 (dynamic-resolved)
+                Binding SID: 1000003
+                Path computation: Configured
+                Explicit null label policy: IPv6 (system default)
+                Segment List: State: Valid, ID: 1, Counters: not available
+                Protected: No, Reason: The top label is not protected
+                        Label Stack: [965537 900012 900004 900003], Weight: 1
+                        Resolved Label Stack: [900012 900004 900003], Next hop: 100.64.0.2, Interface: Ethernet3
+Endpoint 100.64.0.4 Color 40, Counters: not available
+        Path group: State: active (for 00:13:51), modified: 00:14:21 ago
+                Protocol: Static
+                Endpoint provisioning: Static
+                Originator: 0.0.0.0(AS0)
+                Discriminator: 32769
+                Preference: 100
+                IGP metric: 40 (dynamic-resolved)
+                Binding SID: 1000004
+                Path computation: Configured
+                Explicit null label policy: IPv6 (system default)
+                Segment List: State: Valid, ID: 2, Counters: not available
+                Protected: No, Reason: The top label is not protected
+                        Label Stack: [965537 900012 900004], Weight: 1
+                        Resolved Label Stack: [900012 900004], Next hop: 100.64.0.2, Interface: Ethernet3
+```
+
 Both VPNv4 prefixes now carry non-zero **IGP metrics**, with the lower metric being preferred:
 ```
 pe1#sh ip bgp 8.0.0.0/24 detail vrf LAB-TEST-1 
