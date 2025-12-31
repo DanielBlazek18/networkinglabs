@@ -327,10 +327,10 @@ VRF: LAB-TEST-1
 ```
 
 ## Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies:
-* S-BFD is configured globally on headend router `pe1` and enabled for SR-TE path policies.
+* S-BFD is configured globally on headend router `pe1` and enabled under SR-TE path policies.
 * Reflector related S-BFD configuration is applied on routers `pe3` and `pe4`.
 
-Following configuration enables S-BFD globably on the headend router `pe1`, and activates S-BFD monitoring for both (primary and secondary) SR-TE path policies (configured in Lab #1 and #2):
+Following configuration enables **S-BFD globably** on the headend router `pe1`, and activates S-BFD monitoring for both (primary and secondary) SR-TE path policies (configured in Lab #1 and #2):
 ```
 pe1#sh run section bfd
 router bfd
@@ -355,7 +355,7 @@ router bfd
       reflector local-discriminator 100.64.0.3
 ```
 
-Verification - Both S-BFD sessions for the SR-TE policies are UP on the router `pe1`:
+Verification - Both S-BFD sessions for the SR-TE policies are **UP** on the router `pe1`:
 ```
 pe1#sh bfd peers 
 VRF name: default
@@ -366,7 +366,7 @@ DstAddr                 MyDisc         YourDisc                 Interface/Transp
 100.64.0.4          3702968690       1681915908       SR-Tunnel(140737488355329[1])       initiator       12/30/25 07:15             NA       No Diagnostic          Up              -
 ```
 
-The following output shows detailed S-BFD session information toward endpoint **100.64.0.3**:
+The following output shows **detailed** S-BFD session information toward endpoint **100.64.0.3**:
 ```
 pe1#sh bfd peers dest-ip 100.64.0.3 detail 
 VRF name: default
@@ -400,7 +400,7 @@ Last packet:  Version: 1            - Diagnostic: 0
               Min Echo interval: 0
 ```
 
-Both SR-TE policies are successfully monitored using **S-BFD**:
+Both SR-TE path policies are successfully monitored using **S-BFD**:
 ```
 pe1#sh traffic-engineering segment-routing policy | i Color|State|SBFD
 Endpoint 100.64.0.3 Color 30, Counters: not available
