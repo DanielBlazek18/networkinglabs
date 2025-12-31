@@ -20,7 +20,7 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on cEOS. It exp
 * [Lab #1 - Explicit SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-1---explicit-sr-te-path-policy-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe3)
 * [Lab #2 - Explicit (backup) SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe4`](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-2---explicit-backup-sr-te-path-policy-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe4)
 * [Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-3---enable-seamless-bidirectional-forwarding-detection-s-bfd-for-sr-te-path-policies)
-* Lab #4 - Remove the requirement for a Binding-SID (BSID)
+* [Lab #4 - Remove the requirement for a Binding-SID (BSID)](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-4---remove-the-requirement-for-a-binding-sid-bsid)
 
 ## Lab #1 - Explicit SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`:
 * The VPNv4 prefix **8.0.0.0/24** is advertised by `pe3`.
@@ -140,11 +140,7 @@ pe2#bash tcpdump -i eth3
 19:59:42.170729 aa:c1:ab:aa:11:6a (oui Unknown) > aa:c1:ab:72:5c:34 (oui Unknown), ethertype MPLS unicast (0x8847), length 130: MPLS (label 900012, tc 0, ttl 63) (label 900004, tc 0, ttl 63) (label 900003, tc 0, ttl 63) (label 116384, tc 0, [S], ttl 63) 7.0.0.7 > 8.0.0.8: ICMP echo request, id 9, seq 4, length 80
 19:59:42.174718 aa:c1:ab:aa:11:6a (oui Unknown) > aa:c1:ab:72:5c:34 (oui Unknown), ethertype MPLS unicast (0x8847), length 130: MPLS (label 900012, tc 0, ttl 63) (label 900004, tc 0, ttl 63) (label 900003, tc 0, ttl 63) (label 116384, tc 0, [S], ttl 63) 7.0.0.7 > 8.0.0.8: ICMP echo request, id 9, seq 5, length 80
 ```
-Observations:
-* Label stack observed: **900012 900004 900003 116384** from tcpdump.
-* Adjacency label **965537** is popped by `pe1` before sending to `pe2`.
-* Label **116384** corresponds VPNv4 label advertised by `pe3`.
-* Traffic flows along the SR-TE path as intended.
+> Label stack observed: **900012 900004 900003 116384** from tcpdump. The adjacency label **965537** is popped by `pe1` before sending to `pe2`. Label **116384** corresponds VPNv4 label advertised by `pe3`. Traffic flows along the SR-TE path as intended.
 
 ## Lab #2 - Explicit (backup) SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe4`:
 * The `ce2` router is now dual-homed to both `pe3` and `pe4`, and the VPNv4 prefix **8.0.0.0/24** is advertised by `pe4`.
