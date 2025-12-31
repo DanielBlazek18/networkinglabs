@@ -355,7 +355,7 @@ router bfd
       reflector local-discriminator 100.64.0.3
 ```
 
-Both SR-TE policies are successfully monitored using S-BFD, and the corresponding sessions are UP on the router `pe1`:
+Verification - Both S-BFD sessions for the SR-TE policies are UP on the router `pe1`:
 ```
 pe1#sh bfd peers 
 VRF name: default
@@ -398,6 +398,17 @@ Last packet:  Version: 1            - Diagnostic: 0
               My Discr.: 1681915907 - Your Discr.: 2095938501
               Min tx interval: 1000 - Min rx interval: 1000  
               Min Echo interval: 0
+```
+
+Both SR-TE policies are successfully monitored using **S-BFD**:
+```
+pe1#sh traffic-engineering segment-routing policy | i Color|State|SBFD
+Endpoint 100.64.0.3 Color 30, Counters: not available
+        Path group: State: active (for 00:01:19), modified: 00:02:01 ago
+                Segment List: State: Valid, SBFD State: Up, ID: 1, Counters: not available
+Endpoint 100.64.0.4 Color 40, Counters: not available
+        Path group: State: active (for 00:01:18), modified: 00:02:01 ago
+                Segment List: State: Valid, SBFD State: Up, ID: 2, Counters: not available                
 ```
 
 **S-BFD reflector related state** on `pe3`, the following output confirms that router `pe3` is operating correctly as an S-BFD reflector:
