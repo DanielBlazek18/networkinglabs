@@ -330,5 +330,141 @@ VRF: LAB-TEST-1
                  via 100.64.0.2, Ethernet3, label 900012 900004 900003
 ```
 
-## Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies
+## Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies:
+* S-BFD is configured globally on headend router `pe1` and enabled for SR-TE path policies.
+* Reflector related S-BFD configuration is applied on routers `pe3` and `pe4`.
+
+Following configuration enables S-BFD globably on the headend router `pe1`, and activates S-BFD monitoring for both (primary and secondary) SR-TE path policies (configured in Lab #1 and #2):
+```
+pe1#sh run section bfd
+router bfd
+   sbfd
+      local-interface Loopback0 ipv4
+      initiator interval 1000 multiplier 3
+router traffic-engineering
+   segment-routing
+      policy endpoint 100.64.0.3 color 30
+         sbfd remote-discriminator 100.64.0.3
+      policy endpoint 100.64.0.4 color 40
+         sbfd remote-discriminator 100.64.0.4
+```
+
+Routers that act as **S-BFD targets** must be configured as **S-BFD reflector**. The following example shows the reflector configuration on `pe3` (the same configuration model applies to `pe4`):
+```
+pe3#sh run section bfd
+router bfd
+   sbfd
+      local-interface Loopback0 ipv4
+      reflector min-rx 1000
+      reflector local-discriminator 100.64.0.3
+```
+
+Both SR-TE policies are successfully monitored using S-BFD, and the corresponding sessions are UP on the router `pe1`:
+```
+pe1#sh bfd peers 
+VRF name: default
+-----------------
+DstAddr                 MyDisc         YourDisc                 Interface/Transport            Type               LastUp       LastDown            LastDiag       State    Description
+---------------- ---------------- ---------------- ----------------------------------- --------------- -------------------- -------------- ------------------- ----------- -----------
+100.64.0.3          2095938501       1681915907       SR-Tunnel(140737488355330[2])       initiator       12/30/25 07:11             NA       No Diagnostic          Up              -
+100.64.0.4          3702968690       1681915908       SR-Tunnel(140737488355329[1])       initiator       12/30/25 07:15             NA       No Diagnostic          Up              -
+```
+
+The following output shows detailed S-BFD session information toward endpoint **100.64.0.3**:
+```
+pe1#sh bfd peers dest-ip 100.64.0.3 detail 
+VRF name: default
+-----------------
+Peer Addr 100.64.0.3, Tunnel ID 140737488355330(SR), Segment list ID 2, Type SBFD(initiator), State Up
+VRF default, LAddr 100.64.0.1, LD/RD 2095938501/1681915907
+Session state is Up and not using echo function
+Hardware Acceleration: Async Off, Echo Off
+Last Up 12/30/25 07:11:43.254
+Last Down NA
+Last Diag: No Diagnostic
+Authentication mode: None
+Shared-secret profile: None
+TxInt: 1000 ms, RxInt: 1000 ms, Multiplier: 3
+Received RxInt: 1000 ms, Received Multiplier: 3
+Rx Count: 645, Rx Interval (ms) min/max/avg: 750/1001/877 last: 692 ms ago
+Tx Count: 748, Tx Interval (ms) min/max/avg: 750/1001/875 last: 696 ms ago
+Detect Time: 3000 ms
+Sched Delay: 1*TxInt: 744, 2*TxInt: 3, 3*TxInt: 0, GT 3*TxInt: 0
+Registered protocols: sr-te policy
+Uptime: 09:25.87
+Tunnel Info:  MPLS label stack: [965537 900012 900004 900003]
+              MPLS EXP: 7                                    
+              IP DSCP: 192                                   
+Last packet:  Version: 1            - Diagnostic: 0          
+              State bit: Up         - Demand bit: 0          
+              Poll bit: 0           - Final bit: 0           
+              Multiplier: 3         - Length: 24             
+              My Discr.: 1681915907 - Your Discr.: 2095938501
+              Min tx interval: 1000 - Min rx interval: 1000  
+              Min Echo interval: 0
+```
+
+**S-BFD reflector related state** on `pe3`, the following output confirms that router `pe3` is operating correctly as an S-BFD reflector:
+```
+pe3#sh bfd peers sbfd reflectors 
+VRF name: default
+-----------------
+DstAddr                 MyDisc         YourDisc       Interface/Transport            Type               LastUp       LastDown            LastDiag    State
+---------------- ---------------- ---------------- ------------------------- --------------- -------------------- -------------- ------------------- -----
+100.64.0.1          1681915907       2095938501                        NA       reflector       12/30/25 07:11             NA       No Diagnostic       Up
+```
+
+Data plane verification – A tcpdump capture on router `pe2` interface `Ethernet3` confirms that the **S-BFD packets are forwarded within the SR-TE MPLS label stack**, following the explicitly configured paths. The first packet is toward `pe3` (label stack **900012 900004 900003**), while the second packet is toward `pe4` (label stack **900012 900003**):
+```
+pe2#bash tcpdump -i eth3 ether proto 0x8847 -v
+tcpdump: listening on eth3, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+07:27:50.539889 aa:c1:ab:e5:9b:ab (oui Unknown) > aa:c1:ab:b5:3b:17 (oui Unknown), ethertype MPLS unicast (0x8847), length 78: MPLS (label 900012, tc 0, ttl 254)
+        (label 900004, tc 7, ttl 255)
+        (label 900003, tc 7, [S], ttl 255)
+        (tos 0xc0, ttl 1, id 0, offset 0, flags [none], proto UDP (17), length 52)
+    100.64.0.1.51081 > localhost.localdomain.s-bfd: BFDv1, length: 24
+        Sbfd, State Up, Flags: [Demand], Diagnostic: No Diagnostic (0x00)
+        Detection Timer Multiplier: 3 (3000 ms Detection time), BFD Length: 24
+        My Discriminator: 0x7ced7bc5, Your Discriminator: 0x64400003
+          Desired min Tx Interval:    1000 ms
+          Required min Rx Interval:      0 ms
+          Required min Echo Interval:    0 ms
+07:27:50.995323 aa:c1:ab:e5:9b:ab (oui Unknown) > aa:c1:ab:b5:3b:17 (oui Unknown), ethertype MPLS unicast (0x8847), length 74: MPLS (label 900012, tc 0, ttl 254)
+        (label 900004, tc 7, [S], ttl 255)
+        (tos 0xc0, ttl 1, id 0, offset 0, flags [none], proto UDP (17), length 52)
+    100.64.0.1.51081 > localhost.localdomain.s-bfd: BFDv1, length: 24
+        Sbfd, State Up, Flags: [Demand], Diagnostic: No Diagnostic (0x00)
+        Detection Timer Multiplier: 3 (3000 ms Detection time), BFD Length: 24
+        My Discriminator: 0xdcb6d172, Your Discriminator: 0x64400004
+          Desired min Tx Interval:    1000 ms
+          Required min Rx Interval:      0 ms
+          Required min Echo Interval:    0 ms
+```
+> The first packet follows the SR-TE path toward `pe3`, with label stack **900012 900004 900003**, whereas the second packet follows the SR-TE path toward `pe4`, with label stack **900012 900003**.
+
+S-BFD reflector responses (captured on `pe1`):
+```
+pe1#bash tcpdump -i eth1 src host 100.64.0.3 or 100.64.0.4 -v
+tcpdump: listening on eth1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+07:29:32.557804 aa:c1:ab:e7:eb:4f (oui Unknown) > aa:c1:ab:6e:75:d9 (oui Unknown), ethertype IPv4 (0x0800), length 66: (tos 0xc0, ttl 254, id 9030, offset 0, flags [DF], proto UDP (17), length 52)
+    100.64.0.4.s-bfd > pe1.51081: BFDv1, length: 24
+        Sbfd, State Up, Flags: [none], Diagnostic: No Diagnostic (0x00)
+        Detection Timer Multiplier: 3 (3000 ms Detection time), BFD Length: 24
+        My Discriminator: 0x64400004, Your Discriminator: 0xdcb6d172
+          Desired min Tx Interval:    1000 ms
+          Required min Rx Interval:   1000 ms
+          Required min Echo Interval:    0 ms
+07:29:33.163480 aa:c1:ab:e7:eb:4f (oui Unknown) > aa:c1:ab:6e:75:d9 (oui Unknown), ethertype IPv4 (0x0800), length 66: (tos 0xc0, ttl 254, id 26844, offset 0, flags [DF], proto UDP (17), length 52)
+    100.64.0.3.s-bfd > pe1.51081: BFDv1, length: 24
+        Sbfd, State Up, Flags: [none], Diagnostic: No Diagnostic (0x00)
+        Detection Timer Multiplier: 3 (3000 ms Detection time), BFD Length: 24
+        My Discriminator: 0x64400003, Your Discriminator: 0x7ced7bc5
+          Desired min Tx Interval:    1000 ms
+          Required min Rx Interval:   1000 ms
+          Required min Echo Interval:    0 ms
+```
+> The S-BFD responses from `pe3` and `pe4` are captured on `pe1`’s `Ethernet1` interface. These packets follow the **IGP shortest path**, as expected for S-BFD reflector replies.
+
+## Lab #4 - Remove the requirement for a Binding-SID (BSID):
+
 To be continued...
