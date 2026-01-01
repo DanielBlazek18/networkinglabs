@@ -472,6 +472,16 @@ tcpdump: listening on eth1, link-type EN10MB (Ethernet), snapshot length 262144 
 ```
 > The S-BFD responses from `pe3` and `pe4` are captured on `pe1`’s `Ethernet1` interface. These packets follow the **IGP shortest path**, as expected for S-BFD reflector replies.
 
-## Lab #4 - Remove the requirement for a Binding-SID (BSID):
+Node failure testing – The `Loopback0` interface on router `p2` is **shutdown**, causing the Node-SID **900012** (along with other information) to be withdrawn from IS-IS LSP originated by `p2`. S-BFD detects the failure and moves both SR-TE policies to the **Invalid** state:
+```
+pe1#sh traffic-engineering segment-routing policy | i Color|State|SBFD
+Endpoint 100.64.0.3 Color 30, Counters: not available
+        Path group: State: invalid, modified: 00:05:50 ago
+                Segment List: State: Invalid, SBFD State: Down, ID: 1, Counters: not available
+Endpoint 100.64.0.4 Color 40, Counters: not available
+        Path group: State: invalid, modified: 00:05:50 ago
+                Segment List: State: Invalid, SBFD State: Down, ID: 2, Counters: not available
+```
+> _Traffic is forwarded via the IGP shortest path._
 
-To be continued...
+## Lab #4 - Remove the requirement for a Binding-SID (BSID):
