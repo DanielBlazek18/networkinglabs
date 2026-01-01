@@ -482,6 +482,69 @@ Endpoint 100.64.0.4 Color 40, Counters: not available
         Path group: State: invalid, modified: 00:05:50 ago
                 Segment List: State: Invalid, SBFD State: Down, ID: 2, Counters: not available
 ```
-> _Traffic is forwarded via the IGP shortest path._
+> Traffic is forwarded via the IGP shortest path.
 
 ## Lab #4 - Remove the requirement for a Binding-SID (BSID):
+* A Binding-SID is not required for the SR-TE policies in this lab, as traffic is steered **locally** on `pe1` using the **BGP Color Extended Community**.
+* A specific configuration command is required to permit policies without Binding-SID.
+*  Binding-SIDs are removed from the SR-TE policies.
+
+The Binding-SIDs **1000003** and **1000004** configured under SR-TE policies are installed in **LFIB** on `pe1`:
+```
+pe1#sh mpls lfib route traffic-engineering segment-routing policy
+[omitted]
+ ST    1000003  [1], SR-TE Policy 100.64.0.3, color 30
+                via SR-TE tunnel index 1, pop
+                 payload autoDecide, ttlMode uniform, dscpMode uniform, apply egress-acl
+                    via 100.64.0.2, Ethernet3, label 900012 900004 900003
+ ST    1000004  [1], SR-TE Policy 100.64.0.4, color 40
+                via SR-TE tunnel index 2, pop
+                 payload autoDecide, ttlMode uniform, dscpMode uniform, apply egress-acl
+                    via 100.64.0.2, Ethernet3, label 900012 900004
+```
+
+The configuration command `binding-sid specified-only disabled`, applied under segment-routing submode, **allows** SR-TE policies to be configured without a Binding-SID. Once this option is enabled, the Binding-SID can be safely removed from the SR-TE policies:
+```
+pe1#conf t
+pe1(config)#router traffic-engineering 
+pe1(config-te)#segment-routing 
+pe1(config-te-sr)#binding-sid specified-only disabled 
+pe1(config-te-sr)#policy endpoint 100.64.0.3 color 30
+pe1(config-te-sr-policy)#no binding-sid 
+pe1(config-te-sr-policy)#policy endpoint 100.64.0.4 color 40
+pe1(config-te-sr-policy)#no binding-sid 
+```
+
+After removing the Binding-SIDs, they are no longer presented in the SR-TE policies, while both SR-TE policies remain **active** and **operational**:
+```
+pe1#sh traffic-engineering segment-routing policy 
+Endpoint 100.64.0.3 Color 30, Counters: not available
+        Path group: State: active (for 00:15:36), modified: 00:02:15 ago
+                Protocol: Static
+                Endpoint provisioning: Static
+                Originator: 0.0.0.0(AS0)
+                Discriminator: 32769
+                Preference: 100
+                IGP metric: 30 (dynamic-resolved)
+                Path computation: Configured
+                Explicit null label policy: IPv6 (system default)
+                Segment List: State: Valid, SBFD State: Up, ID: 1, Counters: not available
+                Protected: No, Reason: The top label is not protected
+                        Label Stack: [965537 900012 900004 900003], Weight: 1
+                        Resolved Label Stack: [900012 900004 900003], Next hop: 100.64.0.2, Interface: Ethernet3
+Endpoint 100.64.0.4 Color 40, Counters: not available
+        Path group: State: active (for 00:15:37), modified: 00:02:10 ago
+                Protocol: Static
+                Endpoint provisioning: Static
+                Originator: 0.0.0.0(AS0)
+                Discriminator: 32769
+                Preference: 100
+                IGP metric: 40 (dynamic-resolved)
+                Path computation: Configured
+                Explicit null label policy: IPv6 (system default)
+                Segment List: State: Valid, SBFD State: Up, ID: 2, Counters: not available
+                Protected: No, Reason: The top label is not protected
+                        Label Stack: [965537 900012 900004], Weight: 1
+                        Resolved Label Stack: [900012 900004], Next hop: 100.64.0.2, Interface: Ethernet3
+```
+> Binding-SIDs are also removed from the **LFIB** table on `pe1`.
