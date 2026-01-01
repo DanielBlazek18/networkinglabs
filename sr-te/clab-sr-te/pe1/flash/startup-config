@@ -1,4 +1,4 @@
-! Startup-config last modified at Tue Dec 30 07:34:34 2025 by admin
+! Startup-config last modified at Thu Jan  1 09:39:16 2026 by admin
 ! device: pe1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -71,8 +71,8 @@ interface Loopback0
    isis passive
 !
 interface Management0
-   ip address 172.20.20.4/24
-   ipv6 address 3fff:172:20:20::4/64
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::3/64
 !
 ip routing
 ip routing vrf LAB-TEST-1
@@ -118,17 +118,16 @@ router bgp 65000
 router traffic-engineering
    segment-routing
       rib system-colored-tunnel-rib
+      binding-sid specified-only disabled
       igp-cost preference 115 metric dynamic
       !
       policy endpoint 100.64.0.3 color 30
-         binding-sid 1000003
          sbfd remote-discriminator 100.64.0.3
          !
          path-group preference 100
             segment-list label-stack 965537 900012 900004 900003
       !
       policy endpoint 100.64.0.4 color 40
-         binding-sid 1000004
          igp-cost metric dynamic + 10
          sbfd remote-discriminator 100.64.0.4
          !
