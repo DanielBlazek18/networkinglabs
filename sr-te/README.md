@@ -31,10 +31,10 @@ After completing lab exercices, you should be able to:
 * [Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-3---enable-seamless-bidirectional-forwarding-detection-s-bfd-for-sr-te-path-policies)
 * [Lab #4 - Remove the requirement for a Binding-SID (BSID)](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-4---remove-the-requirement-for-a-binding-sid-bsid)
 
-## Lab #1 - Explicit SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`:
+## Lab #1 - SR-TE Policy with Explicit Path on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`:
 * The VPNv4 prefix **8.0.0.0/24** is advertised by `pe3`.
 * BGP Color Extended Community is used to steer traffic (automated steering) into an SR-TE policy; color value **30** is attached to the VPNv4 prefix **8.0.0.0/24**.
-* SR-TE policy with label stack **965537 900012 900004 900003** is configured to forward traffic along the path `pe1` -> `pe2` -> `p2` -> `pe4` -> `pe3`.
+* SR-TE policy with **explicit path** label stack **965537 900012 900004 900003** is configured to forward traffic along the path `pe1` -> `pe2` -> `p2` -> `pe4` -> `pe3`.
 * Label **965537** has been explicitly configured as an adjacency label on the `pe1` interface `Ethernet3`.
 
 ![sr-te-lab-exercise-1.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/drawings/sr-te-lab-exercise-1.png)
@@ -75,7 +75,7 @@ BGP routing table entry for IPv4 prefix 8.0.0.0/24, Route Distinguisher: 100.64.
       Local MPLS label (VRF based): 116384
 ```
 
-The **Explicit SR-TE path policy** toward **endpoint 100.64.0.3** (color **30**) is configured on `pe1`:
+The **SR-TE policy with an explicitly defined path** toward **endpoint 100.64.0.3** (color **30**) is configured on `pe1`:
 ```
 router traffic-engineering
    segment-routing
@@ -151,7 +151,7 @@ pe2#bash tcpdump -i eth3
 ```
 > Tcpdump on `pe2` interface `Ethernet3` shows the label stack **900012 900004 900003 116384**. The adjacency label **965537** is popped by `pe1` before sending to `pe2`. Label **116384** corresponds VPNv4 label advertised by `pe3`. Traffic flows along the SR-TE path as intended.
 
-## Lab #2 - Explicit (backup) SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe4`:
+## Lab #2 - SR-TE (backup) Policy with Explicit Path on `pe1` for traffic to a VPNv4 prefix advertised by `pe4`:
 * The `ce2` router is now dual-homed to both `pe3` and `pe4`, and the VPNv4 prefix **8.0.0.0/24** is advertised by `pe4`.
 * BGP Color Extended Community is used to steer traffic (automated steering) into an SR-TE policy; color value **40** is attached to the VPNv4 prefix **8.0.0.0/24** advertised by `pe4`.
 * SR-TE policy with label stack **965537 900012 900004** is configured to forward traffic along the path `pe1` -> `pe2` -> `p2` -> `pe4`.
@@ -160,7 +160,7 @@ pe2#bash tcpdump -i eth3
 
 ![sr-te-lab-exercise-2.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/drawings/sr-te-lab-exercise-2.png)
 
-**Backup Explicit SR-TE path policy** configuration on `pe1`:
+The **backup SR-TE policy with an explicitly defined path** toward **endpoint 100.64.0.4** (color **40**) is configured on `pe1`:
 ```
 pe1#sh run sec color 40
 router traffic-engineering
