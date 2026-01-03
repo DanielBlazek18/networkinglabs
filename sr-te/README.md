@@ -10,7 +10,7 @@ After completing lab exercices, you should be able to:
 * Validate control plane and data plane operation.
 * Remove the requirement for Binding‑SIDs.
 
-## LAB consists of following routers:
+## Lab consists of following routers:
 * `pe1`
 * `pe2`
 * `pe3`
