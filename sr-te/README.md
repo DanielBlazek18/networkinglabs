@@ -26,8 +26,8 @@ After completing lab exercices, you should be able to:
 * **Seamless Bidirectional Forwarding Detection** (S-BFD)
 
 ## Lab exercises:
-* [Lab #1 - Explicit SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-1---explicit-sr-te-path-policy-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe3)
-* [Lab #2 - Explicit (backup) SR-TE path policy on `pe1` for traffic to a VPNv4 prefix advertised by `pe4`](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-2---explicit-backup-sr-te-path-policy-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe4)
+* [Lab #1 - SR-TE Policy with Explicit Path on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-1---sr-te-policy-with-explicit-path-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe3)
+* [Lab #2 - SR-TE (backup) Policy with Explicit Path on `pe1` for traffic to a VPNv4 prefix advertised by `pe4`](ttps://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-2---sr-te-backup-policy-with-explicit-path-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe4)
 * [Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-3---enable-seamless-bidirectional-forwarding-detection-s-bfd-for-sr-te-path-policies)
 * [Lab #4 - Remove the requirement for a Binding-SID (BSID)](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-4---remove-the-requirement-for-a-binding-sid-bsid)
 
