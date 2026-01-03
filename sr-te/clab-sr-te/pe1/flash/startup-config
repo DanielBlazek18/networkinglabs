@@ -1,4 +1,4 @@
-! Startup-config last modified at Thu Jan  1 09:39:16 2026 by admin
+! Startup-config last modified at Sat Jan  3 18:52:28 2026 by admin
 ! device: pe1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -66,16 +66,19 @@ interface Loopback0
    ip address 100.64.0.1/32
    ipv6 address 2000::100:64:0:1/128
    node-segment ipv4 index 1
-   node-segment ipv6 index 2001
+   node-segment ipv4 index 12801 flex-algo BEST_EFFORT
+   node-segment ipv6 index 201
    isis enable LAB
    isis passive
 !
 interface Management0
-   ip address 172.20.20.3/24
-   ipv6 address 3fff:172:20:20::3/64
+   ip address 172.20.20.5/24
+   ipv6 address 3fff:172:20:20::5/64
 !
 ip routing
 ip routing vrf LAB-TEST-1
+!
+ip prefix-list SET-COLOR seq 10 permit 7.0.0.0/24
 !
 ipv6 unicast-routing
 !
@@ -85,6 +88,10 @@ ip route vrf LAB-TEST-1 7.0.0.0/24 10.1.7.7
 ipv6 route ::/0 3fff:172:20:20::1
 !
 mpls ip
+!
+route-map SET-COLOR permit 10
+   match ip address prefix-list SET-COLOR
+   set extcommunity color 10
 !
 router bfd
    sbfd
@@ -113,7 +120,7 @@ router bgp 65000
       rd 100.64.0.1:10
       route-target import vpn-ipv4 10:10
       route-target export vpn-ipv4 10:10
-      network 7.0.0.0/24
+      network 7.0.0.0/24 route-map SET-COLOR
 !
 router traffic-engineering
    segment-routing
@@ -134,6 +141,11 @@ router traffic-engineering
          path-group preference 100
             segment-list label-stack 965537 900012 900004
    router-id ipv4 100.64.0.1
+   administrative-group alias RED group 33
+   !
+   flex-algo
+      flex-algo 128 BEST_EFFORT
+         administrative-group exclude RED
 !
 router isis LAB
    net 49.0000.0000.0000.0001.00
@@ -149,6 +161,7 @@ router isis LAB
    !
    segment-routing mpls
       no shutdown
+      flex-algo BEST_EFFORT level-2 advertised
 !
 router multicast
    ipv4

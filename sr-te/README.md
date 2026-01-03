@@ -29,6 +29,7 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on Arista cEOS.
 * [Lab #2 - SR-TE (backup) Policy with Explicit Path on `pe1` for traffic to a VPNv4 prefix advertised by `pe4`](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-2---sr-te-backup-policy-with-explicit-path-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe4)
 * [Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-3---enable-seamless-bidirectional-forwarding-detection-s-bfd-for-sr-te-path-policies)
 * [Lab #4 - Remove the requirement for a Binding-SID (BSID)](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-4---remove-the-requirement-for-a-binding-sid-bsid)
+* Lab #5 - SR-TE Policy with Dynamic Path on `pe3` and `pe4` for traffic to a VPNv4 prefix advertised by `pe1`
 
 ## Lab #1 - SR-TE Policy with Explicit Path on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`:
 * The VPNv4 prefix **8.0.0.0/24** is advertised by `pe3`.
@@ -556,3 +557,7 @@ Endpoint 100.64.0.4 Color 40, Counters: not available
                         Resolved Label Stack: [900012 900004], Next hop: 100.64.0.2, Interface: Ethernet3
 ```
 > Binding-SIDs are also removed from the **LFIB** table on `pe1`.
+
+## Lab #5 - SR-TE Policy with Dynamic Path on `pe3` and `pe4` for traffic to a VPNv4 prefix advertised by `pe1`:
+
+To be created...

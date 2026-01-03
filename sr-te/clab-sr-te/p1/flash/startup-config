@@ -1,4 +1,4 @@
-! Startup-config last modified at Thu Jan  1 09:13:37 2026 by root
+! Startup-config last modified at Sat Jan  3 18:51:14 2026 by admin
 ! device: p1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -51,6 +51,7 @@ interface Ethernet3
    ipv6 enable
    isis enable LAB
    isis network point-to-point
+   traffic-engineering administrative-group RED
 !
 interface Ethernet4
    description pe4_Ethernet1
@@ -59,6 +60,7 @@ interface Ethernet4
    ipv6 enable
    isis enable LAB
    isis network point-to-point
+   traffic-engineering administrative-group RED
 !
 interface Ethernet5
    description p2_Ethernet5
@@ -67,13 +69,15 @@ interface Ethernet5
    ipv6 enable
    isis enable LAB
    isis network point-to-point
+   traffic-engineering administrative-group RED
 !
 interface Loopback0
    description Router_ID
    ip address 100.64.0.11/32
    ipv6 address 2000::100:64:0:11/128
    node-segment ipv4 index 11
-   node-segment ipv6 index 2011
+   node-segment ipv4 index 12811 flex-algo BEST_EFFORT
+   node-segment ipv6 index 211
    isis enable LAB
    isis passive
 !
@@ -91,6 +95,13 @@ ipv6 route ::/0 3fff:172:20:20::1
 !
 mpls ip
 !
+router traffic-engineering
+   administrative-group alias RED group 33
+   !
+   flex-algo
+      flex-algo 128 BEST_EFFORT
+         administrative-group exclude RED
+!
 router isis LAB
    net 49.0000.0000.0000.0011.00
    router-id ipv4 100.64.0.11
@@ -105,6 +116,7 @@ router isis LAB
    !
    segment-routing mpls
       no shutdown
+      flex-algo BEST_EFFORT level-2 advertised
 !
 router multicast
    ipv4
