@@ -1,8 +1,7 @@
 # Overview
 This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on Arista cEOS. It explores various use cases across multiple lab scenarios, highlighting how SR-TE can be applied to steer traffic, optimize paths, and validate traffic engineering behaviors.
 
-## Learning Objectives
-After completing lab exercices, you should be able to:
+## Learning Objectives:
 * Configure manually provisioned SR‑TE policies (on the headend router) with explicit and dynamic paths.
 * Use BGP Color Extended Communities to steer traffic.
 * Create primary and backup SR‑TE policies by adjusting IGP preference and cost.
