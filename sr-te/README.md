@@ -23,7 +23,7 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on Arista cEOS.
 * **SR-MPLS** with **IS-IS** in the core. IPv4 unnumbered and IPv6 link-local addresses are used on poit-to-point interfaces.
 * **BGP VPNv4** between **PE** routers.
 * **Seamless Bidirectional Forwarding Detection** (S-BFD).
-* **IS-IS Flexible Algorithm** (FlexAlgo)
+* **IS-IS Flexible Algorithm** (FlexAlgo).
 
 ## Lab exercises:
 * [Lab #1 – Primary SR-TE Policy with Explicit Path (Color-Based Steering)](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-1--primary-sr-te-policy-with-explicit-path-color-based-steering)
