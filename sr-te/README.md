@@ -25,13 +25,13 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on Arista cEOS.
 * **Seamless Bidirectional Forwarding Detection** (S-BFD)
 
 ## Lab exercises:
-* [Lab #1 - SR-TE Policy with Explicit Path on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-1---sr-te-policy-with-explicit-path-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe3)
-* [Lab #2 - SR-TE (backup) Policy with Explicit Path on `pe1` for traffic to a VPNv4 prefix advertised by `pe4`](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-2---sr-te-backup-policy-with-explicit-path-on-pe1-for-traffic-to-a-vpnv4-prefix-advertised-by-pe4)
-* [Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-3---enable-seamless-bidirectional-forwarding-detection-s-bfd-for-sr-te-path-policies)
-* [Lab #4 - Remove the requirement for a Binding-SID (BSID)](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-4---remove-the-requirement-for-a-binding-sid-bsid)
-* [Lab #5 - SR-TE Policy with Dynamic Path on `pe3` and `pe4` for traffic to a VPNv4 prefix advertised by `pe1`](https://github.com/DanielBlazek18/networkinglabs/tree/main/sr-te#lab-5---sr-te-policy-with-dynamic-path-on-pe3-and-pe4-for-traffic-to-a-vpnv4-prefix-advertised-by-pe1)
+* [Lab #1 – Primary SR-TE Policy with Explicit Path (Color-Based Steering)](https://github.com/DanielBlazek18/networkinglabs/edit/main/sr-te/README.md#lab-1--primary-sr-te-policy-with-explicit-path-color-based-steering)
+* [Lab #2 – Backup SR-TE Policy with Explicit Path and IGP Preference and Cost](https://github.com/DanielBlazek18/networkinglabs/edit/main/sr-te/README.md#lab-2--backup-sr-te-policy-with-explicit-path-and-igp-preference-and-cost)
+* [Lab #3 – Seamless Bidirectional Forwarding Detection (S-BFD) Monitoring for SR-TE Policies](https://github.com/DanielBlazek18/networkinglabs/edit/main/sr-te/README.md#lab-3--seamless-bidirectional-forwarding-detection-s-bfd-monitoring-for-sr-te-policies)
+* [Lab #4 – Operating SR-TE Policies Without Binding-SIDs](https://github.com/DanielBlazek18/networkinglabs/edit/main/sr-te/README.md#lab-4--operating-sr-te-policies-without-binding-sids)
+* [Lab #5 – SR-TE Policies with Dynamic Paths](https://github.com/DanielBlazek18/networkinglabs/edit/main/sr-te/README.md#lab-5--sr-te-policies-with-dynamic-paths)
 
-## Lab #1 - SR-TE Policy with Explicit Path on `pe1` for traffic to a VPNv4 prefix advertised by `pe3`:
+## Lab #1 – Primary SR-TE Policy with Explicit Path (Color-Based Steering):
 * The VPNv4 prefix **8.0.0.0/24** is advertised by `pe3`.
 * BGP Color Extended Community is used to steer traffic (automated steering) into an SR-TE policy; color value **30** is attached to the VPNv4 prefix **8.0.0.0/24**.
 * SR-TE policy with **explicit path** label stack **965537 900012 900004 900003** is configured to forward traffic along the path `pe1` -> `pe2` -> `p2` -> `pe4` -> `pe3`.
@@ -151,7 +151,7 @@ pe2#bash tcpdump -i eth3
 ```
 > Tcpdump on `pe2` interface `Ethernet3` shows the label stack **900012 900004 900003 116384**. The adjacency label **965537** is popped by `pe1` before sending to `pe2`. Label **116384** corresponds VPNv4 label advertised by `pe3`. Traffic flows along the SR-TE path as intended.
 
-## Lab #2 - SR-TE (backup) Policy with Explicit Path on `pe1` for traffic to a VPNv4 prefix advertised by `pe4`:
+## Lab #2 – Backup SR-TE Policy with Explicit Path and IGP Preference and Cost:
 * The `ce2` router is now dual-homed to both `pe3` and `pe4`, and the VPNv4 prefix **8.0.0.0/24** is advertised by `pe4`.
 * BGP Color Extended Community is used to steer traffic (automated steering) into an SR-TE policy; color value **40** is attached to the VPNv4 prefix **8.0.0.0/24** advertised by `pe4`.
 * SR-TE policy with label stack **965537 900012 900004** is configured to forward traffic along the path `pe1` -> `pe2` -> `p2` -> `pe4`.
@@ -335,7 +335,7 @@ VRF: LAB-TEST-1
                  via 100.64.0.2, Ethernet3, label 900012 900004 900003
 ```
 
-## Lab #3 - Enable Seamless Bidirectional Forwarding Detection (S-BFD) for SR-TE path policies:
+## Lab #3 – Seamless Bidirectional Forwarding Detection (S-BFD) Monitoring for SR-TE Policies:
 * S-BFD is configured globally on headend router `pe1` and enabled under SR-TE path policies.
 * Reflector related S-BFD configuration is applied on routers `pe3` and `pe4`.
 
@@ -493,7 +493,7 @@ Endpoint 100.64.0.4 Color 40, Counters: not available
 ```
 > Traffic is forwarded via the IGP shortest path.
 
-## Lab #4 - Remove the requirement for a Binding-SID (BSID):
+## Lab #4 – Operating SR-TE Policies Without Binding-SIDs:
 * A Binding-SID is not required for the SR-TE policies in this lab, as traffic is steered **locally** on `pe1` using the **BGP Color Extended Community**.
 * A specific configuration command is required to permit policies without Binding-SID.
 *  Binding-SIDs are removed from the SR-TE policies.
@@ -558,6 +558,6 @@ Endpoint 100.64.0.4 Color 40, Counters: not available
 ```
 > Binding-SIDs are also removed from the **LFIB** table on `pe1`.
 
-## Lab #5 - SR-TE Policy with Dynamic Path on `pe3` and `pe4` for traffic to a VPNv4 prefix advertised by `pe1`:
+## Lab #5 – SR-TE Policies with Dynamic Paths:
 
 To be created...
