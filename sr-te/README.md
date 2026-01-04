@@ -25,11 +25,11 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on Arista cEOS.
 * **Seamless Bidirectional Forwarding Detection** (S-BFD)
 
 ## Lab exercises:
-* [Lab #1 – Primary SR-TE Policy with Explicit Path (Color-Based Steering)](https://github.com/DanielBlazek18/networkinglabs/tree/main/sr-te/README.md#lab-1--primary-sr-te-policy-with-explicit-path-color-based-steering)
-* [Lab #2 – Backup SR-TE Policy with Explicit Path and IGP Preference and Cost](https://github.com/DanielBlazek18/networkinglabs/tree/main/sr-te/README.md#lab-2--backup-sr-te-policy-with-explicit-path-and-igp-preference-and-cost)
-* [Lab #3 – Seamless Bidirectional Forwarding Detection (S-BFD) Monitoring for SR-TE Policies](https://github.com/DanielBlazek18/networkinglabs/tree/main/sr-te/README.md#lab-3--seamless-bidirectional-forwarding-detection-s-bfd-monitoring-for-sr-te-policies)
-* [Lab #4 – Operating SR-TE Policies Without Binding-SIDs](https://github.com/DanielBlazek18/networkinglabs/tree/main/sr-te/README.md#lab-4--operating-sr-te-policies-without-binding-sids)
-* [Lab #5 – SR-TE Policies with Dynamic Paths](https://github.com/DanielBlazek18/networkinglabs/tree/main/sr-te/README.md#lab-5--sr-te-policies-with-dynamic-paths)
+* [Lab #1 – Primary SR-TE Policy with Explicit Path (Color-Based Steering)](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-1--primary-sr-te-policy-with-explicit-path-color-based-steering)
+* [Lab #2 – Backup SR-TE Policy with Explicit Path and IGP Preference and Cost](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-2--backup-sr-te-policy-with-explicit-path-and-igp-preference-and-cost)
+* [Lab #3 – Seamless Bidirectional Forwarding Detection (S-BFD) Monitoring for SR-TE Policies](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-3--seamless-bidirectional-forwarding-detection-s-bfd-monitoring-for-sr-te-policies)
+* [Lab #4 – Operating SR-TE Policies Without Binding-SIDs](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-4--operating-sr-te-policies-without-binding-sids)
+* [Lab #5 – SR-TE Policies with Dynamic Paths](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-5--sr-te-policies-with-dynamic-paths)
 
 ## Lab #1 – Primary SR-TE Policy with Explicit Path (Color-Based Steering):
 * The VPNv4 prefix **8.0.0.0/24** is advertised by `pe3`.
