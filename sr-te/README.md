@@ -22,7 +22,8 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on Arista cEOS.
 ## Key protocols used:
 * **SR-MPLS** with **IS-IS** in the core. IPv4 unnumbered and IPv6 link-local addresses are used on poit-to-point interfaces.
 * **BGP VPNv4** between **PE** routers.
-* **Seamless Bidirectional Forwarding Detection** (S-BFD)
+* **Seamless Bidirectional Forwarding Detection** (S-BFD).
+* **IS-IS Flexible Algorithm** (FlexAlgo)
 
 ## Lab exercises:
 * [Lab #1 – Primary SR-TE Policy with Explicit Path (Color-Based Steering)](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-1--primary-sr-te-policy-with-explicit-path-color-based-steering)
@@ -496,7 +497,7 @@ Endpoint 100.64.0.4 Color 40, Counters: not available
 ## Lab #4 – Operating SR-TE Policies Without Binding-SIDs:
 * A Binding-SID is not required for the SR-TE policies in this lab, as traffic is steered **locally** on `pe1` using the **BGP Color Extended Community**.
 * A specific configuration command is required to permit policies without Binding-SID.
-*  Binding-SIDs are removed from the SR-TE policies.
+* Binding-SIDs are removed from the SR-TE policies.
 
 The Binding-SIDs **1000003** and **1000004** configured under SR-TE policies are installed in **LFIB** on `pe1`:
 ```
@@ -559,5 +560,6 @@ Endpoint 100.64.0.4 Color 40, Counters: not available
 > Binding-SIDs are also removed from the **LFIB** table on `pe1`.
 
 ## Lab #5 – SR-TE Policies with Dynamic Paths:
+* To be added...
 
-To be created...
+![sr-te-lab-exercise-5.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/drawings/sr-te-lab-exercise-5.png)

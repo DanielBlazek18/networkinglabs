@@ -1,4 +1,4 @@
-! Startup-config last modified at Sat Jan  3 18:54:23 2026 by admin
+! Startup-config last modified at Sun Jan  4 17:01:16 2026 by admin
 ! device: pe3 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -73,8 +73,8 @@ interface Loopback0
    isis passive
 !
 interface Management0
-   ip address 172.20.20.8/24
-   ipv6 address 3fff:172:20:20::8/64
+   ip address 172.20.20.6/24
+   ipv6 address 3fff:172:20:20::6/64
 !
 ip routing
 ip routing vrf LAB-VRF-1
@@ -138,6 +138,7 @@ router traffic-engineering
    flex-algo
       flex-algo 128 BEST_EFFORT
          administrative-group exclude RED
+         metric te-metric
 !
 router isis LAB
    net 49.0000.0000.0000.0003.00

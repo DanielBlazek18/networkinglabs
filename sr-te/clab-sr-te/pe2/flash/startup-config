@@ -1,4 +1,4 @@
-! Startup-config last modified at Sat Jan  3 18:54:15 2026 by admin
+! Startup-config last modified at Sun Jan  4 17:01:23 2026 by admin
 ! device: pe2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -100,6 +100,7 @@ router bgp 65000
       neighbor VPNV4 activate
 !
 router traffic-engineering
+   router-id ipv4 100.64.0.2
    administrative-group alias RED group 33
    !
    flex-algo
