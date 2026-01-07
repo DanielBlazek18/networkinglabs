@@ -23,7 +23,7 @@ This lab demonstrate Segment Routing Traffic Engineering (SR-TE) on Arista cEOS.
 * **SR-MPLS** with **IS-IS** in the core. IPv4 unnumbered and IPv6 link-local addresses are used on poit-to-point interfaces.
 * **BGP VPNv4** between **PE** routers.
 * **Seamless Bidirectional Forwarding Detection** (S-BFD).
-* **IS-IS Flexible Algorithm** (FlexAlgo).
+* **IS-IS Flexible Algorithm** (Flex-Algo).
 
 ## Lab exercises:
 * [Lab #1 – Primary SR-TE Policy with Explicit Path (Color-Based Steering)](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/README.md#lab-1--primary-sr-te-policy-with-explicit-path-color-based-steering)
@@ -560,6 +560,12 @@ Endpoint 100.64.0.4 Color 40, Counters: not available
 > Binding-SIDs are also removed from the **LFIB** table on `pe1`.
 
 ## Lab #5 – SR-TE Policies with Dynamic Paths:
-* To be added...
+* A new **Flexible Algorithm** with ID **128** and name **BEST_EFFORT** is defined on all routers in the topology. The Flex-Algo is configured to **exclude links with administrative-group ID 33**.
+* An alias **RED** is created for administrative-group **33** on all routers.
+* The new Flex-Algo (**BEST_EFFORT**) is advertised via **IS-IS**.
+* Every router is configured with a new **Flex-Algo Node-SID** for **BEST_EFFORT (Algo 128)**. Node-SIDs are derived from the base **900000** plus the router-specific offset **128xx**, where `xx` is the logical router ID. For example, the Node-SID for router `pe3` is **912803**.
+* Interfaces that must be excluded from SR-TE path computation are configured with administrative-group **RED**, as shown in the topology diagram.
+* SR-TE policies with **dynamic paths** using the **BEST_EFFORT** Flex-Algo are configured on routers `pe3` and `pe4`.
+* The VPNv4 prefix **7.0.0.0/24** is advertised from router `pe1` with **BGP Color Extended Community 10**, enabling automated steering into the dynamic SR-TE policies.
 
 ![sr-te-lab-exercise-5.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/drawings/sr-te-lab-exercise-5.png)
