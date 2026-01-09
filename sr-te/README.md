@@ -603,8 +603,8 @@ interface Loopback0
    isis passive
 ```
 > `p1`’s Flex-Algo Node-SID is **912811**, derived from the base **900000** plus the Flex-Algo–specific offset **12811**, where:
-* **128** is the Flex-Algo ID (BEST_EFFORT)
-* **11** is the logical router ID 
+>* **128** is the Flex-Algo ID (BEST_EFFORT)
+>* **11** is the logical router ID 
 
 Interfaces highlighted in **red** in the topology diagram are configured with **administrative-group RED (ID 33)**. These links are therefore excluded from path computation by the **BEST_EFFORT** Flex-Algo. Example configuration from router `p1`:
 ```
