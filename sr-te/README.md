@@ -566,6 +566,123 @@ Endpoint 100.64.0.4 Color 40, Counters: not available
 * Every router is configured with a new **Flex-Algo Node-SID** for **BEST_EFFORT (Algo 128)**. Node-SIDs are derived from the base **900000** plus the router-specific offset **128xx**, where `xx` is the logical router ID. For example, the Node-SID for router `pe3` is **912803**.
 * Interfaces that must be excluded from SR-TE path computation are configured with administrative-group **RED**, as shown in the topology diagram.
 * SR-TE policies with **dynamic paths** using the **BEST_EFFORT** Flex-Algo are configured on routers `pe3` and `pe4`.
-* The VPNv4 prefix **7.0.0.0/24** is advertised from router `pe1` with **BGP Color Extended Community 10**, enabling automated steering into the dynamic SR-TE policies.
+* The VPNv4 prefix **7.0.0.0/24** is advertised from router `pe1` with BGP Color Extended Community **10**, enabling automated steering into the dynamic SR-TE policies.
 
 ![sr-te-lab-exercise-5.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/sr-te/drawings/sr-te-lab-exercise-5.png)
+
+The Flex-Algo **BEST_EFFORT** with ID **128** must be configured on all routers in the topology. An alias **RED** is defined for **administrative-group 33**, which will be used to exclude specific links from path computation. The following configuration snippet is taken from router `p1`:
+```
+router traffic-engineering
+   router-id ipv4 100.64.0.11
+   administrative-group alias RED group 33
+   !
+   flex-algo
+      flex-algo 128 BEST_EFFORT
+         administrative-group exclude RED
+```
+
+The **BEST_EFFORT** Flex-Algo is advertised in **IS-IS level-2** so that it is available for SR-TE path computation across the topology:
+```
+router isis LAB
+[omitted]
+   segment-routing mpls
+      no shutdown
+      flex-algo BEST_EFFORT level-2 advertised
+```
+
+Flex-Algo Node-SIDs are configured under the `Loopback0` interface. This lab follows the Node-SID numbering logic described in Lab #5 summary:
+```
+interface Loopback0
+   description Router_ID
+   ip address 100.64.0.11/32
+   ipv6 address 2000::100:64:0:11/128
+   node-segment ipv4 index 11
+   node-segment ipv4 index 12811 flex-algo BEST_EFFORT
+   node-segment ipv6 index 211
+   isis enable LAB
+   isis passive
+```
+> `p1`’s Flex-Algo Node-SID is **912811**, derived from the base **900000** plus the Flex-Algo–specific offset **12811**, where:
+* **128** is the Flex-Algo ID (BEST_EFFORT)
+* **11** is the logical router ID 
+
+Interfaces highlighted in **red** in the topology diagram are configured with **administrative-group RED (ID 33)**. These links are therefore excluded from path computation by the **BEST_EFFORT** Flex-Algo. Example configuration from router `p1`:
+```
+p1#sh run sec int | sec traffic
+interface Ethernet3
+   traffic-engineering administrative-group RED
+interface Ethernet4
+   traffic-engineering administrative-group RED
+interface Ethernet5
+   traffic-engineering administrative-group RED
+```
+
+SR-TE policies toward **endpoint 100.64.0.1** (Color **10**) are configured on routers `pe3` and `pe4`.
+The keyword `computation local` must be configured under the path-group to allow the SR-TE policy to use a path resolved via **Flex-Algo**:
+```
+pe3#sh run sec endpoint
+router traffic-engineering
+   segment-routing
+      policy endpoint 100.64.0.1 color 10
+         path-group preference 100 computation local
+            path segment-routing flex-algo BEST_EFFORT
+```
+> SR-TE policy configuration on router `pe4` is identical.
+
+The SR-TE policy on `pe3` is resolved via nhop **100.64.0.4** over interface `Ethernet3`, as expected:
+```
+pe3#sh traffic-engineering segment-routing policy 
+Endpoint 100.64.0.1 Color 10, Counters: not available
+        Path group: State: active (for 00:01:54), modified: 00:02:51 ago
+                Protocol: Static
+                Endpoint provisioning: Static
+                Originator: 0.0.0.0(AS0)
+                Discriminator: 32769
+                Preference: 100
+                IGP metric: 0 (static)
+                Path computation: Flex Algo BEST_EFFORT
+                Explicit null label policy: IPv6 (system default)
+                Segment List: State: Valid, ID: 3, Counters: not available
+                Protected: No, Reason: The top label is not protected
+                        Label Stack: [912801], Weight: 1
+                        Resolved Label Stack: [912801], Next hop: 100.64.0.4, Interface: Ethernet3
+```
+
+Traffic is then forwarded to router `p2` via `pe4`, as shown by the MPLS LFIB entry on `pe4`:
+```
+pe4#sh mpls lfib route 912801
+[omitted]
+ IP    912801   [1], 100.64.0.1/32, algorithm BEST_EFFORT
+                via M, 100.64.0.12, swap 912801
+                 payload autoDecide, ttlMode uniform, apply egress-acl
+                 interface Ethernet2
+```
+
+On router `p2`, the Flex-Algo Node-SID **912801** is forwarded toward `pe1`:
+```
+p2#sh mpls lfib route 912801
+[ommitted]
+ IP    912801   [1], 100.64.0.1/32, algorithm BEST_EFFORT
+                via M, 100.64.0.2, swap 912801
+                 payload autoDecide, ttlMode uniform, apply egress-acl
+                 interface Ethernet2
+```
+
+Finally, the label is popped on `pe1`, delivering the packet to the endpoint:
+```
+pe2#sh mpls lfib route 912801
+[ommitted]
+ IP    912801   [1], 100.64.0.1/32, algorithm BEST_EFFORT
+                via M, 100.64.0.1, pop
+                 payload autoDecide, ttlMode uniform, apply egress-acl
+                 interface Ethernet3
+```
+
+> [!NOTE]
+>**Final note for Lab #5**
+>
+> I did not initially plan to introduce **Flex-Algo** in this lab. Cisco IOS-XR supports SR-TE policies with dynamic paths computed locally on the headend (without Flex-Algo), where the headend calculates the path and installs a segment list that is then pushed onto packets [(see slide 14)](https://www.segment-routing.net/tutorials/2017-03-06-segment-routing-traffic-engineering-srte/).
+>
+> I was unable to find an equivalent mechanism in **Arista EOS**. Based on my findings, Flex-Algo appears to be the only supported method to achieve dynamic SR-TE path computation in EOS. This effectively requires that Flex-Algo (including constraints and Node-SIDs) be configured consistently on all routers in the topology, which can be considered a limitation compared to the IOS-XR model.
+>
+> That said, it is possible that an alternative approach exists and I may have overlooked it.

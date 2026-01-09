@@ -138,7 +138,6 @@ router traffic-engineering
    flex-algo
       flex-algo 128 BEST_EFFORT
          administrative-group exclude RED
-         metric te-metric
 !
 router isis LAB
    net 49.0000.0000.0000.0003.00
