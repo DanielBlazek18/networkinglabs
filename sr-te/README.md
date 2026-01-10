@@ -616,6 +616,7 @@ interface Ethernet4
 interface Ethernet5
    traffic-engineering administrative-group RED
 ```
+> You can use the command `show isis database p1.00-00 traffic-engineering` to inspect the **Traffic Engineering (TE)** information advertised by router `p1` in the **IS-IS LSDB**.
 
 SR-TE policies toward **endpoint 100.64.0.1** (Color **10**) are configured on routers `pe3` and `pe4`.
 The keyword `computation local` must be configured under the path-group to allow the SR-TE policy to use a path resolved via **Flex-Algo**:
