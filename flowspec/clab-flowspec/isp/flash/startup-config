@@ -56,6 +56,7 @@ ip route 0.0.0.0/0 172.20.20.1
 ipv6 route ::/0 3fff:172:20:20::1
 !
 router bgp 65002
+   router-id 100.64.0.2
    neighbor 10.1.2.1 remote-as 65001
    neighbor 10.1.2.1 maximum-routes 0
    !
