@@ -1,1 +1,1 @@
-ifconfig eth1 191.0.0.2 netmask 255.255.255.0
+ifconfig eth1 10.1.5.5 netmask 255.255.255.0
