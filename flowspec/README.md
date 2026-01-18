@@ -15,6 +15,6 @@ This lab demonstrates BGP FlowSpec implementation on Arista cEOS.
 * BGP IPv4 unicast address family between `customer`, `igw` and `isp`
 * BGP FlowSpec address family between `igw` and `exabgp`
 
-## Lab exervices:
+## Lab exercices:
 * Lab #1 - FlowSpec discard action
 * Lab #2 - FlowSpec redirect to a VRF
