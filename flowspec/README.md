@@ -16,7 +16,7 @@ This lab demonstrates BGP FlowSpec implementation on Arista EOS.
 * BGP FlowSpec address family between `igw` and `exabgp`
 
 ## Lab exercices:
-* Lab #1 - FlowSpec discard action
+* [Lab #1 - FlowSpec discard action](https://github.com/DanielBlazek18/networkinglabs/blob/main/flowspec/README.md#lab-1---flowspec-discard-action)
 * Lab #2 - FlowSpec redirect to a VRF
 
 ## Lab #1 - FlowSpec discard action
@@ -141,3 +141,6 @@ PING 203.0.113.1 (203.0.113.1) from 9.0.0.9 : 72(100) bytes of data.
 --- 203.0.113.1 ping statistics ---
 5 packets transmitted, 0 received, 100% packet loss, time 41ms
 ```
+
+## Lab #2 - FlowSpec redirect to a VRF
+To be added ...
