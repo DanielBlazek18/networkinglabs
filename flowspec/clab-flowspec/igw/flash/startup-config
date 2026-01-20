@@ -1,4 +1,4 @@
-! Startup-config last modified at Sun Jan 18 08:01:42 2026 by admin
+! Startup-config last modified at Tue Jan 20 07:12:04 2026 by admin
 ! device: igw (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
