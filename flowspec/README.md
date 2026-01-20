@@ -2,7 +2,7 @@
 This lab demonstrates BGP FlowSpec implementation on Arista EOS.
 
 ## Learning Objectives:
-* Configured different BGP FlowSpec actions (discard, redirect).
+* Configured BGP FlowSpec with different actions (discard, redirect).
 
 ## Lab consists of following devices:
 * `igw`
