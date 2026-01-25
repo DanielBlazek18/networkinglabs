@@ -1,4 +1,4 @@
-! Startup-config last modified at Tue Jan 20 06:27:00 2026 by root
+! Startup-config last modified at Sun Jan 25 22:27:06 2026 by admin
 ! device: scrubber (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -29,14 +29,29 @@ management api netconf
    transport ssh default
 !
 interface Ethernet1
+   description igw_Ethernet4
+   no switchport
+!
+interface Ethernet1.10
+   encapsulation dot1q vlan 10
+   ip address 10.1.4.4/24
+!
+interface Ethernet1.20
+   encapsulation dot1q vlan 20
+   ip address 10.11.44.44/24
+!
+interface Loopback0
+   description Router_ID
+   ip address 100.64.0.4/32
 !
 interface Management0
    ip address 172.20.20.5/24
    ipv6 address 3fff:172:20:20::5/64
 !
-no ip routing
+ip routing
 !
 ip route 0.0.0.0/0 172.20.20.1
+ip route 203.0.113.0/24 10.11.44.11
 !
 ipv6 route ::/0 3fff:172:20:20::1
 !
