@@ -1,4 +1,4 @@
-! Startup-config last modified at Sun Jan 25 22:27:15 2026 by admin
+! Startup-config last modified at Mon Jan 26 22:40:55 2026 by admin
 ! device: igw (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -65,14 +65,14 @@ interface Loopback0
    ip address 100.64.0.1/32
 !
 interface Management0
-   ip address 172.20.20.4/24
-   ipv6 address 3fff:172:20:20::4/64
+   ip address 172.20.20.5/24
+   ipv6 address 3fff:172:20:20::5/64
 !
 ip routing
 ip routing vrf DIRTY
 !
 ip route 0.0.0.0/0 172.20.20.1
-ip route vrf DIRTY 203.0.113.0/24 10.1.4.4 name to_scrubber
+ip route vrf DIRTY 0.0.0.0/0 Ethernet4.10 10.1.4.4 name to_scrubber
 !
 ipv6 route ::/0 3fff:172:20:20::1
 !
