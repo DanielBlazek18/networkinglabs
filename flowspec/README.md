@@ -17,7 +17,7 @@ This lab demonstrates BGP FlowSpec implementation on Arista EOS.
 
 ## Lab exercices:
 * [Lab #1 - FlowSpec discard action](https://github.com/DanielBlazek18/networkinglabs/blob/main/flowspec/README.md#lab-1---flowspec-discard-action)
-* Lab #2 - FlowSpec redirect to a VRF
+* [Lab #2 - FlowSpec redirect to a VRF](https://github.com/DanielBlazek18/networkinglabs/blob/main/flowspec#lab-2---flowspec-redirect-to-a-vrf)
 
 ## Lab #1 - FlowSpec discard action
 * The `exabgp` is configured to advertise an **IPv4 FlowSpec route** that matches the source prefix **9.0.0.9/32** with **discard** action.
