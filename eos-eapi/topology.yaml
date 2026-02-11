@@ -1,0 +1,15 @@
+name: eos-eapi
+prefix: ""
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.35.0F 
+  nodes:
+    eos1:
+      kind: ceos
+      mgmt-ipv4: 172.20.20.3
+    eos2:
+      kind: ceos
+      mgmt-ipv4: 172.20.20.2
+  links:
+    - endpoints: ["eos1:eth1", "eos2:eth1"]

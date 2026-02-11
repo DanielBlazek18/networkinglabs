@@ -1,0 +1,6 @@
+[leaf]
+eos1    ansible_host=172.20.20.3
+eos2    ansible_host=172.20.20.2
+
+[arista:children]
+leaf

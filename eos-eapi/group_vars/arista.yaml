@@ -1,0 +1,13 @@
+---
+ansible_user: admin
+ansible_ssh_pass: admin
+
+# Priviladge
+ansible_become: yes
+ansible_become_method: enable
+ansible_become_password: admin
+
+ansible_network_os: arista.eos.eos
+ansible_connection: ansible.netcommon.httpapi
+ansible_httpapi_use_ssl: yes
+ansible_httpapi_validate_certs: no

@@ -1,0 +1,9 @@
+---
+- name: "Configure Basic Configuration on Arista Fabric"
+  hosts: arista
+  tasks:
+    - name: "Conifgure Basic System config"
+      arista.eos.eos_system:
+        name_servers: "{{ global.dns }}"
+        state: present
+      tags: system

@@ -1,0 +1,9 @@
+global: 
+  dns:
+  - 8.8.8.8
+  - 8.8.4.4
+  users:
+  -   password: ansible123
+      privilege: 15
+      role: network-admin
+      username: ansible
