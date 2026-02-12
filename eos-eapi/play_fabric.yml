@@ -1,0 +1,16 @@
+---
+- name: "Build Arista DC Fabirc"
+  hosts: arista
+  tasks:
+    - name: Generate DC Fabric Configuration
+      import_role:
+        name: dc_fabric_config
+      delegate_to: localhost
+      tags: build      
+
+    - name: "Provision fabric configuration on switches"
+      arista.eos.eos_config:
+        src: "{{config_dir}}/{{ inventory_hostname }}.cfg"
+        replace: line
+        save_when: changed
+      tags: deploy
