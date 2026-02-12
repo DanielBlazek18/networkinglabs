@@ -1,9 +1,9 @@
-! Startup-config last modified at Wed Feb 11 21:30:43 2026 by root
-! device: eos2 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
+! Startup-config last modified at Thu Feb 12 20:05:03 2026 by root
+! device: leaf2 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$exYp36bI2efqXrA0$OeEGoVy131IQghvU5w0RyfN0qQLB83rA52KAFOH3lWXspWGSIkkCWDiiIcSSUHzC2UxjKwn4td5lDJBOpKgbw1
+username admin privilege 15 role network-admin secret sha512 $6$YAxYwBpK56XwTnNE$FFJ71EswGgV1U9U2jNHWnRuOlEyZgVUt0NDjKQiSoedeS6k8xIuKAwHU8UcOxvpG/lVLctD7TzbzwMm3tJyRT.
 !
 management api http-commands
    no shutdown
@@ -14,7 +14,7 @@ transceiver qsfp default-mode 4x10G
 !
 service routing protocols model multi-agent
 !
-hostname eos2
+hostname leaf2
 !
 spanning-tree mode mstp
 !
@@ -30,9 +30,11 @@ management api netconf
 !
 interface Ethernet1
 !
+interface Ethernet2
+!
 interface Management0
-   ip address 172.20.20.2/24
-   ipv6 address 3fff:172:20:20::2/64
+   ip address 172.20.20.5/24
+   ipv6 address 3fff:172:20:20::5/64
 !
 no ip routing
 !
