@@ -5,5 +5,6 @@
     - name: "Conifgure Basic System config"
       arista.eos.eos_system:
         name_servers: "{{ global.dns }}"
+        lookup_source: "{{ global.lookup_source }}"
         state: present
       tags: system
