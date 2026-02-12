@@ -6,7 +6,7 @@
       import_role:
         name: dc_fabric_config
       delegate_to: localhost
-      tags: build      
+      tags: build
 
     - name: "Provision fabric configuration on switches"
       arista.eos.eos_config:

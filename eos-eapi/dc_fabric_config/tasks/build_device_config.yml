@@ -1,6 +1,6 @@
 ---
 - name: "System Configuration"
   template:
-    src: "{{ansible_network_os}}/mgmt.j2"
+    src: "{{ansible_network_os}}/fabric.j2"
     dest: "{{build_dir}}/00_mgmt.cfg"
   tags: mgmt
