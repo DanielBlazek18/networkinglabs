@@ -1,9 +1,9 @@
 !
 interface loopback0
  description RouterID
- ip address {{ routerId }}
+ ip address {{ routerId }}/32
 !
 interface loopback1
  description VTEP
- ip address {{ vtep }}
+ ip address {{ vtep }}/32
 !

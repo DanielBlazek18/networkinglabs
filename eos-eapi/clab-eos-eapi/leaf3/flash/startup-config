@@ -1,4 +1,4 @@
-! Startup-config last modified at Thu Feb 12 20:05:05 2026 by root
+! Startup-config last modified at Thu Feb 12 21:24:39 2026 by admin
 ! device: leaf3 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
 !
 no aaa root
@@ -31,6 +31,14 @@ management api netconf
 interface Ethernet1
 !
 interface Ethernet2
+!
+interface Loopback0
+   description RouterID
+   ip address 100.64.0.5/32
+!
+interface Loopback1
+   description VTEP
+   ip address 100.65.0.5/32
 !
 interface Management0
    ip address 172.20.20.6/24
