@@ -1,2 +1,28 @@
-routerId: 100.64.0.1
+router_id: 100.64.0.1
 vtep: 100.65.0.1
+bgp_as: 4200000000
+ethernet_interfaces:
+- name: Ethernet1
+  shutdown: false
+  ip_address: 10.1.3.1/24
+  peer: leaf1
+  peer_interface: Ethernet1
+  peer_type: leaf
+- name: Ethernet2
+  shutdown: false
+  ip_address: 10.1.4.1/24
+  peer: leaf2
+  peer_interface: Ethernet2
+  peer_type: leaf
+- name: Ethernet3
+  shutdown: false
+  ip_address: 10.1.5.1/24
+  peer: leaf3
+  peer_interface: Ethernet3
+  peer_type: leaf
+- name: Ethernet2
+  shutdown: false
+  ip_address: 10.1.6.1/24
+  peer: leaf4
+  peer_interface: Ethernet4
+  peer_type: leaf

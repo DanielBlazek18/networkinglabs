@@ -1,2 +1,16 @@
-routerId: 100.64.0.4
+router_id: 100.64.0.4
 vtep: 100.65.0.4
+bgp_as: 4200000004
+ethernet_interfaces:
+- name: Ethernet1
+  shutdown: false
+  ip_address: 10.1.4.4/24
+  peer: spine1
+  peer_interface: Ethernet2
+  peer_type: spine
+- name: Ethernet2
+  shutdown: false
+  ip_address: 10.2.4.4/24
+  peer: spine2
+  peer_interface: Ethernet2
+  peer_type: spine
