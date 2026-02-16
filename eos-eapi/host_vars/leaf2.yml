@@ -1,6 +1,8 @@
 router_id: 100.64.0.4
 vtep: 100.65.0.4
 bgp_as: 4200000004
+ip_virtual_router_mac_address: 0a:00:ca:fe:00:01
+switch_group: "0001"
 ethernet_interfaces:
 - name: Ethernet1
   shutdown: false
@@ -14,3 +16,11 @@ ethernet_interfaces:
   peer: spine2
   peer_interface: Ethernet2
   peer_type: spine
+- name: Ethernet3
+  shutdown: false
+  channel_group:
+    id: 1
+    mode: active
+  peer: host1
+  peer_interface: Ethernet1
+  peer_type: esi

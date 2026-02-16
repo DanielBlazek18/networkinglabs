@@ -20,7 +20,7 @@ ethernet_interfaces:
   peer: leaf3
   peer_interface: Ethernet3
   peer_type: leaf
-- name: Ethernet2
+- name: Ethernet4
   shutdown: false
   ip_address: 10.1.6.1/24
   peer: leaf4

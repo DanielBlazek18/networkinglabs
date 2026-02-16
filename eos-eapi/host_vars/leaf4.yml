@@ -1,6 +1,7 @@
 router_id: 100.64.0.6
 vtep: 100.65.0.6
 bgp_as: 4200000006
+ip_virtual_router_mac_address: 0a:00:ca:fe:00:02
 ethernet_interfaces:
 - name: Ethernet1
   shutdown: false

@@ -1,3 +1,6 @@
+{% if 'leaf'in group_names %}
+ip virtual-router mac-address {{ ip_virtual_router_mac_address }}
+{% endif %}
 ip routing
 router bgp {{ bgp_as }}
    router-id {{ router_id }}
@@ -7,11 +10,11 @@ router bgp {{ bgp_as }}
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
    neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
-   neighbor EVPN-OVERLAY-PEERS password 7 r2TFFLgWXxg=
+   neighbor EVPN-OVERLAY-PEERS password LAB
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS password 7 r2TFFLgWXxg=
+   neighbor IPv4-UNDERLAY-PEERS password LAB
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
 {% if 'leaf' in group_names %}
@@ -62,11 +65,8 @@ router bgp {{ bgp_as }}
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
-      neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
 !
-
-
 
 
 {% if inventory_hostname in groups['leaf'] %}

@@ -1,6 +1,6 @@
 config_dir: configs
 tmp_dir: tmp
-global: 
+global:
   dns:
   - 8.8.8.8
   - 8.8.4.4

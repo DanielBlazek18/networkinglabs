@@ -16,3 +16,9 @@
     src: "{{ansible_network_os}}/fabric.j2"
     dest: "{{build_dir}}/02_fabric.cfg"
   tags: fabric
+
+# - name: "Generate all in base.j2 test"
+#   template:
+#     src: "{{ansible_network_os}}/base.j2"
+#     dest: "{{build_dir}}/00_base.cfg"
+#   tags: base-test
