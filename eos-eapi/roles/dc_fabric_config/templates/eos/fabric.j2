@@ -67,7 +67,7 @@ router bgp {{ bgp_as }}
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
-      host-flap detection window 180 threshold 5 expiry timeout 300 seconds
+      host-flap detection expiry timeout 300.0 seconds
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate

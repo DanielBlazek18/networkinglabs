@@ -6,11 +6,6 @@ username admin privilege 15 role network-admin secret admin
 management api http-commands
    no shutdown
 !
-{% include "intf.j2" %}
-
-!
-{% include "vxlan.j2" %}
-!
 no service interface inactive port-id allocation disabled
 !
 transceiver qsfp default-mode 4x10G
@@ -30,18 +25,23 @@ system l1
    unsupported speed action error
    unsupported error-correction action error
 !
-{% include "fabric.j2" %}
-
-!
 management api gnmi
    transport grpc default
 !
 management api netconf
    transport ssh default
 !
+{% include "intf.j2" %}
+
+!
+{% include "vxlan.j2" %}
+!
 ip route 0.0.0.0/0 172.20.20.1
 !
 ipv6 route ::/0 3fff:172:20:20::1
+!
+{% include "fabric.j2" %}
+
 !
 router multicast
    ipv4

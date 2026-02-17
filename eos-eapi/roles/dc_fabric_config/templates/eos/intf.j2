@@ -1,9 +1,9 @@
 {% for ethernet_interface in ethernet_interfaces %}
 {% if ethernet_interface.peer_type in ['spine', 'leaf'] %}
 interface {{ ethernet_interface.name }}
-   no switchport
    description {{ ethernet_interface.peer }}_{{ ethernet_interface.peer_interface }}
    mtu 9202
+   no switchport
    ip address {{ ethernet_interface.ip_address }}
 {% elif ethernet_interface.peer_type == 'esi' %}
 interface {{ ethernet_interface.name }}

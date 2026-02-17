@@ -7,7 +7,7 @@ ip_virtual_router_mac_address: 0a:00:ca:fe:00:02
 ethernet_interfaces:
 - name: Ethernet1
   shutdown: false
-  ip_address: 10.1.5.6/24
+  ip_address: 10.1.6.6/24
   peer: spine1
   peer_interface: Ethernet4
   peer_type: spine
