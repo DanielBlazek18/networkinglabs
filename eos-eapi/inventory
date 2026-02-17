@@ -1,0 +1,35 @@
+---
+all:
+  children:
+    arista:
+      vars:
+        ansible_user: admin
+        ansible_ssh_pass: admin
+        ansible_network_os: eos
+        ansible_connection: httpapi
+        ansible_httpapi_use_ssl: yes
+        ansible_httpapi_validate_certs: false
+        # Privilege (enable)
+        ansible_become: yes
+        ansible_become_method: enable
+        ansible_become_password: admin
+
+      children:
+        DC1:
+          children:
+            leaf:
+              hosts:
+                leaf1:
+                  ansible_host: 172.20.20.4
+                leaf2:
+                  ansible_host: 172.20.20.5
+                leaf3:
+                  ansible_host: 172.20.20.6
+                leaf4:
+                  ansible_host: 172.20.20.7
+            spine:
+              hosts:
+                spine1:
+                  ansible_host: 172.20.20.2
+                spine2:
+                  ansible_host: 172.20.20.3
