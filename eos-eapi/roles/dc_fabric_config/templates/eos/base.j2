@@ -1,12 +1,13 @@
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$wyM5nRhbGMI2Tcn9$wqBScn54eGvWRWWOvrecEB1z0tYgQdZcDLHS6Q.5REj6GDWWMLcRsr9JEPILWGjL8kHMrB4Zev1p2kR8w2o2B1
+username admin privilege 15 role network-admin secret admin
 !
 management api http-commands
    no shutdown
 !
 {% include "intf.j2" %}
+
 !
 {% include "vxlan.j2" %}
 !
@@ -30,7 +31,7 @@ system l1
    unsupported error-correction action error
 !
 {% include "fabric.j2" %}
-   !
+
 !
 management api gnmi
    transport grpc default

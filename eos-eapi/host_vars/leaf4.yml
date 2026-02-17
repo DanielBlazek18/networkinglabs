@@ -1,5 +1,5 @@
 mgmt_ipv4: 172.20.20.7
-mgmt_ipv6: 3fff:172:20:20::7/64
+mgmt_ipv6: 3fff:172:20:20::7
 router_id: 100.64.0.6
 vtep: 100.65.0.6
 bgp_as: 4200000006

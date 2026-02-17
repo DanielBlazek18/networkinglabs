@@ -40,8 +40,8 @@ interface {{ ethernet_interface.name }}
 {% endif %}
 {% endfor %}
 interface Management0
-   ip address {{ mgmt_ipv4 }}
-   ipv6 address {{ mgmt_ipv6 }}
+   ip address {{ mgmt_ipv4 }}/24
+   ipv6 address {{ mgmt_ipv6 }}/64
 !
 interface loopback0
    description RouterID
