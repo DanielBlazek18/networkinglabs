@@ -1,15 +1,6 @@
+{% if 'leaf' in group_names %}
 {% for ethernet_interface in ethernet_interfaces %}
-{% if ethernet_interface.peer_type in ['spine', 'leaf'] %}
-interface {{ ethernet_interface.name }}
-   description {{ ethernet_interface.peer }}_{{ ethernet_interface.peer_interface }}
-   mtu 9202
-   no switchport
-   ip address {{ ethernet_interface.ip_address }}
-{% elif ethernet_interface.peer_type == 'esi' %}
-interface {{ ethernet_interface.name }}
-   description {{ ethernet_interface.peer }}
-   no shutdown
-   channel-group {{ ethernet_interface.channel_group.id }} mode {{ ethernet_interface.channel_group.mode }}
+{% if ethernet_interface.peer_type == 'esi' %}
 !
 interface Port-Channel{{ ethernet_interface.channel_group.id }}
    description {{ ethernet_interface.peer }}_{{ ethernet_interface.peer_interface }}
@@ -23,6 +14,22 @@ interface Port-Channel{{ ethernet_interface.channel_group.id }}
       identifier 0000:0000:beee:{{ switch_group }}:{{ "%04d" | format(ethernet_interface.channel_group.id | int) }}
       route-target import be:ee:{{ (switch_group | string)[0:2] }}:{{ (switch_group | string)[2:] }}:00:{{ "%02d" | format(ethernet_interface.channel_group.id | int) }}
    lacp system-id {{ ip_virtual_router_mac_address }}
+{% endif %}
+{% endfor %}
+{% endif %}
+!
+{% for ethernet_interface in ethernet_interfaces %}
+{% if ethernet_interface.peer_type in ['spine', 'leaf'] %}
+interface {{ ethernet_interface.name }}
+   description {{ ethernet_interface.peer }}_{{ ethernet_interface.peer_interface }}
+   mtu 9202
+   no switchport
+   ip address {{ ethernet_interface.ip_address }}
+{% elif ethernet_interface.peer_type == 'esi' %}
+interface {{ ethernet_interface.name }}
+   description {{ ethernet_interface.peer }}
+   no shutdown
+   channel-group {{ ethernet_interface.channel_group.id }} mode {{ ethernet_interface.channel_group.mode }}
 {% elif ethernet_interface.peer_type == 'orphan' %}
 interface {{ ethernet_interface.name }}
    description {{ ethernet_interface.peer }}
