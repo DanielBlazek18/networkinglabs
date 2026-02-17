@@ -1,7 +1,12 @@
-{% if 'leaf'in group_names %}
-ip virtual-router mac-address {{ ip_virtual_router_mac_address }}
-{% endif %}
 ip routing
+!
+ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+   seq 10 permit 100.64.0.0/24 eq 32
+   seq 20 permit 100.65.0.0/24 eq 32
+!
+route-map RM-CONN-2-BGP permit 10
+   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+!
 router bgp {{ bgp_as }}
    router-id {{ router_id }}
    update wait-install
@@ -67,12 +72,3 @@ router bgp {{ bgp_as }}
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
-   !
-!
-ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-   seq 10 permit 100.64.0.0/24 eq 32
-   seq 20 permit 100.65.0.0/24 eq 32
-!
-route-map RM-CONN-2-BGP permit 10
-   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-!

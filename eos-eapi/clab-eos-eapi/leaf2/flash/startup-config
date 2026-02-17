@@ -1,14 +1,12 @@
+! Startup-config last modified at Tue Feb 17 09:27:43 2026 by root
+! device: leaf2 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$wyM5nRhbGMI2Tcn9$wqBScn54eGvWRWWOvrecEB1z0tYgQdZcDLHS6Q.5REj6GDWWMLcRsr9JEPILWGjL8kHMrB4Zev1p2kR8w2o2B1
+username admin privilege 15 role network-admin secret sha512 $6$qN5NTztrJeOQ6H3P$V/hgtE/SDQRJjjt2mhl5hGvsdxKR27sg5Q3aO4omzlZLjCWxTgAWJ0Bu0PMQuQirZAY5RxVNyIgb/g0.pQAlL1
 !
 management api http-commands
    no shutdown
-!
-{% include "intf.j2" %}
-!
-{% include "vxlan.j2" %}
 !
 no service interface inactive port-id allocation disabled
 !
@@ -16,12 +14,7 @@ transceiver qsfp default-mode 4x10G
 !
 service routing protocols model multi-agent
 !
-hostname {{ inventory_hostname }}
-ip domain lookup source-interface {{ global.lookup_source }}
-{% for dns in global.dns %}
-ip name-server vrf default {{ dns }}
-{% endfor %}
-dns domain lab.danielblazek.cz
+hostname leaf2
 !
 spanning-tree mode mstp
 !
@@ -29,14 +22,21 @@ system l1
    unsupported speed action error
    unsupported error-correction action error
 !
-{% include "fabric.j2" %}
-   !
-!
 management api gnmi
    transport grpc default
 !
 management api netconf
    transport ssh default
+!
+interface Ethernet1
+!
+interface Ethernet2
+!
+interface Management0
+   ip address 172.20.20.5/24
+   ipv6 address 3fff:172:20:20::5/64
+!
+no ip routing
 !
 ip route 0.0.0.0/0 172.20.20.1
 !

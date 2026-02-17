@@ -1,12 +1,3 @@
-!
-interface loopback0
-   description RouterID
-   ip address {{ router_id }}/32
-!
-interface loopback1
-   description VTEP
-   ip address {{ vtep }}/32
-!
 {% for ethernet_interface in ethernet_interfaces %}
 {% if ethernet_interface.peer_type in ['spine', 'leaf'] %}
 interface {{ ethernet_interface.name }}
@@ -48,3 +39,14 @@ interface {{ ethernet_interface.name }}
 !
 {% endif %}
 {% endfor %}
+interface Management0
+   ip address {{ mgmt_ipv4 }}
+   ipv6 address {{ mgmt_ipv6 }}
+!
+interface loopback0
+   description RouterID
+   ip address {{ router_id }}/32
+!
+interface loopback1
+   description VTEP
+   ip address {{ vtep }}/32

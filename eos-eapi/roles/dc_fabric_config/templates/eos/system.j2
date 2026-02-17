@@ -1,5 +1,0 @@
-{% for dns in global.dns %}
-ip name-server vrf default {{ dns }}
-{% endfor %}
-ip domain lookup source-interface {{ global.lookup_source }}
-dns domain lab.danielblazek.cz
