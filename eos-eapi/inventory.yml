@@ -33,3 +33,7 @@ all:
                   ansible_host: 172.20.20.2
                 spine2:
                   ansible_host: 172.20.20.3
+
+        DC1_TENANT_SERVICES:
+          children:
+            leaf:
