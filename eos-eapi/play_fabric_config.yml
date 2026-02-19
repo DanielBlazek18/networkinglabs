@@ -11,6 +11,6 @@
     - name: "Provision fabric configuration on switches"
       arista.eos.eos_config:
         src: "{{config_dir}}/{{ inventory_hostname }}.cfg"
-        replace: block
+        replace: config
         save_when: changed
       tags: deploy

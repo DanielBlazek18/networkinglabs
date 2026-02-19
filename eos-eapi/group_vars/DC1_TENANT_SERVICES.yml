@@ -1,0 +1,5 @@
+vlans:
+  - id: 10
+    name: L2_VLAN_10
+  - id: 20
+    name: L2_VLAN_20

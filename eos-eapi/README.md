@@ -1,5 +1,5 @@
 # Overview
-This LAB demonstrate how to use Ansible Network Collection for Arista EOS devices to deploy EVPN/VxLAN fabric and tenant configuration.
+This LAB demonstrate how to use Ansible Network Collection `Arista.Eos` to build and provision fabric (EVPN/VxLAN) and tenant configuration on Arista EOS devices.
 
 ## LAB consists of following routers:
 * `spine1`
@@ -8,5 +8,7 @@ This LAB demonstrate how to use Ansible Network Collection for Arista EOS device
 * `leaf2`
 * `leaf3`
 * `leaf4`
+* `host1`
+* `host2`
 
 Work in progress...

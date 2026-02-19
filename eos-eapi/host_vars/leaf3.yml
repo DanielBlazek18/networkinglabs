@@ -17,8 +17,8 @@ ethernet_interfaces:
   peer: spine2
   peer_interface: Ethernet3
   peer_type: spine
-- name: Ethernet3
-  shutdown: false
-  peer: host2
-  peer_interface: Ethernet1
-  peer_type: orphan
+# - name: Ethernet3
+#   shutdown: false
+#   peer: host2
+#   peer_interface: Ethernet1
+#   peer_type: orphan

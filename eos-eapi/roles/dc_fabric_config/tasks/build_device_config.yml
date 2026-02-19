@@ -1,18 +1,6 @@
 ---
-# - name: "Interface configuration"
-#   template:
-#     src: "{{ansible_network_os}}/intf.j2"
-#     dest: "{{build_dir}}/00_intf.cfg"
-#   tags: intf
-
-# - name: "Fabric configuration"
-#   template:
-#     src: "{{ansible_network_os}}/fabric.j2"
-#     dest: "{{build_dir}}/01_fabric.cfg"
-#   tags: fabric
-
-- name: "Generate all in base.j2 test"
+- name: "Generate configuration from the base.j2"
   template:
     src: "{{ansible_network_os}}/base.j2"
     dest: "{{build_dir}}/00_base.cfg"
-  tags: base-test
+  tags: base

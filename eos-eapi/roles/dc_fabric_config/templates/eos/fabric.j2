@@ -64,6 +64,10 @@ router bgp {{ bgp_as }}
 {% endfor %}
 {% endif %}
    redistribute connected route-map RM-CONN-2-BGP
+{% if 'leaf' in group_names %}
+   !
+{% include "mac-vrf.j2" %}
+{% endif %}
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate

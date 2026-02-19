@@ -5,6 +5,9 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan udp-port 4789
    vxlan learn-restrict any
+{% for vlan in vlans %}
+   vxlan vlan {{ vlan.id }} vni 100{{ vlan.id }}
+{% endfor %}
 !
 ip virtual-router mac-address {{ ip_virtual_router_mac_address }}
 {% endif %}
