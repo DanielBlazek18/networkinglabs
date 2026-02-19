@@ -62,3 +62,4 @@ interface loopback0
 interface loopback1
    description VTEP
    ip address {{ vtep }}/32
+{% include "svi-vrf.j2" %}

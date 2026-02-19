@@ -1,6 +1,12 @@
+{% if 'leaf' in group_names %}
+   !
 {% for vlan in vlans %}
    vlan {{ vlan.id }}
-      rd {{ vtep }}:100{{ vlan.id }}
-      route-target both 100{{ vlan.id }}:100{{ vlan.id }}
+      rd {{ router_id }}:10{{ "%04d" | format(vlan.id | int) }}
+      route-target both 10{{ "%04d" | format(vlan.id | int) }}:10{{ "%04d" | format(vlan.id | int) }}
       redistribute learned
+   !
 {% endfor %}
+{% elif 'spine'in group_names %}
+   !
+{% endif %}

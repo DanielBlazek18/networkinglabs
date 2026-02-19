@@ -1,0 +1,22 @@
+{% if 'leaf' in group_names %}
+!
+interface Vlan1
+   shutdown
+!
+{% for vrf in vrfs %}
+{% if vrf.svis is defined %}
+{% for svi in vrf.svis %}
+interface Vlan{{ svi.id }}
+   description {{ svi.name }}
+{% if svi.enabled %}
+   no shutdown
+{% else %}
+    shutdown
+{% endif %}
+   vrf {{ vrf.name }}
+   ip address virtual {{ svi.ipv4_address }}
+{% endfor %}
+!
+{% endif %}
+{% endfor %}
+{% endif %}

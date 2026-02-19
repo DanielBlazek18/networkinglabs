@@ -1,12 +1,14 @@
-{% if 'leaf'in group_names %}
-!
+{% if 'leaf' in group_names %}
 interface Vxlan1
    description {{ inventory_hostname }}_VTEP
    vxlan source-interface Loopback1
    vxlan udp-port 4789
    vxlan learn-restrict any
 {% for vlan in vlans %}
-   vxlan vlan {{ vlan.id }} vni 100{{ vlan.id }}
+   vxlan vlan {{ vlan.id }} vni 10{{ "%04d" | format(vlan.id | int) }}
+{% endfor %}
+{% for vrf in vrfs %}
+   vxlan vrf {{ vrf.name }} vni {{ "%04d" | format(vrf.vni | int) }}
 {% endfor %}
 !
 ip virtual-router mac-address {{ ip_virtual_router_mac_address }}

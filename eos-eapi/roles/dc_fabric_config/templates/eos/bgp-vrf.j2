@@ -1,0 +1,12 @@
+{% if 'leaf' in group_names %}
+   !
+{% for vrf in vrfs %}
+   vrf {{ vrf.name }}
+      rd {{ router_id }}:{{ "%04d" | format(vrf.vni | int) }}
+      route-target import evpn {{ "%04d" | format(vrf.vni | int) }}:{{ "%04d" | format(vrf.vni | int) }}
+      route-target export evpn {{ "%04d" | format(vrf.vni | int) }}:{{ "%04d" | format(vrf.vni | int) }}
+      router-id {{ router_id }}
+      redistribute connected
+   !
+{% endfor %}
+{% endif %}
