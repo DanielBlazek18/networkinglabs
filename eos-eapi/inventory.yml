@@ -37,6 +37,3 @@ all:
         DC1_TENANT_SERVICES:
           children:
             leaf:
-        DC1_CONNECTED_ENDPOINTS:
-          children:
-            leaf:

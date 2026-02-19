@@ -5,8 +5,8 @@
 interface Port-Channel{{ ethernet_interface.channel_group.id }}
    description {{ ethernet_interface.peer }}_{{ ethernet_interface.peer_interface }}
    no shutdown
-   switchport trunk native vlan 1000
-   switchport trunk allowed vlan none
+   switchport trunk native vlan {{ ethernet_interface.native_vlan }}
+   switchport trunk allowed vlan {{ ethernet_interface.allowed_vlans }}
    switchport mode trunk
    switchport
    !
@@ -34,10 +34,15 @@ interface {{ ethernet_interface.name }}
 interface {{ ethernet_interface.name }}
    description {{ ethernet_interface.peer }}
    no shutdown
-   switchport trunk native vlan 1000
-   switchport trunk allowed vlan none
+{% if ethernet_interface.mode == 'trunk' %}
+   switchport trunk native vlan {{ ethernet_interface.native_vlan }}
+   switchport trunk allowed vlan {{ ethernet_interface.allowed_vlans }}
    switchport mode trunk
+{% elif ethernet_interface.mode == 'access' %}
+   switchport mode access
+   switchport access vlan {{ ethernet_interface.access_vlan }}
    switchport
+{% endif %}
 {% endif %}
 {% if ethernet_interface.shutdown == 'true' %}
    shutdown

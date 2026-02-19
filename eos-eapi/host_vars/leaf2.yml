@@ -18,11 +18,14 @@ ethernet_interfaces:
   peer: spine2
   peer_interface: Ethernet2
   peer_type: spine
-# - name: Ethernet3
-#   shutdown: false
-#   channel_group:
-#     id: 1
-#     mode: active
-#   peer: host1
-#   peer_interface: Ethernet1
-#   peer_type: esi
+- name: Ethernet3
+  shutdown: false
+  channel_group:
+    id: 1
+    mode: active
+  peer: host1
+  peer_interface: Ethernet1
+  peer_type: esi
+  mode: trunk
+  allowed_vlans: 10,20
+  native_vlan: 1000
