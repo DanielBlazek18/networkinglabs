@@ -21,6 +21,9 @@ dns domain lab.danielblazek.cz
 !
 spanning-tree mode mstp
 !
+clock timezone Europe/Prague
+{% include "vlan.j2" %}
+!
 system l1
    unsupported speed action error
    unsupported error-correction action error
