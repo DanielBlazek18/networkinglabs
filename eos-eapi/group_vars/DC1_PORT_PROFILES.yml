@@ -3,6 +3,6 @@ port_profiles:
         mode: trunk
         allowed_vlans: 10,20
         native_vlan: 1000
-    host2_server:
+    baremetal:
         mode: access
         access_vlan: 10

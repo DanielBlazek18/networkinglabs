@@ -22,4 +22,4 @@ ethernet_interfaces:
   peer: host2
   peer_interface: Ethernet1
   peer_type: orphan
-  port_profile: host2_server
+  port_profile: baremetal
