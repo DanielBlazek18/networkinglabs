@@ -1,0 +1,7 @@
+{% if 'leaf' in group_names %}
+!
+{% for vlan in vlans %}
+vlan {{ vlan.id }}
+   name {{ vlan.name }}
+{% endfor %}
+{% endif %}

@@ -1,0 +1,8 @@
+port_profiles:
+    compute_servers_dc1:
+        mode: trunk
+        allowed_vlans: 10,20
+        native_vlan: 1000
+    baremetal:
+        mode: access
+        access_vlan: 10

@@ -1,0 +1,70 @@
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret admin
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname {{ inventory_hostname }}
+ip domain lookup source-interface {{ global.lookup_source }}
+{% for dns in global.dns %}
+ip name-server vrf default {{ dns }}
+{% endfor %}
+dns domain lab.danielblazek.cz
+!
+spanning-tree mode mstp
+!
+clock timezone Europe/Prague
+{% include "vlan.j2" %}
+!
+{% if 'leaf'in group_names %}
+{% for vrf in vrfs %}
+vrf instance {{ vrf.name }}
+!
+{% endfor %}
+{% endif %}
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+{% include "intf.j2" %}
+{% include "vxlan.j2" %}
+{% if 'spine'in group_names %}
+!
+{% endif %}
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+{% if 'leaf' in group_names %}
+ip routing
+{% for vrf in vrfs %}
+ip routing vrf {{ vrf.name }}
+{% endfor %}
+!
+{% elif 'spine'in group_names %}
+ip routing
+!
+{% endif %}
+{% include "fabric.j2" %}
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

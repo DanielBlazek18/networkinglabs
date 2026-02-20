@@ -1,0 +1,38 @@
+mgmt_ipv4: 172.20.20.4
+mgmt_ipv6: 3fff:172:20:20::4
+router_id: 100.64.0.3
+vtep: 100.65.0.3
+bgp_as: 4200000003
+ip_virtual_router_mac_address: 0a:00:ca:fe:00:01
+switch_group: "0001"
+ethernet_interfaces:
+- name: Ethernet1
+  shutdown: false
+  ip_address: 10.1.3.3/24
+  peer: spine1
+  peer_interface: Ethernet1
+  peer_type: spine
+- name: Ethernet2
+  shutdown: false
+  ip_address: 10.2.3.3/24
+  peer: spine2
+  peer_interface: Ethernet1
+  peer_type: spine
+- name: Ethernet3
+  shutdown: false
+  channel_group:
+    id: 1
+    mode: active
+  peer: host1
+  peer_interface: Ethernet1
+  peer_type: esi
+  port_profile: compute_servers_dc1
+- name: Ethernet4
+  shutdown: true
+  channel_group:
+    id: 2
+    mode: active
+  peer: host3
+  peer_interface: Ethernet1
+  peer_type: esi
+  port_profile: compute_servers_dc1

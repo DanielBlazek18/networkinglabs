@@ -1,0 +1,22 @@
+---
+- name: Build Required Directories
+  import_tasks: build_config_dir.yml
+
+- name: Build Device Configuration
+  import_tasks: build_device_config.yml
+
+- name: Remove Old Assembled Config
+  ansible.builtin.file:
+    path: "{{ config_dir }}/{{ inventory_hostname }}.cfg"
+    state: absent
+
+- name: Build Final Device Configuration
+  ansible.builtin.assemble:
+    src: "{{ build_dir }}"
+    dest: "{{ config_dir }}/{{ inventory_hostname }}.cfg"
+
+- name: Remove Build Directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: absent
+  run_once: true

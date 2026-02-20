@@ -1,0 +1,6 @@
+---
+- name: "Generate configuration from the base.j2"
+  template:
+    src: "{{ansible_network_os}}/base.j2"
+    dest: "{{build_dir}}/00_base.cfg"
+  tags: base
