@@ -4,8 +4,9 @@
 
 ---
 
-List of the existing LABs and short description:
+List of the existing LABs with a short description:
 * **d-intf-bgp**: Interface-based BGP neighbors established over IPv6 link-local addresses. The IPv4 address family is enabled to exchange prefixes.
+* **eos-eapi**: IaC to provision and configure Clos fabric with `Arista.Eos` Ansible collection.
 * **eos-telemetry**: Arista EOS telemetry streaming via gNMI (gRPC). Components used in the lab:
   * Arista cEOS
   * pyGNMI: Python gNMI client
