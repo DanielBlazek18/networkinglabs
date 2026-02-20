@@ -4,10 +4,22 @@
 !
 interface Port-Channel{{ ethernet_interface.channel_group.id }}
    description {{ ethernet_interface.peer }}_{{ ethernet_interface.peer_interface }}
+{% if ethernet_interface.shutdown %}
+   shutdown
+{% else %}
    no shutdown
-   switchport trunk native vlan {{ ethernet_interface.native_vlan }}
-   switchport trunk allowed vlan {{ ethernet_interface.allowed_vlans }}
+{% endif %}
+{% set profile = port_profiles.get(ethernet_interface.port_profile) %}
+{% if profile %}
+{% if profile.mode == 'trunk' %}
+   switchport trunk native vlan {{ profile.native_vlan }}
+   switchport trunk allowed vlan {{ profile.allowed_vlans }}
    switchport mode trunk
+{% elif profile.mode == 'access' %}
+   switchport mode access
+   switchport access vlan {{ profile.access_vlan }}
+{% endif %}
+{% endif %}
    switchport
    !
    evpn ethernet-segment
@@ -28,33 +40,30 @@ interface {{ ethernet_interface.name }}
 {% elif ethernet_interface.peer_type == 'esi' %}
 interface {{ ethernet_interface.name }}
    description {{ ethernet_interface.peer }}
-   no shutdown
    channel-group {{ ethernet_interface.channel_group.id }} mode {{ ethernet_interface.channel_group.mode }}
 {% elif ethernet_interface.peer_type == 'orphan' %}
 interface {{ ethernet_interface.name }}
    description {{ ethernet_interface.peer }}
-   no shutdown
-{% if ethernet_interface.mode == 'trunk' %}
-   switchport trunk native vlan {{ ethernet_interface.native_vlan }}
-   switchport trunk allowed vlan {{ ethernet_interface.allowed_vlans }}
+{% set profile = port_profiles.get(ethernet_interface.port_profile) %}
+{% if profile %}
+{% if profile.mode == 'trunk' %}
+   switchport trunk native vlan {{ profile.native_vlan }}
+   switchport trunk allowed vlan {{ profile.allowed_vlans }}
    switchport mode trunk
-{% elif ethernet_interface.mode == 'access' %}
+{% elif profile.mode == 'access' %}
    switchport mode access
-   switchport access vlan {{ ethernet_interface.access_vlan }}
-   switchport
+   switchport access vlan {{ profile.access_vlan }}
 {% endif %}
 {% endif %}
-{% if ethernet_interface.shutdown == 'true' %}
+{% endif %}
+{% if ethernet_interface.shutdown %}
    shutdown
+!
 {% else %}
    no shutdown
 !
 {% endif %}
 {% endfor %}
-interface Management0
-   ip address {{ mgmt_ipv4 }}/24
-   ipv6 address {{ mgmt_ipv6 }}/64
-!
 interface loopback0
    description RouterID
    ip address {{ router_id }}/32
@@ -62,4 +71,8 @@ interface loopback0
 interface loopback1
    description VTEP
    ip address {{ vtep }}/32
+!
+interface Management0
+   ip address {{ mgmt_ipv4 }}/24
+   ipv6 address {{ mgmt_ipv6 }}/64
 {% include "svi-vrf.j2" %}

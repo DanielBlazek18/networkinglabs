@@ -24,8 +24,15 @@ ethernet_interfaces:
     id: 1
     mode: active
   peer: host1
-  peer_interface: Ethernet1
+  peer_interface: Ethernet2
   peer_type: esi
-  mode: trunk
-  allowed_vlans: 10,20
-  native_vlan: 1000
+  port_profile: compute_servers_dc1
+- name: Ethernet4
+  shutdown: true
+  channel_group:
+    id: 2
+    mode: active
+  peer: host3
+  peer_interface: Ethernet2
+  peer_type: esi
+  port_profile: compute_servers_dc1

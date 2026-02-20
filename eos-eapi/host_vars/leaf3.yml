@@ -22,5 +22,4 @@ ethernet_interfaces:
   peer: host2
   peer_interface: Ethernet1
   peer_type: orphan
-  mode: access
-  access_vlan: 10
+  port_profile: host2_server
