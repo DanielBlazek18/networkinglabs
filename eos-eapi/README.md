@@ -59,7 +59,7 @@ base.j2
 ├── vxlan.j2
 ├── intf.j2
 │   └── svi.j2
-└── fabric.j2
+└── bgp.j2
     ├── mac-vrf.j2
     └── bgp-vrf.j2
 ```
