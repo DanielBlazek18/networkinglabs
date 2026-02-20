@@ -55,6 +55,18 @@ interface {{ ethernet_interface.name }}
    switchport access vlan {{ profile.access_vlan }}
 {% endif %}
 {% endif %}
+{% elif ethernet_interface.peer_type == 'external' %}
+{% set profile = port_profiles.get(ethernet_interface.port_profile) %}
+{% set external_peer = external_peers.get(ethernet_interface.port_profile) %}
+{% if profile and external_peer %}
+{% if profile.mode == 'routed' %}
+interface {{ ethernet_interface.name }}
+   description {{ ethernet_interface.peer }}_{{ ethernet_interface.peer_interface }}
+   no switchport
+   vrf {{ external_peer.vrf }}
+   ip address {{ ethernet_interface.ipv4_address }}
+{% endif %}
+{% endif %}
 {% endif %}
 {% if ethernet_interface.shutdown %}
    shutdown

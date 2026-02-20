@@ -1,22 +1,33 @@
 vlans:
-  - id: 10
-    name: L2_VLAN_10
-  - id: 20
-    name: L2_VLAN_20
-  - id: 3000
-    name: L2_VLAN_3000
+  L2_VLAN_10:
+    id: 10
+  L2_VLAN_20:
+    id: 20
+  L2_VLAN_3000:
+    id: 3000
 vrfs:
-  - name: vrf-01
+  vrf-01:
     vni: 1010
     svis:
-      - id: 10
-        name: vrf-01_vlan10
-        enabled: true
-        ipv4_address: 10.0.10.1/24
-  - name: vrf-02
+    - id: 10
+      name: vrf-01_vlan10
+      enabled: true
+      ipv4_address: 10.0.10.1/24
+  vrf-02:
     vni: 1020
     svis:
-      - id: 20
-        name: vrf-02_vlan20
-        enabled: true
-        ipv4_address: 10.0.20.1/24
+    - id: 20
+      name: vrf-02_vlan20
+      enabled: true
+      ipv4_address: 10.0.20.1/24
+external_peers:
+  isp-dc1:
+    vrf: vrf-01
+    ipv4_address: 192.0.0.1
+    ipv4_peer_address: 192.0.0.0
+    remote_as: 65000
+    local_as: 345
+    prefix_set_in: isp-dc1-inbound
+    prefix_set_out: isp-dc1-outbound
+    password: LAB
+    enabled: true

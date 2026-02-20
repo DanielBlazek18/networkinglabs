@@ -1,12 +1,37 @@
 {% if 'leaf' in group_names %}
    !
-{% for vrf in vrfs %}
-   vrf {{ vrf.name }}
+{% for vrf_name, vrf in vrfs.items() %}
+   vrf {{ vrf_name }}
       rd {{ router_id }}:{{ vrf.vni }}
       route-target import evpn {{ "%04d" | format(vrf.vni | int) }}:{{ "%04d" | format(vrf.vni | int) }}
       route-target export evpn {{ "%04d" | format(vrf.vni | int) }}:{{ "%04d" | format(vrf.vni | int) }}
       router-id {{ router_id }}
       redistribute connected
+{% for peer_name, peer in external_peers.items()
+     if peer.vrf == vrf_name
+     and ethernet_interfaces
+        | selectattr('port_profile', 'defined')
+        | selectattr('port_profile', 'equalto', peer_name)
+        | list
+        | length > 0 %}
+      neighbor {{ peer.ipv4_peer_address }} remote-as {{ peer.remote_as }}
+      neighbor {{ peer.ipv4_peer_address }} local-as {{ peer.local_as }} no-prepend replace-as 
+      neighbor {{ peer.ipv4_peer_address }} timers 5 15
+      neighbor {{ peer.ipv4_peer_address }} bfd
+      neighbor {{ peer.ipv4_peer_address }} bfd interval 300 min-rx 300 multiplier 3
+      neighbor {{ peer.ipv4_peer_address }} password {{ peer.password }}
+{% if peer.enabled %}
+      neighbor {{ peer.ipv4_peer_address }} no shutdown
+{% else %}
+      neighbor {{ peer.ipv4_peer_address }} shutdown
+{% endif %}
+      neighbor {{ peer.ipv4_peer_address }} maximum-routes 10000
+      !
+      address-family ipv4
+         neighbor {{ peer.ipv4_peer_address }} activate
+         neighbor {{ peer.ipv4_peer_address }} route-map {{ peer.prefix_set_in }} in
+         neighbor {{ peer.ipv4_peer_address }} route-map {{ peer.prefix_set_out }} out
+{% endfor %}
    !
 {% endfor %}
 {% endif %}
