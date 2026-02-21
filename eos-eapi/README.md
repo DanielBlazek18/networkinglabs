@@ -14,6 +14,10 @@ The fabric design is based on an **EVPN/VXLAN** architecture.
 * Hosts:
     * `host1`
     * `host2`
+    * `host3`
+* Peers:
+    * `isp-router1`
+    * `isp-router2`
 
 ## Key components used:
 * Ansible Network Collection for Arista EOS devices - `Arista.Eos`
