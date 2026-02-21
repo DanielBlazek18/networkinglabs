@@ -39,7 +39,7 @@ ethernet_interfaces:
 - name: Ethernet5
   shutdown: false
   ipv4_address: 191.0.0.1/31
-  peer: isp-router
+  peer: isp-router1
   peer_interface: Ethernet1
   peer_type: external
-  port_profile: isp-dc1
+  port_profile: isp-dc1-primary

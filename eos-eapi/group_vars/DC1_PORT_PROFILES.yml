@@ -6,5 +6,7 @@ port_profiles:
     baremetal:
         mode: access
         access_vlan: 10
-    isp-dc1:
+    isp-dc1-primary:
+        mode: routed
+    isp-dc1-secondary:
         mode: routed

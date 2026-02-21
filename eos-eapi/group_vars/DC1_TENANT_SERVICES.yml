@@ -21,13 +21,34 @@ vrfs:
       enabled: true
       ipv4_address: 10.0.20.1/24
 external_peers:
-  isp-dc1:
+  isp-dc1-primary:
     vrf: vrf-01
     ipv4_address: 192.0.0.1
     ipv4_peer_address: 192.0.0.0
     remote_as: 65000
     local_as: 345
-    prefix_set_in: isp-dc1-inbound
-    prefix_set_out: isp-dc1-outbound
+    prefix_set_in: isp-dc1-in
+    prefix_set_out: isp-dc1-out
     password: LAB
     enabled: true
+    role: primary
+  isp-dc1-secondary:
+    vrf: vrf-01
+    ipv4_address: 192.0.0.3
+    ipv4_peer_address: 192.0.0.2
+    remote_as: 65000
+    local_as: 345
+    prefix_set_in: isp-dc1-in
+    prefix_set_out: isp-dc1-out
+    password: LAB
+    enabled: true
+    role: secondary
+prefix_sets:
+  isp-dc1-in:
+  - 0.0.0.0/0
+  - 8.8.8.4/32
+  - 8.8.8.8/32
+  isp-dc1-out:
+  - 192.0.0.0/25
+  - 192.0.0.128/25
+  - 131.125.11.0/24 le 25

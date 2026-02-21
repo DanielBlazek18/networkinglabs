@@ -29,8 +29,8 @@
       !
       address-family ipv4
          neighbor {{ peer.ipv4_peer_address }} activate
-         neighbor {{ peer.ipv4_peer_address }} route-map {{ peer.prefix_set_in }} in
-         neighbor {{ peer.ipv4_peer_address }} route-map {{ peer.prefix_set_out }} out
+         neighbor {{ peer.ipv4_peer_address }} route-map AS_{{ peer.remote_as }}_{{ peer_name | upper }}_IN in
+         neighbor {{ peer.ipv4_peer_address }} route-map AS_{{ peer.remote_as }}_{{ peer_name | upper }}_OUT out
 {% endfor %}
    !
 {% endfor %}

@@ -1,0 +1,25 @@
+{% if 'leaf' in group_names %}
+{% for peer_name, peer in external_peers.items()
+     if ethernet_interfaces
+        | selectattr('port_profile', 'defined')
+        | selectattr('port_profile', 'equalto', peer_name)
+        | list
+        | length > 0 %}
+route-map AS_{{ peer.remote_as }}_{{ peer_name | upper }}_IN permit 10
+   match ip address prefix-list AS_{{ peer.remote_as }}_{{ peer_name | upper }}_IN
+{% if peer.role == 'primary' %}
+   set local-preference 120
+   set metric 100
+{% elif peer.role == 'secondary' %}
+   set local-preference 90
+   set metric 200
+{% endif %}
+!
+route-map AS_{{ peer.remote_as }}_{{ peer_name | upper }}_OUT permit 10
+   match ip address prefix-list AS_{{ peer.remote_as }}_{{ peer_name | upper }}_OUT
+{% if peer.role == 'secondary' %}
+   set as-path prepend last-as 2
+{% endif %}
+!
+{% endfor %}
+{% endif %}

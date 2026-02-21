@@ -2,9 +2,11 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
    seq 10 permit 100.64.0.0/24 eq 32
    seq 20 permit 100.65.0.0/24 eq 32
 !
+{% include "prefix-set.j2" %}
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 !
+{% include "rpl.j2" %}
 router bgp {{ bgp_as }}
    router-id {{ router_id }}
    update wait-install

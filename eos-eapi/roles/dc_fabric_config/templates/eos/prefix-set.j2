@@ -1,0 +1,21 @@
+{% if 'leaf' in group_names %}
+{% for peer_name, peer in external_peers.items()
+     if ethernet_interfaces
+        | selectattr('port_profile', 'defined')
+        | selectattr('port_profile', 'equalto', peer_name)
+        | list
+        | length > 0 %}
+ip prefix-list AS_{{ peer.remote_as }}_{{ peer_name | upper }}_IN
+{% set prefix_set_in = prefix_sets.get(peer.prefix_set_in) %}
+{% for prefix in prefix_set_in %}
+   seq {{ loop.index * 10 }} permit {{ prefix }}
+{% endfor %}
+!
+ip prefix-list AS_{{ peer.remote_as }}_{{ peer_name | upper }}_OUT
+{% set prefix_set_out = prefix_sets.get(peer.prefix_set_out) %}
+{% for prefix in prefix_set_out %}
+   seq {{ loop.index * 10 }} permit {{ prefix }}
+{% endfor %}
+!
+{% endfor %}
+{% endif %}
