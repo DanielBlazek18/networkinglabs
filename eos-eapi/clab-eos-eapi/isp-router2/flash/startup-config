@@ -1,0 +1,50 @@
+! Startup-config last modified at Sat Feb 21 12:36:57 2026 by root
+! device: isp-router2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$xLunuUdP6Q94KMMJ$5K9oc5R5HHZKP7kB.GKRA6ldV3M5cT63o6TDnlnnlXeFbmndpAl/WDgMnk2I.Da4KJF8u05l1v.uK7I4kl1V4.
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname isp-router2
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+!
+interface Management0
+   ip address 172.20.20.12/24
+   ipv6 address 3fff:172:20:20::12/64
+!
+no ip routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

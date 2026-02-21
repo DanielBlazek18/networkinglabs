@@ -3,7 +3,7 @@
 {% for vlan_name, vlan in vlans.items() %}
    vlan {{ vlan.id }}
       rd {{ router_id }}:{{ vlan.id }}
-      route-target both 10{{ "%04d" | format(vlan.id | int) }}:10{{ "%04d" | format(vlan.id | int) }}
+      route-target both 345:10{{ "%04d" | format(vlan.id | int) }}
       redistribute learned
    !
 {% endfor %}

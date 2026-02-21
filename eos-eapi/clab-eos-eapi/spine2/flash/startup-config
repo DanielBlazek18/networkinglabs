@@ -1,9 +1,9 @@
-! Startup-config last modified at Thu Feb 19 09:49:20 2026 by admin
-! device: spine2 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
+! Startup-config last modified at Sat Feb 21 13:52:03 2026 by admin
+! device: spine2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$Fn/sfQsSqgGoCGID$SajhBe2YeCTWK1zeVtTVW7YNdF4SLXa1YBSB0ukXAWiOsp634kppXWyB5Zh2Td15Z4PpSgDqucty5rdw4BF4l/
+username admin privilege 15 role network-admin secret sha512 $6$X//yBt1t4tsWyjPM$D9zdAkSbbwCSAO6pvVR7B8VIsYVaF/P7mVXdpYO.ll9wNaJKX2cmhpvvRUmn02b7.Bu9zwZ32FVPd3NxBcdcv1
 !
 management api http-commands
    no shutdown
@@ -25,6 +25,8 @@ spanning-tree mode mstp
 system l1
    unsupported speed action error
    unsupported error-correction action error
+!
+clock timezone Europe/Prague
 !
 management api gnmi
    transport grpc default

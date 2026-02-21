@@ -1,9 +1,9 @@
-! Startup-config last modified at Thu Feb 19 09:49:20 2026 by admin
-! device: leaf4 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
+! Startup-config last modified at Sat Feb 21 13:52:02 2026 by admin
+! device: leaf4 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$0FJxOLSoJj9hAzTO$IriKVPNbIJWZwxFyWvZcb4iCf8iqhvsb9OSbaT5J48oiQLTUjj9MhCOXquT7/9JXXnzx0jvZznZ2FyehDsepa0
+username admin privilege 15 role network-admin secret sha512 $6$gl1LFs99cQBDfHlD$3Kd3dzzw67cJ2JntL2fTfJhW3aFXUt0XsgzDLrsielJvWr5M82XuJOkZnpuKhSvRWYK9bRsMa31tITh5mMfW80
 !
 management api http-commands
    no shutdown
@@ -25,6 +25,21 @@ spanning-tree mode mstp
 system l1
    unsupported speed action error
    unsupported error-correction action error
+!
+clock timezone Europe/Prague
+!
+vlan 10
+   name L2_VLAN_10
+!
+vlan 20
+   name L2_VLAN_20
+!
+vlan 3000
+   name L2_VLAN_3000
+!
+vrf instance vrf-01
+!
+vrf instance vrf-02
 !
 management api gnmi
    transport grpc default
@@ -56,15 +71,35 @@ interface Management0
    ip address 172.20.20.7/24
    ipv6 address 3fff:172:20:20::7/64
 !
+interface Vlan1
+   shutdown
+!
+interface Vlan10
+   description vrf-01_vlan10
+   vrf vrf-01
+   ip address virtual 10.0.10.1/24
+!
+interface Vlan20
+   description vrf-02_vlan20
+   vrf vrf-02
+   ip address virtual 10.0.20.1/24
+!
 interface Vxlan1
    description leaf4_VTEP
    vxlan source-interface Loopback1
    vxlan udp-port 4789
+   vxlan vlan 10 vni 100010
+   vxlan vlan 20 vni 100020
+   vxlan vlan 3000 vni 103000
+   vxlan vrf vrf-01 vni 1010
+   vxlan vrf vrf-02 vni 1020
    vxlan learn-restrict any
 !
 ip virtual-router mac-address 0a:00:ca:fe:00:02
 !
 ip routing
+ip routing vrf vrf-01
+ip routing vrf vrf-02
 !
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
    seq 10 permit 100.64.0.0/24 eq 32
@@ -107,6 +142,21 @@ router bgp 4200000006
    neighbor 100.64.0.2 description spine2_Loopback0
    redistribute connected route-map RM-CONN-2-BGP
    !
+   vlan 10
+      rd 100.64.0.6:10
+      route-target both 345:100010
+      redistribute learned
+   !
+   vlan 20
+      rd 100.64.0.6:20
+      route-target both 345:100020
+      redistribute learned
+   !
+   vlan 3000
+      rd 100.64.0.6:3000
+      route-target both 345:103000
+      redistribute learned
+   !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
       host-flap detection expiry timeout 300.0 seconds
@@ -114,6 +164,20 @@ router bgp 4200000006
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
+   !
+   vrf vrf-01
+      rd 100.64.0.6:1010
+      route-target import evpn 345:1010
+      route-target export evpn 345:1010
+      router-id 100.64.0.6
+      redistribute connected
+   !
+   vrf vrf-02
+      rd 100.64.0.6:1020
+      route-target import evpn 345:1020
+      route-target export evpn 345:1020
+      router-id 100.64.0.6
+      redistribute connected
 !
 router multicast
    ipv4
