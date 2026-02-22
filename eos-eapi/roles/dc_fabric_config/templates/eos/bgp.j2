@@ -1,8 +1,3 @@
-ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-   seq 10 permit 100.64.0.0/24 eq 32
-   seq 20 permit 100.65.0.0/24 eq 32
-!
-{% include "prefix-set.j2" %}
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 !
@@ -37,33 +32,12 @@ router bgp {{ bgp_as }}
    neighbor {{ hostvars[leaf].router_id }} description {{ leaf }}_Loopback0
 {% endfor %}
 {% endif %}
-{% if 'leaf' in group_names %}
-{% for spine in groups['spine'] %}
-{% set spine_intf = hostvars[spine].ethernet_interfaces
-   | selectattr('peer', 'equalto', inventory_hostname)
-   | list
-   | first %}
-{% if spine_intf is defined %}
-   neighbor {{ spine_intf.ip_address.split('/')[0] }} peer group IPv4-UNDERLAY-PEERS
-   neighbor {{ spine_intf.ip_address.split('/')[0] }} remote-as {{ hostvars[spine].bgp_as }}
-   neighbor {{ spine_intf.ip_address.split('/')[0] }} description {{ spine }}_{{ spine_intf.name }}
-{% endif %}
-{% endfor %}
-{% endif %}
-{% if 'spine' in group_names %}
-{% for leaf in groups['leaf'] %}
-{% set leaf_intf = hostvars[leaf].ethernet_interfaces
-   | selectattr('peer', 'equalto', inventory_hostname)
-   | list
-   | first %}
-{% if leaf_intf is defined %}
-   neighbor {{ leaf_intf.ip_address.split('/')[0] }} peer group IPv4-UNDERLAY-PEERS
-   neighbor {{ leaf_intf.ip_address.split('/')[0] }} remote-as {{ hostvars[leaf].bgp_as }}
-   neighbor {{ leaf_intf.ip_address.split('/')[0] }} description {{ leaf }}_{{ leaf_intf.name }}
-{% endif %}
-{% endfor %}
-{% endif %}
    redistribute connected route-map RM-CONN-2-BGP
+{% for ethernet_interface in ethernet_interfaces %}
+{% if ethernet_interface.peer_type == 'spine' or ethernet_interface.peer_type == 'leaf' %}
+   neighbor interface {{ ethernet_interface.name }} peer-group IPv4-UNDERLAY-PEERS remote-as {{ hostvars[ethernet_interface.peer].bgp_as }}
+{% endif %}
+{% endfor %}
 {% include "mac-vrf.j2" %}
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
@@ -72,4 +46,5 @@ router bgp {{ bgp_as }}
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
+      neighbor IPv4-UNDERLAY-PEERS next-hop address-family ipv6 originate
 {% include "bgp-vrf.j2" %}

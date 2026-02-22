@@ -1,4 +1,4 @@
-! Startup-config last modified at Sat Feb 21 12:36:49 2026 by root
+! Startup-config last modified at Sun Feb 22 12:40:30 2026 by root
 ! device: isp-router1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root

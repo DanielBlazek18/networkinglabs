@@ -1,30 +1,26 @@
 mgmt_ipv4: 172.20.20.3
 mgmt_ipv6: 3fff:172:20:20::3
 router_id: 100.64.0.2
-vtep: 100.65.0.2
+router_id_v6: 2001::100:64:0:2
 bgp_as: 4200000000
 ethernet_interfaces:
 - name: Ethernet1
   shutdown: false
-  ip_address: 10.2.3.2/24
   peer: leaf1
   peer_interface: Ethernet1
   peer_type: leaf
 - name: Ethernet2
   shutdown: false
-  ip_address: 10.2.4.2/24
   peer: leaf2
   peer_interface: Ethernet2
   peer_type: leaf
 - name: Ethernet3
   shutdown: false
-  ip_address: 10.2.5.2/24
   peer: leaf3
   peer_interface: Ethernet3
   peer_type: leaf
 - name: Ethernet4
   shutdown: false
-  ip_address: 10.2.6.2/24
   peer: leaf4
   peer_interface: Ethernet4
   peer_type: leaf

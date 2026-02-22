@@ -44,20 +44,26 @@ management api netconf
 {% if 'spine'in group_names %}
 !
 {% endif %}
+{% if 'leaf' in group_names %}
+ip routing
+{% elif 'spine' in group_names %}
+ip routing ipv6 interface
+{% endif %}
+{% if 'leaf' in group_names %}
+{% for vrf_name, vrf in vrfs.items() %}
+ip routing vrf {{ vrf_name }}
+{% endfor %}
+{% endif %}
+!
+{% include "prefix-set.j2" %}
+
+!
+ipv6 unicast-routing
+!
 ip route 0.0.0.0/0 172.20.20.1
 !
 ipv6 route ::/0 3fff:172:20:20::1
 !
-{% if 'leaf' in group_names %}
-ip routing
-{% for vrf_name, vrf in vrfs.items() %}
-ip routing vrf {{ vrf_name }}
-{% endfor %}
-!
-{% elif 'spine'in group_names %}
-ip routing
-!
-{% endif %}
 {% include "bgp.j2" %}
 !
 router multicast

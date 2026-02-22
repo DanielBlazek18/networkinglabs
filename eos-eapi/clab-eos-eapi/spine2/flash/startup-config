@@ -1,9 +1,9 @@
-! Startup-config last modified at Sat Feb 21 13:52:03 2026 by admin
+! Startup-config last modified at Sun Feb 22 14:47:10 2026 by admin
 ! device: spine2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$X//yBt1t4tsWyjPM$D9zdAkSbbwCSAO6pvVR7B8VIsYVaF/P7mVXdpYO.ll9wNaJKX2cmhpvvRUmn02b7.Bu9zwZ32FVPd3NxBcdcv1
+username admin privilege 15 role network-admin secret sha512 $6$Pb3A7U9/y1SRgRlh$F0Vq24SOu8le4zJu0DLbT.VbjuZwqaD0bzLS3jXVxKfsMkl1TMvFPEhbiHtV7t6mCJDqS5gqxFmrNq/xHvltt.
 !
 management api http-commands
    no shutdown
@@ -38,33 +38,30 @@ interface Ethernet1
    description leaf1_Ethernet1
    mtu 9202
    no switchport
-   ip address 10.2.3.2/24
+   ipv6 enable
 !
 interface Ethernet2
    description leaf2_Ethernet2
    mtu 9202
    no switchport
-   ip address 10.2.4.2/24
+   ipv6 enable
 !
 interface Ethernet3
    description leaf3_Ethernet3
    mtu 9202
    no switchport
-   ip address 10.2.5.2/24
+   ipv6 enable
 !
 interface Ethernet4
    description leaf4_Ethernet4
    mtu 9202
    no switchport
-   ip address 10.2.6.2/24
+   ipv6 enable
 !
 interface Loopback0
    description RouterID
    ip address 100.64.0.2/32
-!
-interface Loopback1
-   description VTEP
-   ip address 100.65.0.2/32
+   ipv6 address 2001::100:64:0:2/128
 !
 interface Management0
    ip address 172.20.20.3/24
@@ -75,6 +72,8 @@ ip routing
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
    seq 10 permit 100.64.0.0/24 eq 32
    seq 20 permit 100.65.0.0/24 eq 32
+!
+ipv6 unicast-routing
 !
 ip route 0.0.0.0/0 172.20.20.1
 !
@@ -99,18 +98,6 @@ router bgp 4200000000
    neighbor IPv4-UNDERLAY-PEERS password 7 GKFABHQp8d8=
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 10.2.3.3 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.2.3.3 remote-as 4200000003
-   neighbor 10.2.3.3 description leaf1_Ethernet2
-   neighbor 10.2.4.4 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.2.4.4 remote-as 4200000004
-   neighbor 10.2.4.4 description leaf2_Ethernet2
-   neighbor 10.2.5.5 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.2.5.5 remote-as 4200000005
-   neighbor 10.2.5.5 description leaf3_Ethernet2
-   neighbor 10.2.6.6 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.2.6.6 remote-as 4200000006
-   neighbor 10.2.6.6 description leaf4_Ethernet2
    neighbor 100.64.0.3 peer group EVPN-OVERLAY-PEERS
    neighbor 100.64.0.3 remote-as 4200000003
    neighbor 100.64.0.3 description leaf1_Loopback0
@@ -124,6 +111,10 @@ router bgp 4200000000
    neighbor 100.64.0.6 remote-as 4200000006
    neighbor 100.64.0.6 description leaf4_Loopback0
    redistribute connected route-map RM-CONN-2-BGP
+   neighbor interface Et1 peer-group IPv4-UNDERLAY-PEERS remote-as 4200000003
+   neighbor interface Et2 peer-group IPv4-UNDERLAY-PEERS remote-as 4200000004
+   neighbor interface Et3 peer-group IPv4-UNDERLAY-PEERS remote-as 4200000005
+   neighbor interface Et4 peer-group IPv4-UNDERLAY-PEERS remote-as 4200000006
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
@@ -132,6 +123,7 @@ router bgp 4200000000
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
+      neighbor IPv4-UNDERLAY-PEERS next-hop address-family ipv6 originate
 !
 router multicast
    ipv4

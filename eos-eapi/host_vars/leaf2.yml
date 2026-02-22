@@ -1,20 +1,20 @@
 mgmt_ipv4: 172.20.20.5
 mgmt_ipv6: 3fff:172:20:20::5
 router_id: 100.64.0.4
+router_id_v6: 2001::100:64:0:4
 vtep: 100.65.0.4
+vtep_v6: 2002::100:65:0:4
 bgp_as: 4200000004
 ip_virtual_router_mac_address: 0a:00:ca:fe:00:01
 switch_group: "0001"
 ethernet_interfaces:
 - name: Ethernet1
   shutdown: false
-  ip_address: 10.1.4.4/24
   peer: spine1
   peer_interface: Ethernet2
   peer_type: spine
 - name: Ethernet2
   shutdown: false
-  ip_address: 10.2.4.4/24
   peer: spine2
   peer_interface: Ethernet2
   peer_type: spine

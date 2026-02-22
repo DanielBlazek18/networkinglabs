@@ -36,7 +36,7 @@ interface {{ ethernet_interface.name }}
    description {{ ethernet_interface.peer }}_{{ ethernet_interface.peer_interface }}
    mtu 9202
    no switchport
-   ip address {{ ethernet_interface.ip_address }}
+   ipv6 enable
 {% elif ethernet_interface.peer_type == 'esi' %}
 interface {{ ethernet_interface.name }}
    description {{ ethernet_interface.peer }}
@@ -79,11 +79,15 @@ interface {{ ethernet_interface.name }}
 interface loopback0
    description RouterID
    ip address {{ router_id }}/32
+   ipv6 address {{ router_id_v6 }}/128
 !
+{% if 'leaf' in group_names %}
 interface loopback1
    description VTEP
    ip address {{ vtep }}/32
+   ipv6 address {{ vtep_v6 }}/128
 !
+{% endif %}
 interface Management0
    ip address {{ mgmt_ipv4 }}/24
    ipv6 address {{ mgmt_ipv6 }}/64

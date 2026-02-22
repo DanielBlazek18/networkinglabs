@@ -19,3 +19,6 @@ ip prefix-list AS_{{ peer.remote_as }}_{{ peer_name | upper }}_OUT
 !
 {% endfor %}
 {% endif %}
+ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+   seq 10 permit 100.64.0.0/24 eq 32
+   seq 20 permit 100.65.0.0/24 eq 32
