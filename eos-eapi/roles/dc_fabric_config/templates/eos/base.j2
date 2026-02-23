@@ -44,11 +44,7 @@ management api netconf
 {% if 'spine'in group_names %}
 !
 {% endif %}
-{% if 'leaf' in group_names %}
 ip routing
-{% elif 'spine' in group_names %}
-ip routing ipv6 interface
-{% endif %}
 {% if 'leaf' in group_names %}
 {% for vrf_name, vrf in vrfs.items() %}
 ip routing vrf {{ vrf_name }}

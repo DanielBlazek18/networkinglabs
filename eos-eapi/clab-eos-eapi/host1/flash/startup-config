@@ -1,9 +1,9 @@
-! Startup-config last modified at Sun Feb 22 12:39:25 2026 by root
+! Startup-config last modified at Mon Feb 23 08:22:46 2026 by root
 ! device: host1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$FzRS9WegUk6T7Pfx$SlexCh1CkXhq8C39LV9uodSqKwsKl0OvnthKzzDaVBSsEX8GlZUsWq1A5VXKmUkbHKMYaLrE3OxxPxe6OZmpR0
+username admin privilege 15 role network-admin secret sha512 $6$JpDr70KFaeERW7qa$j.hfl81.7Rxd2MuAQMSGrilwBNgV82pkTr54fA9YZJk32TTlfIQ9ne8ZrIhwvntGGKrs1nvuyyuQkcOMrlbN80
 !
 management api http-commands
    no shutdown
@@ -22,32 +22,21 @@ system l1
    unsupported speed action error
    unsupported error-correction action error
 !
-vlan 10
-!
 management api gnmi
    transport grpc default
 !
 management api netconf
    transport ssh default
 !
-interface Port-Channel1
-   switchport trunk allowed vlan 10,20,3000
-   switchport mode trunk
-!
 interface Ethernet1
-   channel-group 1 mode active
 !
 interface Ethernet2
-   channel-group 1 mode active
 !
 interface Management0
    ip address 172.20.20.8/24
    ipv6 address 3fff:172:20:20::8/64
 !
-interface Vlan10
-   ip address 10.0.10.100/24
-!
-ip routing
+no ip routing
 !
 ip route 0.0.0.0/0 172.20.20.1
 !

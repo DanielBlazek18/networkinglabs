@@ -1,9 +1,9 @@
-! Startup-config last modified at Sun Feb 22 14:47:08 2026 by admin
+! Startup-config last modified at Mon Feb 23 09:33:37 2026 by admin
 ! device: spine1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$a0Xyc9Rx7vwluehm$BBB4ZwEmKVwwhe1Ph1NW2hNpLcHXUNEzpITz8JI4MPP2KvvYC.61zOwH0RrkpCdifgkIN5cFHAaYZja3IpgF11
+username admin privilege 15 role network-admin secret sha512 $6$vs/1ECMkm6U95yq.$NGQnBAKm2SCT5isXZ29XHloKalbeRit3D7Mk0hJe0ThFeXQwIZV9FK.D6X.h5FoA1mdplFSsP7JsW1LNQUf19.
 !
 management api http-commands
    no shutdown
@@ -73,6 +73,10 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
    seq 10 permit 100.64.0.0/24 eq 32
    seq 20 permit 100.65.0.0/24 eq 32
 !
+ipv6 prefix-list PL-LOOPBACKS-EVPN-OVERLAY_V6
+   seq 10 permit 2001::/64 le 128
+   seq 20 permit 2002::/64 le 128
+!
 ipv6 unicast-routing
 !
 ip route 0.0.0.0/0 172.20.20.1
@@ -81,6 +85,9 @@ ipv6 route ::/0 3fff:172:20:20::1
 !
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+!
+route-map RM-CONN-2-BGP permit 20
+   match ipv6 address prefix-list PL-LOOPBACKS-EVPN-OVERLAY_V6
 !
 router bgp 4200000000
    router-id 100.64.0.1
@@ -94,36 +101,35 @@ router bgp 4200000000
    neighbor EVPN-OVERLAY-PEERS password 7 6wXqwrZlb4Q=
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS password 7 GKFABHQp8d8=
-   neighbor IPv4-UNDERLAY-PEERS send-community
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 100.64.0.3 peer group EVPN-OVERLAY-PEERS
-   neighbor 100.64.0.3 remote-as 4200000003
-   neighbor 100.64.0.3 description leaf1_Loopback0
-   neighbor 100.64.0.4 peer group EVPN-OVERLAY-PEERS
-   neighbor 100.64.0.4 remote-as 4200000004
-   neighbor 100.64.0.4 description leaf2_Loopback0
-   neighbor 100.64.0.5 peer group EVPN-OVERLAY-PEERS
-   neighbor 100.64.0.5 remote-as 4200000005
-   neighbor 100.64.0.5 description leaf3_Loopback0
-   neighbor 100.64.0.6 peer group EVPN-OVERLAY-PEERS
-   neighbor 100.64.0.6 remote-as 4200000006
-   neighbor 100.64.0.6 description leaf4_Loopback0
+   neighbor IPv6-UNDERLAY-PEERS peer group
+   neighbor IPv6-UNDERLAY-PEERS password 7 L+EP+BojkQ0=
+   neighbor IPv6-UNDERLAY-PEERS send-community
+   neighbor IPv6-UNDERLAY-PEERS maximum-routes 12000
+   neighbor 2001::100:64:0:3 peer group EVPN-OVERLAY-PEERS
+   neighbor 2001::100:64:0:3 remote-as 4200000003
+   neighbor 2001::100:64:0:3 description leaf1_Loopback0
+   neighbor 2001::100:64:0:4 peer group EVPN-OVERLAY-PEERS
+   neighbor 2001::100:64:0:4 remote-as 4200000004
+   neighbor 2001::100:64:0:4 description leaf2_Loopback0
+   neighbor 2001::100:64:0:5 peer group EVPN-OVERLAY-PEERS
+   neighbor 2001::100:64:0:5 remote-as 4200000005
+   neighbor 2001::100:64:0:5 description leaf3_Loopback0
+   neighbor 2001::100:64:0:6 peer group EVPN-OVERLAY-PEERS
+   neighbor 2001::100:64:0:6 remote-as 4200000006
+   neighbor 2001::100:64:0:6 description leaf4_Loopback0
    redistribute connected route-map RM-CONN-2-BGP
-   neighbor interface Et1 peer-group IPv4-UNDERLAY-PEERS remote-as 4200000003
-   neighbor interface Et2 peer-group IPv4-UNDERLAY-PEERS remote-as 4200000004
-   neighbor interface Et3 peer-group IPv4-UNDERLAY-PEERS remote-as 4200000005
-   neighbor interface Et4 peer-group IPv4-UNDERLAY-PEERS remote-as 4200000006
+   neighbor interface Et1 peer-group IPv6-UNDERLAY-PEERS remote-as 4200000003
+   neighbor interface Et2 peer-group IPv6-UNDERLAY-PEERS remote-as 4200000004
+   neighbor interface Et3 peer-group IPv6-UNDERLAY-PEERS remote-as 4200000005
+   neighbor interface Et4 peer-group IPv6-UNDERLAY-PEERS remote-as 4200000006
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
       host-flap detection expiry timeout 300.0 seconds
    !
-   address-family ipv4
+   address-family ipv6
       no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS next-hop address-family ipv6 originate
+      neighbor IPv6-UNDERLAY-PEERS activate
 !
 router multicast
    ipv4

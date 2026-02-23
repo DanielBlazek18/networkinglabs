@@ -1,9 +1,9 @@
-! Startup-config last modified at Sun Feb 22 14:47:08 2026 by admin
+! Startup-config last modified at Mon Feb 23 09:33:56 2026 by admin
 ! device: leaf1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$C1xU/A7hW4RF9b2T$vUNePqnWyhmJqvbUS1fk.VtF/iHRghRG.TBO7mOVwz5eROvnIN2gOKufxN0e/ZwMePRGYTXv3d9RhJHHUE5j90
+username admin privilege 15 role network-admin secret sha512 $6$8oFseDq8yx63CZck$bKntqnocNf.m85fzrGa/g.Zpgs6QbF/yS.1E22544dcpvVsqUbk8pL7QbTfV1VujF6keMvM0fS4cZ/M5vJJeG.
 !
 management api http-commands
    no shutdown
@@ -128,6 +128,7 @@ interface Vxlan1
    description leaf1_VTEP
    vxlan source-interface Loopback1
    vxlan udp-port 4789
+   vxlan encapsulation ipv6
    vxlan vlan 10 vni 100010
    vxlan vlan 20 vni 100020
    vxlan vlan 3000 vni 103000
@@ -155,6 +156,10 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
    seq 10 permit 100.64.0.0/24 eq 32
    seq 20 permit 100.65.0.0/24 eq 32
 !
+ipv6 prefix-list PL-LOOPBACKS-EVPN-OVERLAY_V6
+   seq 10 permit 2001::/64 le 128
+   seq 20 permit 2002::/64 le 128
+!
 ipv6 unicast-routing
 !
 ip route 0.0.0.0/0 172.20.20.1
@@ -172,6 +177,9 @@ route-map AS_65000_ISP-DC1-PRIMARY_OUT permit 10
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 !
+route-map RM-CONN-2-BGP permit 20
+   match ipv6 address prefix-list PL-LOOPBACKS-EVPN-OVERLAY_V6
+!
 router bgp 4200000003
    router-id 100.64.0.3
    update wait-install
@@ -184,18 +192,18 @@ router bgp 4200000003
    neighbor EVPN-OVERLAY-PEERS password 7 6wXqwrZlb4Q=
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS password 7 GKFABHQp8d8=
-   neighbor IPv4-UNDERLAY-PEERS send-community
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 100.64.0.1 peer group EVPN-OVERLAY-PEERS
-   neighbor 100.64.0.1 remote-as 4200000000
-   neighbor 100.64.0.1 description spine1_Loopback0
-   neighbor 100.64.0.2 peer group EVPN-OVERLAY-PEERS
-   neighbor 100.64.0.2 remote-as 4200000000
-   neighbor 100.64.0.2 description spine2_Loopback0
+   neighbor IPv6-UNDERLAY-PEERS peer group
+   neighbor IPv6-UNDERLAY-PEERS password 7 L+EP+BojkQ0=
+   neighbor IPv6-UNDERLAY-PEERS send-community
+   neighbor IPv6-UNDERLAY-PEERS maximum-routes 12000
+   neighbor 2001::100:64:0:1 peer group EVPN-OVERLAY-PEERS
+   neighbor 2001::100:64:0:1 remote-as 4200000000
+   neighbor 2001::100:64:0:1 description spine1_Loopback0
+   neighbor 2001::100:64:0:2 peer group EVPN-OVERLAY-PEERS
+   neighbor 2001::100:64:0:2 remote-as 4200000000
+   neighbor 2001::100:64:0:2 description spine2_Loopback0
    redistribute connected route-map RM-CONN-2-BGP
-   neighbor interface Et1-2 peer-group IPv4-UNDERLAY-PEERS remote-as 4200000000
+   neighbor interface Et1-2 peer-group IPv6-UNDERLAY-PEERS remote-as 4200000000
    !
    vlan 10
       rd 100.64.0.3:10
@@ -216,10 +224,9 @@ router bgp 4200000003
       neighbor EVPN-OVERLAY-PEERS activate
       host-flap detection expiry timeout 300.0 seconds
    !
-   address-family ipv4
+   address-family ipv6
       no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS next-hop address-family ipv6 originate
+      neighbor IPv6-UNDERLAY-PEERS activate
    !
    vrf vrf-01
       rd 100.64.0.3:1010

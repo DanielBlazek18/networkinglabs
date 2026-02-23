@@ -1,9 +1,9 @@
-! Startup-config last modified at Sun Feb 22 12:39:22 2026 by root
+! Startup-config last modified at Mon Feb 23 08:22:44 2026 by root
 ! device: host3 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$sOo45Y7GOGL5d9hx$uxF.15WKkYps.cD6LHarCUTW8VTLHa9riEWgh1.5ouBHpy7DjXMonbwQWJyr54r2tV78.ixto/Ppo.ToBTnRD.
+username admin privilege 15 role network-admin secret sha512 $6$k0V2UKC05jqh53KT$Hplwx9gYFxX9nugGGcLe55f7xDZTiTFLmtYMhDKbPepDfeI6bzNztLwh/ZLiBovKE5RCWRX3cu9ASGuijxdyQ1
 !
 management api http-commands
    no shutdown

@@ -1,9 +1,9 @@
-! Startup-config last modified at Sun Feb 22 12:40:35 2026 by root
+! Startup-config last modified at Mon Feb 23 08:24:04 2026 by root
 ! device: isp-router2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$xLunuUdP6Q94KMMJ$5K9oc5R5HHZKP7kB.GKRA6ldV3M5cT63o6TDnlnnlXeFbmndpAl/WDgMnk2I.Da4KJF8u05l1v.uK7I4kl1V4.
+username admin privilege 15 role network-admin secret sha512 $6$zd.vyTthyBpQptPn$1zmcNZRtFt2S0X.P0xUm9ZfEf8aPKhil97WacfusNxQXv314GFQwQooY5ZGxbSvPV4M3w7tX9Xgei5NdLG4bE/
 !
 management api http-commands
    no shutdown

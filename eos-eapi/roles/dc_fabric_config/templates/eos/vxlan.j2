@@ -3,6 +3,7 @@ interface Vxlan1
    description {{ inventory_hostname }}_VTEP
    vxlan source-interface Loopback1
    vxlan udp-port 4789
+   vxlan encapsulation ipv6
 {% for vlan_name, vlan in vlans.items() %}
    vxlan vlan {{ vlan.id }} vni 10{{ "%04d" | format(vlan.id | int) }}
 {% endfor %}
