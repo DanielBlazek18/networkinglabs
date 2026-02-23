@@ -1,7 +1,7 @@
 mgmt_ipv4: 172.20.20.3
 mgmt_ipv6: 3fff:172:20:20::3
 router_id: 100.64.0.2
-router_id_v6: 2001::100:64:0:2
+router_id_ipv6: 2001::100:64:0:2
 bgp_as: 4200000000
 ethernet_interfaces:
 - name: Ethernet1

@@ -22,3 +22,7 @@ ip prefix-list AS_{{ peer.remote_as }}_{{ peer_name | upper }}_OUT
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
    seq 10 permit 100.64.0.0/24 eq 32
    seq 20 permit 100.65.0.0/24 eq 32
+!
+ipv6 prefix-list PL-LOOPBACKS-EVPN-OVERLAY_V6
+   seq 10 permit 2001::/64 le 128
+   seq 20 permit 2002::/64 le 128

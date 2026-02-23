@@ -1,5 +1,6 @@
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+   match ipv6 address prefix-list PL-LOOPBACKS-EVPN-OVERLAY_V6
 !
 {% include "rpl.j2" %}
 router bgp {{ bgp_as }}
@@ -14,28 +15,28 @@ router bgp {{ bgp_as }}
    neighbor EVPN-OVERLAY-PEERS password LAB
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS password LAB
-   neighbor IPv4-UNDERLAY-PEERS send-community
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
+   neighbor IPv6-UNDERLAY-PEERS peer group
+   neighbor IPv6-UNDERLAY-PEERS password LAB
+   neighbor IPv6-UNDERLAY-PEERS send-community
+   neighbor IPv6-UNDERLAY-PEERS maximum-routes 12000
 {% if 'leaf' in group_names %}
 {% for spine in groups['spine'] %}
-   neighbor {{ hostvars[spine].router_id }} peer group EVPN-OVERLAY-PEERS
-   neighbor {{ hostvars[spine].router_id }} remote-as {{ hostvars[spine].bgp_as }}
-   neighbor {{ hostvars[spine].router_id }} description {{ spine }}_Loopback0
+   neighbor {{ hostvars[spine].router_id_ipv6 }} peer group EVPN-OVERLAY-PEERS
+   neighbor {{ hostvars[spine].router_id_ipv6 }} remote-as {{ hostvars[spine].bgp_as }}
+   neighbor {{ hostvars[spine].router_id_ipv6 }} description {{ spine }}_Loopback0
 {% endfor %}
 {% endif %}
 {% if 'spine' in group_names %}
 {% for leaf in groups['leaf'] %}
-   neighbor {{ hostvars[leaf].router_id }} peer group EVPN-OVERLAY-PEERS
-   neighbor {{ hostvars[leaf].router_id }} remote-as {{ hostvars[leaf].bgp_as }}
-   neighbor {{ hostvars[leaf].router_id }} description {{ leaf }}_Loopback0
+   neighbor {{ hostvars[leaf].router_id_ipv6 }} peer group EVPN-OVERLAY-PEERS
+   neighbor {{ hostvars[leaf].router_id_ipv6 }} remote-as {{ hostvars[leaf].bgp_as }}
+   neighbor {{ hostvars[leaf].router_id_ipv6 }} description {{ leaf }}_Loopback0
 {% endfor %}
 {% endif %}
    redistribute connected route-map RM-CONN-2-BGP
 {% for ethernet_interface in ethernet_interfaces %}
 {% if ethernet_interface.peer_type == 'spine' or ethernet_interface.peer_type == 'leaf' %}
-   neighbor interface {{ ethernet_interface.name }} peer-group IPv4-UNDERLAY-PEERS remote-as {{ hostvars[ethernet_interface.peer].bgp_as }}
+   neighbor interface {{ ethernet_interface.name }} peer-group IPv6-UNDERLAY-PEERS remote-as {{ hostvars[ethernet_interface.peer].bgp_as }}
 {% endif %}
 {% endfor %}
 {% include "mac-vrf.j2" %}
@@ -45,6 +46,10 @@ router bgp {{ bgp_as }}
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS next-hop address-family ipv6 originate
+      neighbor IPv6-UNDERLAY-PEERS activate
+      neighbor IPv6-UNDERLAY-PEERS next-hop address-family ipv6 originate
+   !
+   address-family ipv6
+      no neighbor EVPN-OVERLAY-PEERS activate
+      neighbor IPv6-UNDERLAY-PEERS activate
 {% include "bgp-vrf.j2" %}

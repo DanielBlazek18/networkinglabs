@@ -79,13 +79,13 @@ interface {{ ethernet_interface.name }}
 interface loopback0
    description RouterID
    ip address {{ router_id }}/32
-   ipv6 address {{ router_id_v6 }}/128
+   ipv6 address {{ router_id_ipv6 }}/128
 !
 {% if 'leaf' in group_names %}
 interface loopback1
    description VTEP
    ip address {{ vtep }}/32
-   ipv6 address {{ vtep_v6 }}/128
+   ipv6 address {{ vtep_ipv6 }}/128
 !
 {% endif %}
 interface Management0
