@@ -1,7 +1,7 @@
 # Overview
 This lab demonstrates how to use the Ansible Network Collection – `Arista.Eos` to build and provision a Clos fabric along with tenant configurations on Arista EOS devices, following Infrastructure as Code (IaC) principles.
 
-The fabric design is based on an **EVPN/VXLAN** architecture. The underlay leverages [rfc8950](https://datatracker.ietf.org/doc/html/rfc8950). IPv6 is used in the overlay control plane and transport.
+The fabric design is based on an **EVPN/VXLAN** architecture. IPv6 is used in the underlay and overlay.
 
 ## Lab consists of following devices:
 * DC1 fabric:
