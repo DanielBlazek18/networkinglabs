@@ -1,0 +1,36 @@
+stages:
+  - build
+  - approve
+  - deploy
+  
+fabric_build:
+  stage: build
+  tags:
+    - build
+  before_script:
+    - git config --global alias.hist "log --all --decorate --oneline --graph"
+  script:
+    - git fetch origin main
+    - git checkout -B main origin/main
+    - git hist
+    - ansible-playbook eos-eapi/play_fabric_config.yml --tags build -i eos-eapi/inventory.yml
+    - git add .
+    - git hist
+    - git commit -m "$(git log -1 --pretty=%s) [CONFIG BUILD BY CICD]"
+    - git push https://oauth2:${GITLAB_TOKEN}@gitlab.com/DanielBlazek18/networkinglabs.git main
+
+approve_deploy:
+  stage: approve
+  script:
+    - echo "Approval granted. Proceeding..."
+  when: manual
+  allow_failure: false
+
+fabric_deploy:
+  stage: deploy
+  tags:
+    - deploy
+  script:
+    - ansible-playbook eos-eapi/play_fabric_config.yml --tags deploy -i eos-eapi/inventory.yml
+  only:
+    - main
