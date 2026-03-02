@@ -20,8 +20,8 @@ fabric_build:
     - git checkout -B main origin/main
     - git hist
     - ansible-playbook eos-eapi/play_fabric_config.yml --tags build -i eos-eapi/inventory.yml
-    - git add .
-    - git commit -m "$(git log -1 --pretty=%s) [CONFIG BUILD BY CICD]" || echo "Nothing to commit"
+    - git add eos-eapi/configs/.
+    - git commit -am "$(git log -1 --pretty=%s) [CONFIG BUILD BY CICD]" || echo "Nothing to commit"
     - git hist
     - git push https://oauth2:${GITLAB_TOKEN}@gitlab.com/DanielBlazek18/networkinglabs.git main
 
