@@ -7,8 +7,14 @@ fabric_build:
   stage: build
   tags:
     - build
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /CONFIG BUILD BY CICD/'
+      when: never
+    - when: always
   before_script:
     - git config --global alias.hist "log --all --decorate --oneline --graph"
+    - git config --global user.name "bnet-containerlab-runner"
+    - git config --global user.email "lab@danielblazek.cz"
   script:
     - git fetch origin main
     - git checkout -B main origin/main
