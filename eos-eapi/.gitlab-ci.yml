@@ -16,14 +16,14 @@ fabric_build:
     - git config --global user.name "bnet-containerlab-runner"
     - git config --global user.email "lab@danielblazek.cz"
   script:
-    - git fetch origin main
-    - git checkout -B main origin/main
+    - git fetch origin $CI_COMMIT_REF_NAME
+    - git checkout -B $CI_COMMIT_REF_NAME origin/$CI_COMMIT_REF_NAME
     - git hist
     - ansible-playbook eos-eapi/play_fabric_config.yml --tags build -i eos-eapi/inventory.yml
     - git add eos-eapi/configs/.
     - git commit -am "$(git log -1 --pretty=%s) [CONFIG BUILD BY CICD]" || echo "Nothing to commit"
     - git hist
-    - git push https://oauth2:${GITLAB_TOKEN}@gitlab.com/DanielBlazek18/networkinglabs.git main
+    - git push https://oauth2:${GITLAB_TOKEN}@gitlab.com/DanielBlazek18/networkinglabs.git HEAD:$CI_COMMIT_REF_NAME
 
 approve_deploy:
   stage: approve
@@ -31,6 +31,8 @@ approve_deploy:
     - echo "Approval granted. Proceeding..."
   when: manual
   allow_failure: false
+  only:
+    - main
 
 fabric_deploy:
   stage: deploy
