@@ -1,6 +1,7 @@
 ---
 - name: "Build Arista DC Fabirc"
   hosts: arista
+  gather_facts: no
   tasks:
     - name: Generate DC Fabric Configuration
       import_role:
