@@ -299,4 +299,4 @@ interface Port-Channel2
 > This lab demonstrates a basic implementation of Ansible, Jinja2, and a GitLab CI/CD pipeline to build and provision a fabric. In real-world deployments, Arista typically uses the AVD (Arista Validated Designs) collection together with CloudVision (CVP) for automated network provisioning and management.
 
 ## Demo Video
-[![Watch the video](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://youtu.be/gcpZW5wjn9c)
+[![Watch the video](https://img.youtube.com/vi/gcpZW5wjn9c/0.jpg)](https://youtu.be/gcpZW5wjn9c)
