@@ -82,10 +82,12 @@ After verification, the generated configurations should be **merged into the `ma
 
 The **Approve** stage requires **manual confirmation** before the configurations are deployed to the network devices in the **Deploy** stage.
 
-![eos-eapi.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/eos-eapi/drawings/eos-eapi.png)
-
 ## Pipeline at Work:
 In this example, a new **VLAN 30** is introduced into the fabric and added to the allowed VLAN list of the port profile `compute_servers_dc1`.
+
+![eos-eapi.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/eos-eapi/drawings/eos-eapi.png)
+
+*Figure: A network admin modifies the fabric configuration (for example adding VLAN 30), commits the changes to a feature branch, and pushes them to GitLab, which automatically triggers the CI/CD pipeline.*
 
 A new feature branch named `VLAN30` is created to implement the change:
 ```
