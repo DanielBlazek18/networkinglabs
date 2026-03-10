@@ -1,6 +1,6 @@
 # Overview
 
-`Networkinglabs` is a repository that contains practical networking lab exercises built with `containerlab`. Most labs are created using Arista `cEOS`, with `SONiC`, Cisco `c8000v`, and other network operating systems included when needed. Some labs also require additional simulation tools, such as `ExaBGP` and `Routinator`. Python, Ansible, Docker, and other automation tools are frequently used throughout the examples.
+`NetworkingLabs` is a repository that contains practical networking lab exercises built with `containerlab`. Most labs are created using Arista `cEOS`, with `SONiC`, Cisco `c8000v`, and other network operating systems included when needed. Some labs also require additional simulation tools, such as `ExaBGP` and `Routinator`. Python, Ansible, Docker, and other automation tools are frequently used throughout the examples.
 
 ---
 
