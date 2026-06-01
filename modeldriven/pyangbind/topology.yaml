@@ -1,0 +1,15 @@
+name: pyangbind
+prefix: "" 
+topology:
+  kinds:
+    cisco_c8000v:
+      image: arthurk99/cisco-c8000v:17.11.01a
+    ceos:
+      image: ceos:4.35.0F
+  nodes:
+    cisco:
+      kind: cisco_c8000v
+    arista:
+      kind: ceos
+  links:
+    - endpoints: ["arista:eth1", "cisco:Gi2"]
