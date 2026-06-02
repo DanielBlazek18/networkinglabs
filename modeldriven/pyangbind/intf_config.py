@@ -11,13 +11,14 @@ Status: In-progress
 
 
 import json
+import xmltodict
 from ncclient import manager
 from lxml import etree
 from pyangbind.lib.serialise import pybindIETFXMLEncoder
 from binding import openconfig_interfaces
 
 
-def edit_config(host_ip, config) -> str | None:
+def edit_config(host_ip: str, config: str) -> str | None:
     try:
         with manager.connect(
             host=host_ip,
@@ -38,6 +39,32 @@ def edit_config(host_ip, config) -> str | None:
 
     except Exception as e:
         return f"An unexpected error occurred while connecting to {host}: {e}"
+
+
+def get_config(host_ip: str, filter: str) -> None:
+    try:
+        with manager.connect(
+            host=host_ip,
+            port=830,
+            username="admin",
+            password="admin",
+            timeout=90,
+            hostkey_verify=False,
+        ) as m:
+            print(f"Successfully connected to {host_ip}")
+
+            try:
+                response = m.get(filter=('subtree', filter))
+                # To get a running config
+                # response = m.get_config('running', filter=('subtree', filter))
+                response_dict = xmltodict.parse(response.xml)
+                for item in (response_dict['rpc-reply']['data']['interfaces']['interface']):
+                    print(item['name'])
+            except Exception as e:
+                return f"Error has occured: {e}"
+
+    except Exception as e:
+        return f"An unexpected error occurred while connecting to {host_ip}: {e}"
 
 
 def main():
@@ -67,6 +94,13 @@ def main():
     for device in ["cisco", "arista"]:
         result = edit_config(device, config)
         print(result)
+
+    # Just testing getting ops data
+    filter = """
+    <interfaces xmlns="http://openconfig.net/yang/interfaces">
+    </interfaces>
+    """
+    get_config("cisco", filter)
 
 if __name__ == "__main__":
     main()

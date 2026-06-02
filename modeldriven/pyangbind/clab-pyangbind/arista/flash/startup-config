@@ -1,4 +1,4 @@
-! Startup-config last modified at Mon Jun  1 16:04:33 2026 by admin
+! Startup-config last modified at Tue Jun  2 06:24:17 2026 by root
 ! device: arista (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
