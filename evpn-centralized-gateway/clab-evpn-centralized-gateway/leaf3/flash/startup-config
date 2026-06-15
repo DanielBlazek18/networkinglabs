@@ -22,8 +22,8 @@ system l1
    unsupported speed action error
    unsupported error-correction action error
 !
-vlan 10
-   name L2_VLAN_10
+vlan 20
+   name L2_VLAN_20
 !
 management api gnmi
    transport grpc default
@@ -118,9 +118,9 @@ router bgp 4200000005
    redistribute connected route-map RM-CONN-2-BGP
    neighbor interface Et1-2 peer-group IPv6-UNDERLAY-PEERS remote-as 4200000000
    !
-   vlan 10
-      rd 100.64.0.5:10
-      route-target both 345:100010
+   vlan 20
+      rd 100.64.0.5:20
+      route-target both 345:100020
       redistribute learned
    !
    address-family evpn
