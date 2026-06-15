@@ -1,4 +1,4 @@
-! Startup-config last modified at Sat Jun 13 11:14:59 2026 by admin
+! Startup-config last modified at Mon Jun 15 06:42:05 2026 by admin
 ! device: host2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -22,8 +22,8 @@ system l1
    unsupported speed action error
    unsupported error-correction action error
 !
-vlan 10
-   name L2_VLAN_10
+vlan 20
+   name L2_VLAN_20
 !
 management api gnmi
    transport grpc default
@@ -34,21 +34,22 @@ management api netconf
 interface Ethernet1
    description leaf3_Ethernet3
    switchport trunk native vlan 1000
-   switchport trunk allowed vlan 10,20
+   switchport trunk allowed vlan 20
    switchport mode trunk
 !
 interface Management0
-   ip address 172.20.20.7/24
-   ipv6 address 3fff:172:20:20::7/64
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::3/64
 !
-interface Vlan10
+interface Vlan20
    description SVI
    no autostate
-   ip address 10.10.0.200/24
+   ip address 10.20.0.200/24
 !
 ip routing
 !
 ip route 0.0.0.0/0 172.20.20.1
+ip route 10.10.0.0/24 10.20.0.1
 !
 ipv6 route ::/0 3fff:172:20:20::1
 !

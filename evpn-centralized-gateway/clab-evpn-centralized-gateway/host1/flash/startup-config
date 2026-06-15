@@ -1,4 +1,4 @@
-! Startup-config last modified at Sat Jun 13 13:27:27 2026 by admin
+! Startup-config last modified at Mon Jun 15 06:42:48 2026 by admin
 ! device: host1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
 !
 no aaa root
@@ -43,12 +43,11 @@ interface Ethernet1
 !
 interface Ethernet2
    description leaf2_Ethernet3
-   shutdown
    channel-group 1 mode active
 !
 interface Management0
-   ip address 172.20.20.4/24
-   ipv6 address 3fff:172:20:20::4/64
+   ip address 172.20.20.6/24
+   ipv6 address 3fff:172:20:20::6/64
 !
 interface Vlan10
    description SVI
@@ -57,8 +56,8 @@ interface Vlan10
 !
 ip routing
 !
-ip route 0.0.0.0/0 10.10.0.1
 ip route 0.0.0.0/0 172.20.20.1
+ip route 10.20.0.0/24 10.10.0.1
 !
 ipv6 route ::/0 3fff:172:20:20::1
 !
