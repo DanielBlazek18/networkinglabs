@@ -25,9 +25,6 @@ system l1
 vlan 10
    name L2_VLAN_10
 !
-vlan 20
-   name L2_VLAN_20
-!
 management api gnmi
    transport grpc default
 !
@@ -49,7 +46,7 @@ interface Ethernet2
 interface Ethernet3
    description host2
    switchport trunk native vlan 1000
-   switchport trunk allowed vlan 10,20
+   switchport trunk allowed vlan 20
    switchport mode trunk
 !
 interface Loopback0
@@ -71,7 +68,6 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan udp-port 4789
    vxlan encapsulation ipv6
-   vxlan vlan 10 vni 100010
    vxlan vlan 20 vni 100020
    vxlan learn-restrict any
 !
@@ -125,11 +121,6 @@ router bgp 4200000005
    vlan 10
       rd 100.64.0.5:10
       route-target both 345:100010
-      redistribute learned
-   !
-   vlan 20
-      rd 100.64.0.5:20
-      route-target both 345:100020
       redistribute learned
    !
    address-family evpn
