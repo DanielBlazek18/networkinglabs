@@ -9,13 +9,13 @@ In the Arista document, the solution relies on configuring a **secondary** IPv4 
 Fortunately, Arista EOS provides an alternative mechanism that works with an **IPv6 underlay**. The command `redistribute router-mac virtual-ip next-hop vtep primary` under the MAC-VRF allows the **gateway IP** and **virtual router MAC address** to be advertised in **EVPN Route Type 2** (MAC/IP Advertisement) routes, enabling a centralized anycast gateway design without the need for a dedicated VARP VTEP address.
 
 ## Lab consists of following devices:
-* `spine1`
-* `spine2`
-* `leaf1`
-* `leaf2`
-* `leaf3`
-* `host1`
-* `host2`
+* [`spine1`](https://github.com/DanielBlazek18/networkinglabs/blob/main/evpn-centralized-anycast-gateway/clab-evpn-centralized-anycast-gateway/spine1/flash/startup-config)
+* [`spine2`](https://github.com/DanielBlazek18/networkinglabs/blob/main/evpn-centralized-anycast-gateway/clab-evpn-centralized-anycast-gateway/spine2/flash/startup-config)
+* [`leaf1`](https://github.com/DanielBlazek18/networkinglabs/blob/main/evpn-centralized-anycast-gateway/clab-evpn-centralized-anycast-gateway/leaf1/flash/startup-config)
+* [`leaf2`](https://github.com/DanielBlazek18/networkinglabs/blob/main/evpn-centralized-anycast-gateway/clab-evpn-centralized-anycast-gateway/leaf2/flash/startup-config)
+* [`leaf3`](https://github.com/DanielBlazek18/networkinglabs/blob/main/evpn-centralized-anycast-gateway/clab-evpn-centralized-anycast-gateway/leaf3/flash/startup-config)
+* [`host1`](https://github.com/DanielBlazek18/networkinglabs/blob/main/evpn-centralized-anycast-gateway/clab-evpn-centralized-anycast-gateway/host1/flash/startup-config)
+* [`host2`](https://github.com/DanielBlazek18/networkinglabs/blob/main/evpn-centralized-anycast-gateway/clab-evpn-centralized-anycast-gateway/host2/flash/startup-config)
 
 > [!NOTE]
 > In a centralized VXLAN routing design, the `spine` switches provide the Layer 3 gateway functionality by hosting the **IRB interfaces** and performing inter-subnet VXLAN routing. The `leaf` switches perform Layer 2 VXLAN bridging only and are therefore commonly referred to as **Bridged VTEPs**.
