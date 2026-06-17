@@ -1,4 +1,4 @@
-name: evpn-centralized-gateway
+name: evpn-centralized-anycast-gateway
 prefix: ""
 topology:
   kinds:

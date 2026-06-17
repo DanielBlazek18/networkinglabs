@@ -1,9 +1,9 @@
-! Startup-config last modified at Mon Jun 15 06:38:28 2026 by root
-! device: leaf1 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+! Startup-config last modified at Wed Jun 17 07:00:58 2026 by root
+! device: leaf2 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$K0kY0WSZhVlUa8/l$/Qo4qG7etCdSEOodmA1qWYXFu8Po66fE5B8eel8SFBV8g7.rq0qiCZirOz7lsJ8YIZEPaBWKtpn2sMvtvZV6U0
+username admin privilege 15 role network-admin secret sha512 $6$8B2jiRwyPd06AzAY$EkoAgNhkudVbcFqfGrT6U/4BjTN.14BsdO2XcNZrAWX/pc9K0foPKO1RV/sc/IcV0nHHaNE6yKtvIMg6dhv0z.
 !
 management api http-commands
    no shutdown
@@ -14,7 +14,7 @@ transceiver qsfp default-mode 4x10G
 !
 service routing protocols model multi-agent
 !
-hostname leaf1
+hostname leaf2
 !
 spanning-tree mode mstp
 !
@@ -32,7 +32,7 @@ management api netconf
    transport ssh default
 !
 interface Port-Channel1
-   description host1_Ethernet1
+   description host1_Ethernet2
    switchport trunk native vlan 1000
    switchport trunk allowed vlan 10
    switchport mode trunk
@@ -43,13 +43,13 @@ interface Port-Channel1
    lacp system-id 0a00.cafe.0003
 !
 interface Ethernet1
-   description spine1_Ethernet1
+   description spine1_Ethernet2
    mtu 9202
    no switchport
    ipv6 enable
 !
 interface Ethernet2
-   description spine2_Ethernet1
+   description spine2_Ethernet2
    mtu 9202
    no switchport
    ipv6 enable
@@ -60,20 +60,20 @@ interface Ethernet3
 !
 interface Loopback0
    description RouterID
-   ip address 100.64.0.3/32
-   ipv6 address 2001::100:64:0:3/128
+   ip address 100.64.0.4/32
+   ipv6 address 2001::100:64:0:4/128
 !
 interface Loopback1
    description VTEP
-   ip address 100.65.0.3/32
-   ipv6 address 2002::100:65:0:3/128
+   ip address 100.65.0.4/32
+   ipv6 address 2002::100:65:0:4/128
 !
 interface Management0
    ip address 172.20.20.7/24
    ipv6 address 3fff:172:20:20::7/64
 !
 interface Vxlan1
-   description leaf1_VTEP
+   description leaf2_VTEP
    vxlan source-interface Loopback1
    vxlan udp-port 4789
    vxlan encapsulation ipv6
@@ -102,8 +102,8 @@ route-map RM-CONN-2-BGP permit 10
 route-map RM-CONN-2-BGP permit 20
    match ipv6 address prefix-list PL-LOOPBACKS-EVPN-OVERLAY_V6
 !
-router bgp 4200000003
-   router-id 100.64.0.3
+router bgp 4200000004
+   router-id 100.64.0.4
    update wait-install
    no bgp default ipv4-unicast
    maximum-paths 4 ecmp 4
@@ -128,7 +128,7 @@ router bgp 4200000003
    neighbor interface Et1-2 peer-group IPv6-UNDERLAY-PEERS remote-as 4200000000
    !
    vlan 10
-      rd 100.64.0.3:10
+      rd 100.64.0.4:10
       route-target both 345:100010
       redistribute learned
    !

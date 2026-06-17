@@ -1,9 +1,9 @@
-! Startup-config last modified at Mon Jun 15 06:38:37 2026 by root
-! device: leaf2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+! Startup-config last modified at Wed Jun 17 07:00:57 2026 by root
+! device: leaf3 (cEOSLab, EOS-4.35.0F-44171508.4350F (engineering build))
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$8B2jiRwyPd06AzAY$EkoAgNhkudVbcFqfGrT6U/4BjTN.14BsdO2XcNZrAWX/pc9K0foPKO1RV/sc/IcV0nHHaNE6yKtvIMg6dhv0z.
+username admin privilege 15 role network-admin secret sha512 $6$F6rRycs9W8H38rU3$zxYVbXudwPImUTPuCH20e2RVo1zTtK3cTsU/c2iAnbV1Ez8CGTrpqjFwrAUpAdLlcOjz6Ow9RqVl292M2V/5W1
 !
 management api http-commands
    no shutdown
@@ -14,7 +14,7 @@ transceiver qsfp default-mode 4x10G
 !
 service routing protocols model multi-agent
 !
-hostname leaf2
+hostname leaf3
 !
 spanning-tree mode mstp
 !
@@ -22,8 +22,8 @@ system l1
    unsupported speed action error
    unsupported error-correction action error
 !
-vlan 10
-   name L2_VLAN_10
+vlan 20
+   name L2_VLAN_20
 !
 management api gnmi
    transport grpc default
@@ -31,53 +31,43 @@ management api gnmi
 management api netconf
    transport ssh default
 !
-interface Port-Channel1
-   description host1_Ethernet2
-   switchport trunk native vlan 1000
-   switchport trunk allowed vlan 10
-   switchport mode trunk
-   !
-   evpn ethernet-segment
-      identifier 0000:0000:beee:0001:0003
-      route-target import be:ee:00:01:00:03
-   lacp system-id 0a00.cafe.0003
-!
 interface Ethernet1
-   description spine1_Ethernet2
+   description spine1_Ethernet3
    mtu 9202
    no switchport
    ipv6 enable
 !
 interface Ethernet2
-   description spine2_Ethernet2
+   description spine2_Ethernet3
    mtu 9202
    no switchport
    ipv6 enable
 !
 interface Ethernet3
-   description host1
-   channel-group 1 mode active
+   description host2
+   switchport trunk native vlan 1000
+   switchport trunk allowed vlan 20
+   switchport mode trunk
 !
 interface Loopback0
    description RouterID
-   ip address 100.64.0.4/32
-   ipv6 address 2001::100:64:0:4/128
+   ip address 100.64.0.5/32
+   ipv6 address 2001::100:64:0:5/128
 !
 interface Loopback1
    description VTEP
-   ip address 100.65.0.4/32
-   ipv6 address 2002::100:65:0:4/128
+   ip address 100.65.0.5/32
+   ipv6 address 2002::100:65:0:5/128
 !
 interface Management0
-   ip address 172.20.20.5/24
-   ipv6 address 3fff:172:20:20::5/64
+   ip address 172.20.20.4/24
+   ipv6 address 3fff:172:20:20::4/64
 !
 interface Vxlan1
-   description leaf2_VTEP
+   description leaf3_VTEP
    vxlan source-interface Loopback1
    vxlan udp-port 4789
-   vxlan encapsulation ipv6
-   vxlan vlan 10 vni 100010
+   vxlan vlan 20 vni 100020
    vxlan learn-restrict any
 !
 ip routing
@@ -102,8 +92,8 @@ route-map RM-CONN-2-BGP permit 10
 route-map RM-CONN-2-BGP permit 20
    match ipv6 address prefix-list PL-LOOPBACKS-EVPN-OVERLAY_V6
 !
-router bgp 4200000004
-   router-id 100.64.0.4
+router bgp 4200000005
+   router-id 100.64.0.5
    update wait-install
    no bgp default ipv4-unicast
    maximum-paths 4 ecmp 4
@@ -127,9 +117,9 @@ router bgp 4200000004
    redistribute connected route-map RM-CONN-2-BGP
    neighbor interface Et1-2 peer-group IPv6-UNDERLAY-PEERS remote-as 4200000000
    !
-   vlan 10
-      rd 100.64.0.4:10
-      route-target both 345:100010
+   vlan 20
+      rd 100.64.0.5:20
+      route-target both 345:100020
       redistribute learned
    !
    address-family evpn
@@ -139,12 +129,5 @@ router bgp 4200000004
    address-family ipv6
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv6-UNDERLAY-PEERS activate
-!
-router multicast
-   ipv4
-      software-forwarding kernel
-   !
-   ipv6
-      software-forwarding kernel
 !
 end
