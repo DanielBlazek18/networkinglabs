@@ -21,7 +21,7 @@ Fortunately, Arista EOS provides an alternative mechanism that works with an **I
 > In a centralized VXLAN routing design, the `spine` switches provide the Layer 3 gateway functionality by hosting the **IRB interfaces** and performing inter-subnet VXLAN routing. The `leaf` switches perform Layer 2 VXLAN bridging only and are therefore commonly referred to as **Bridged VTEPs**.
 
 ## Topology
-![evpn-centralized-anycast-gateway.png](https://github.com/DanielBlazek18/networkinglabs/blob/main/evpn-centralized-anycast-gateway/drawings/evpn-centralized-anycast-gateway.png)
+![evpn-centralized-anycast-gateway.png](https://raw.githubusercontent.com/DanielBlazek18/networkinglabs/refs/heads/evpn-centralized-gateway/evpn-centralized-anycast-gateway/drawings/evpn-centralized-anycast-gateway.png)
 
 ## Implementation and verification
 
