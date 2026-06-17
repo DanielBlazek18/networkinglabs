@@ -12,6 +12,7 @@ List of the existing LABs with a short description:
   * pyGNMI: Python gNMI client
   * ELK stack (Elasticsearch, Logstash, and Kibana)
 * **epe**: Egress Peer Engineering Using BGP-LU
+* **evpn-centralized-anycast-gateway**: Centralized Anycast Gateway in an EVPN/VXLAN fabric built with an IPv6 underlay.
 * **flowspec**: BGP FlowSpec address family used to test and demonstrate <ins>drop</ins> and <ins>redirect to VRF</ins> actions. ExaBGP used to advertise traffic flow specifications (flow routes) throughout a network.
   * Action drop has been tested in the LAB.
   * Action redirect to VRF has not been tested yet.
