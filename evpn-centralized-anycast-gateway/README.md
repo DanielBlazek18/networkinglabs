@@ -23,9 +23,8 @@ Fortunately, Arista EOS provides an alternative mechanism that works with an **I
 ## Topology
 ![evpn-centralized-anycast-gateway.png](https://raw.githubusercontent.com/DanielBlazek18/networkinglabs/refs/heads/evpn-centralized-gateway/evpn-centralized-anycast-gateway/drawings/evpn-centralized-anycast-gateway.png)
 
-## Implementation and verification
-
-The minimalistic working configuration of the MAC-VRFs on the `spine` switches:
+## Implementation and Verification
+The following is the minimal working configuration for the MAC-VRFs on the `spine` switches:
 ```
 router bgp 4200000000
 [omitted]
