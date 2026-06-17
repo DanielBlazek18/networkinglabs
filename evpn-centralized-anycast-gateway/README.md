@@ -66,7 +66,7 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                                  -                     -       -       0       i
 ```
 > [!NOTE]
-> Without this mechanism, the **Bridge VTEPs** (`leafs`) dont not know where to send traffic with > the destination MAC address of the DGW, and would send a copy to each VTEP participating in the > **flood list** for a particular **MAC-VRF**.
+> Without this mechanism, the **Bridge VTEPs** (`leafs`) do not know where to send traffic with the destination MAC address of the DGW, and would send a copy to each VTEP participating in the **flood list** for a particular **MAC-VRF**.
 
 ARP table output for clarity:
 ```
