@@ -24,7 +24,7 @@ Fortunately, Arista EOS provides an alternative mechanism that works with an **I
 ![evpn-centralized-anycast-gateway.png](https://raw.githubusercontent.com/DanielBlazek18/networkinglabs/refs/heads/evpn-centralized-gateway/evpn-centralized-anycast-gateway/drawings/evpn-centralized-anycast-gateway.png)
 
 ## Implementation and Verification
-The following is the minimal working configuration for the MAC-VRFs on the `spine` switches:
+The following is the minimal working configuration for the **MAC-VRFs** on the `spine` switches:
 ```
 router bgp 4200000000
 [omitted]
@@ -42,4 +42,36 @@ router bgp 4200000000
       redistribute router-mac virtual-ip next-hop vtep primary
    !
 [omitted]
+```
+_(Full configuration can be found in the Containerlab folder `clab-evpn-centralized-anycast-gateway`)._
+
+The effect of the `redistribute router-mac virtual-ip next-hop vtep primary` configuration is that the `spine` switches originate and advertise **EVPN Route Type 2 (MAC/IP Advertisement)** routes into the EVPN control plane:
+```
+spine1#sh bgp evpn route-type mac-ip
+BGP routing table information for VRF default
+Router identifier 100.64.0.1, local AS number 4200000000
+Route status codes: * - valid, > - active, S - Stale, E - ECMP head, e - ECMP
+                    c - Contributing to ECMP, % - Pending best path selection
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >      RD: 100.64.0.5:20 mac-ip 001c.7322.48bb
+                                 2002::100:65:0:5      -       100     0       4200000005 i
+ * >      RD: 100.64.0.3:10 mac-ip 001c.7352.8199
+                                 2002::100:65:0:3      -       100     0       4200000003 i
+ * >      RD: 100.64.0.1:10 mac-ip 0a00.cafe.0001 10.10.0.1
+                                 -                     -       -       0       i
+ * >      RD: 100.64.0.2:20 mac-ip 0a00.cafe.0001 10.20.0.1
+                                 -                     -       -       0       i
+```
+> [!NOTE]
+> Without this mechanism, the **Bridge VTEPs** (`leafs`) dont not know where to send traffic with > the destination MAC address of the DGW, and would send a copy to each VTEP participating in the > **flood list** for a particular **MAC-VRF**.
+
+ARP table output for clarity:
+```
+spine1#sh ip arp vrf vrf-01 
+Address         Age (sec)  Hardware Addr   Interface
+10.10.0.100       0:07:17  001c.7352.8199  Vlan10, Vxlan1
+10.20.0.100       0:01:37  001c.7322.48bb  Vlan20, Vxlan1
 ```
