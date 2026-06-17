@@ -21,7 +21,7 @@ Fortunately, Arista EOS provides an alternative mechanism that works with an **I
 > In a centralized VXLAN routing design, the `spine` switches provide the Layer 3 gateway functionality by hosting the **IRB interfaces** and performing inter-subnet VXLAN routing. The `leaf` switches perform Layer 2 VXLAN bridging only and are therefore commonly referred to as **Bridged VTEPs**.
 
 ## Topology
-![evpn-centralized-anycast-gateway.png](https://raw.githubusercontent.com/DanielBlazek18/networkinglabs/refs/heads/evpn-centralized-gateway/evpn-centralized-anycast-gateway/drawings/evpn-centralized-anycast-gateway.png)
+![evpn-centralized-anycast-gateway.png](https://raw.githubusercontent.com/DanielBlazek18/networkinglabs/refs/heads/main/evpn-centralized-anycast-gateway/drawings/evpn-centralized-anycast-gateway.png)
 
 ## Implementation and Verification
 The following is the minimal working configuration for the **MAC-VRFs** on the `spine` switches:
@@ -45,7 +45,7 @@ router bgp 4200000000
 ```
 _(Full configuration can be found in the Containerlab folder `clab-evpn-centralized-anycast-gateway`)._
 
-The effect of the `redistribute router-mac virtual-ip next-hop vtep primary` configuration is that the `spine` switches originate and advertise **EVPN Route Type 2 (MAC/IP Advertisement)** routes into the EVPN control plane:
+The `redistribute router-mac virtual-ip next-hop vtep primary` configuration causes the spine switches to originate and advertise **EVPN Route Type 2 (MAC/IP Advertisement)** routes for the **anycast IP address** and **virtual MAC address** into the EVPN control plane:
 ```
 spine1#sh bgp evpn route-type mac-ip
 BGP routing table information for VRF default
