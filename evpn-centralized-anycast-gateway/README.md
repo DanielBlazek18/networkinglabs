@@ -62,7 +62,7 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                                  2002::100:65:0:3      -       100     0       4200000003 i
  * >      RD: 100.64.0.1:10 mac-ip 0a00.cafe.0001 10.10.0.1
                                  -                     -       -       0       i
- * >      RD: 100.64.0.2:20 mac-ip 0a00.cafe.0001 10.20.0.1
+ * >      RD: 100.64.0.1:20 mac-ip 0a00.cafe.0001 10.20.0.1
                                  -                     -       -       0       i
 ```
 > [!NOTE]
