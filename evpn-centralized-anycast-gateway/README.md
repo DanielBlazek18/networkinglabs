@@ -36,7 +36,7 @@ router bgp 4200000000
       redistribute router-mac virtual-ip next-hop vtep primary
    !
    vlan 20
-      rd 100.64.0.2:20
+      rd 100.64.0.1:20
       route-target both 345:100020
       redistribute learned
       redistribute router-mac virtual-ip next-hop vtep primary
