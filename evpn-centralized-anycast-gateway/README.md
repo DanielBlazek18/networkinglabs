@@ -1,11 +1,10 @@
 # Overview
 This lab demonstrates how to deploy a **Centralized Anycast Gateway** in an EVPN/VXLAN fabric built with an **IPv6 underlay** on Arista EOS.
 
-> [!TIP]
 > **Quick start:** [Launch](https://codespaces.new/DanielBlazek18/networkinglabs) this lab in GitHub Codespaces (no local setup required)
->
-> [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/DanielBlazek18/networkinglabs)
 > 
+> [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/DanielBlazek18/networkinglabs)
+>
 > Recommended Machine type: 4 vCPU · 16 GB RAM
 
 ### Motivation
