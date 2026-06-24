@@ -9,7 +9,7 @@ In the Arista document, the solution relies on configuring a **secondary** IPv4 
 Fortunately, Arista EOS provides an alternative mechanism that works with an **IPv6 underlay**. The command `redistribute router-mac virtual-ip next-hop vtep primary` under the MAC-VRF allows the **gateway IP** and **virtual router MAC address** to be advertised in **EVPN Route Type 2** (MAC/IP Advertisement) routes, enabling a centralized anycast gateway design without the need for a dedicated VARP VTEP address.
 
 <div align=center markdown>
-<a href="https://codespaces.new/DanielBlazek18/networkinglabs?quickstart=1">
+<a href="https://codespaces.new/DanielBlazek18/networkinglabs">
 <img src="https://github.com/codespaces/badge.svg" style="width:30%"/></a>
 
 [Run](https://codespaces.new/DanielBlazek18/networkinglabs) this lab in GitHub Codespaces for free.  
