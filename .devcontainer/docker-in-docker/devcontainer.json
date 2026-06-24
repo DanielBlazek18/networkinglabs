@@ -6,14 +6,10 @@
         "storage": "32gb"
     },
     "runArgs": [
-        "--network=host",
-        "--pid=host",
         "--privileged"
     ],
     "mounts": [
-        "type=bind,src=/var/lib/docker,dst=/var/lib/docker",
         "type=bind,src=/lib/modules,dst=/lib/modules"
     ],
-    "workspaceMount": "source=${localWorkspaceFolder},target=${localWorkspaceFolder},type=bind,consistency=cached",
     "postCreateCommand": "docker pull bda18/ceos:4.35.0F && docker tag bda18/ceos:4.35.0F ceos:4.35.0F"
 }
