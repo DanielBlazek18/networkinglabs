@@ -1,9 +1,9 @@
 {
-    "image": "ghcr.io/srl-labs/containerlab/devcontainer-dind-slim:0.75.0",
+    "image": "ghcr.io/srl-labs/containerlab/devcontainer-dind-slim:0.68.0",
     "hostRequirements": {
-        "cpus": 4,
-        "memory": "16gb",
-        "storage": "32gb",
-    }
+        "cpus": 4, 
+        "memory": "8gb",
+        "storage": "32gb"
+    },
     "postCreateCommand": "docker pull bda18/ceos:4.35.0F && docker tag bda18/ceos:4.35.0F ceos:4.35.0F"
 }
