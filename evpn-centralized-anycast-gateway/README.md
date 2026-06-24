@@ -2,7 +2,7 @@
 This lab demonstrates how to deploy a **Centralized Anycast Gateway** in an EVPN/VXLAN fabric built with an **IPv6 underlay** on Arista EOS.
 
 > [!TIP]
-> Use GitHub Codespaces if you want to try the lab without installing Containerlab locally.
+> **Quick start:** [Launch](https://codespaces.new/DanielBlazek18/networkinglabs) this lab in GitHub Codespaces (no local setup required)
 >
 > [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/DanielBlazek18/networkinglabs)
 > 
