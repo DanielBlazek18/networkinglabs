@@ -7,7 +7,7 @@ This lab demonstrates how to deploy a **Centralized Anycast Gateway** in an EVPN
 >
 > Recommended Machine type: 4 vCPU · 16 GB RAM
 >
-> [Download](https://www.arista.com/en/support/software-download) cEOS-lab image && [import](https://arista.my.site.com/AristaCommunity/s/article/cEOS-lab-in-Github-Codespaces#Comm_Kna_ka0Uw000000830jIAA_42) it into docker: `docker import cEOS-lab-4.35.0F.tar.xz ceos:4.35.0F`
+> [Download](https://www.arista.com/en/support/software-download) cEOS-lab image & [import](https://arista.my.site.com/AristaCommunity/s/article/cEOS-lab-in-Github-Codespaces#Comm_Kna_ka0Uw000000830jIAA_42) it into docker: `docker import cEOS-lab-4.35.0F.tar.xz ceos:4.35.0F`
 
 ### Motivation
 This exercise was inspired by a recent series of blog posts on [EVPN Centralized Routing with Arista EOS](https://blog.ipspace.net/2026/06/arista-eos-evpn-central-routing/) by [Ivan Pepelnjak](https://www.linkedin.com/in/ivanpepelnjak/). While studying the topic, I came across an Arista [document](https://www.arista.com/en/support/toi/eos-4-23-2f/14453-evpn-centralized-anycast-gateway) describing how to implement an EVPN Centralized Anycast Gateway in fabrics using an **IPv4 underlay**.
