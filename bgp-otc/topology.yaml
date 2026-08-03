@@ -1,0 +1,25 @@
+name: bgp-otc
+prefix: ""
+topology:
+  kinds:
+    linux:
+      image: quay.io/frrouting/frr:10.5.4
+  nodes:
+    isp:
+      kind: linux
+      binds:
+        - /home/bnetadmin/networkinglabs/bgp-otc/daemons:/etc/frr/daemons
+        - /home/bnetadmin/networkinglabs/bgp-otc/configs/isp.cfg:/etc/frr/frr.conf
+    igw:
+      kind: linux
+      binds:
+        - /home/bnetadmin/networkinglabs/bgp-otc/daemons:/etc/frr/daemons
+        - /home/bnetadmin/networkinglabs/bgp-otc/configs/igw.cfg:/etc/frr/frr.conf
+    customer:
+      kind: linux
+      binds:
+        - /home/bnetadmin/networkinglabs/bgp-otc/daemons:/etc/frr/daemons
+        - /home/bnetadmin/networkinglabs/bgp-otc/configs/customer.cfg:/etc/frr/frr.conf
+  links:
+    - endpoints: ["isp:eth1", "igw:eth1"]
+    - endpoints: ["igw:eth2", "customer:eth1"]
