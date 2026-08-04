@@ -1,5 +1,5 @@
 # Overview
-This lab demonstrates how to deploy and validate **BGP Roles** and **Only To Customer (OTC) Attribute**, as defined in **[RFC 9234](https://datatracker.ietf.org/doc/html/rfc9234)**.
+This lab demonstrates how to deploy and validate **BGP Roles** and **Only To Customer (OTC) Attribute**, as defined in **[RFC 9234](https://datatracker.ietf.org/doc/html/rfc9234)**. BGP Roles provide a mechanism to enforce **valley-free** routing and help prevent route leaks. A similar mechanism is provided by **ASPA**, which relies on **RPKI**.
 
 > **Quick start:** [Launch](https://codespaces.new/DanielBlazek18/networkinglabs) this lab in GitHub Codespaces (no local setup required)
 > 
@@ -145,6 +145,6 @@ B>* 192.168.3.0/24 [20/0] via 10.3.5.3, eth1, weight 1, 00:09:24
 B>* 192.168.4.0/24 [20/0] via 10.3.5.3, eth1, weight 1, 00:09:24
 S>* 192.168.5.0/24 [1/0] unreachable (blackhole), weight 1, 00:09:29
 ```
-* A prefix advertised by a **provider** is sent to and received by a **customer**, and is subsequently sent only to **customers** (OTC), not to another **provider** or a **peer**. In this lab example, a prefix from `isp1` is not sent to `isp2`, and vice versa.
-* On the other hand, a prefix advertised by a **customer** is sent to and received by both a **provider** and a **peer**.
-* Prefixes advertised by a **peer** are sent to and received by other **peers** and **customers**, but not to **providers**.
+* A prefix received from a **provider** is propagated only to **customers** (OTC) - enforcing **valley-free** routing. For example, a prefix learned from `isp1` is not advertised to `isp2` or to any **peer**.
+* A prefix received from a **peer** is also propagated only to **customers**.
+* A prefix that is locally originated within the AS, or learned from a **customer**, is propagated to all neighbors: **customers**, **peers**, and **providers**.
