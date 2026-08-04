@@ -1,10 +1,11 @@
 # Overview
 
-`NetworkingLabs` is a repository that contains practical networking lab exercises built with `containerlab`. Most labs are created using Arista `cEOS`, with `SONiC`, Cisco `c8000v`, and other network operating systems included when needed. Some labs also require additional simulation tools, such as `ExaBGP` and `Routinator`. Python, Ansible, Docker, and other automation tools are frequently used throughout the examples.
+`NetworkingLabs` is a repository that contains practical networking lab exercises built with `containerlab`. Most labs are created using Arista `cEOS`, with `FRR`, Cisco `c8000v`, and other network operating systems included when needed. Some labs also require additional simulation tools, such as `ExaBGP` and `Routinator`. Python, Ansible, Docker, and other automation tools are frequently used throughout the examples.
 
 ---
 
 List of the existing LABs with a short description:
+* **bgp-otc**: BGP Roles and Only To Customer (OTC) attribute testing.
 * **d-intf-bgp**: Interface-based BGP neighbors established over IPv6 link-local addresses. The IPv4 address family is enabled to exchange prefixes.
 * **eos-eapi**: Clos fabric provisioning with `Arista.Eos` Ansible collection following Infrastructure as Code principle.
 * **eos-telemetry**: Arista EOS telemetry streaming via gNMI (gRPC). Components used in the lab:
