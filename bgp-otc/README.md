@@ -1,5 +1,5 @@
 # Overview
-This lab demonstrates how to deploy and validate **BGP Roles**, as defined in **[RFC 9234](https://datatracker.ietf.org/doc/html/rfc9234)**.
+This lab demonstrates how to deploy and validate **BGP Roles** and **Only To Customer (OTC) Attribute**, as defined in **[RFC 9234](https://datatracker.ietf.org/doc/html/rfc9234)**.
 
 > **Quick start:** [Launch](https://codespaces.new/DanielBlazek18/networkinglabs) this lab in GitHub Codespaces (no local setup required)
 > 
@@ -10,14 +10,14 @@ This lab demonstrates how to deploy and validate **BGP Roles**, as defined in **
 > Pull the `FRR` container image: `docker pull quay.io/frrouting/frr:10.5.4`
 
 ## Lab consists of following devices:
-* [`isp1`]()
-* [`isp2`]()
-* [`igw`]()
-* [`customer`]()
-* [`peer`]()
+* [`isp1`](https://github.com/DanielBlazek18/networkinglabs/blob/main/bgp-otc/configs/isp1.cfg)
+* [`isp2`](https://github.com/DanielBlazek18/networkinglabs/blob/main/bgp-otc/configs/isp2.cfg)
+* [`igw`](https://github.com/DanielBlazek18/networkinglabs/blob/main/bgp-otc/configs/igw.cfg)
+* [`customer`](https://github.com/DanielBlazek18/networkinglabs/blob/main/bgp-otc/configs/customer.cfg)
+* [`peer`](https://github.com/DanielBlazek18/networkinglabs/blob/main/bgp-otc/configs/peer.cfg)
 
 ## Topology
-![bgp-otc.png]()
+![bgp-otc.png](https://raw.githubusercontent.com/DanielBlazek18/networkinglabs/refs/heads/main/bgp-otc/drawings/bgp-otc.png)
 
 ## Implementation and Verification
 All BGP peerings are configured with the appropriate `local-role`, as shown in the topology:
