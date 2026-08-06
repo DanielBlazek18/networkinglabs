@@ -8,28 +8,28 @@ topology:
     isp1:
       kind: linux
       binds:
-        - /home/bnetadmin/networkinglabs/bgp-otc/daemons:/etc/frr/daemons
-        - /home/bnetadmin/networkinglabs/bgp-otc/configs/isp1.cfg:/etc/frr/frr.conf
+        - ../bgp-otc/daemons:/etc/frr/daemons
+        - ../bgp-otc/configs/isp1.cfg:/etc/frr/frr.conf
     isp2:
       kind: linux
       binds:
-        - /home/bnetadmin/networkinglabs/bgp-otc/daemons:/etc/frr/daemons
-        - /home/bnetadmin/networkinglabs/bgp-otc/configs/isp2.cfg:/etc/frr/frr.conf
+        - ../bgp-otc/daemons:/etc/frr/daemons
+        - ../bgp-otc/configs/isp2.cfg:/etc/frr/frr.conf
     igw:
       kind: linux
       binds:
-        - /home/bnetadmin/networkinglabs/bgp-otc/daemons:/etc/frr/daemons
-        - /home/bnetadmin/networkinglabs/bgp-otc/configs/igw.cfg:/etc/frr/frr.conf
+        - ../bgp-otc/daemons:/etc/frr/daemons
+        - ../bgp-otc/configs/igw.cfg:/etc/frr/frr.conf
     customer:
       kind: linux
       binds:
-        - /home/bnetadmin/networkinglabs/bgp-otc/daemons:/etc/frr/daemons
-        - /home/bnetadmin/networkinglabs/bgp-otc/configs/customer.cfg:/etc/frr/frr.conf
+        - ../bgp-otc/daemons:/etc/frr/daemons
+        - ../bgp-otc/configs/customer.cfg:/etc/frr/frr.conf
     peer:
       kind: linux
       binds:
-        - /home/bnetadmin/networkinglabs/bgp-otc/daemons:/etc/frr/daemons
-        - /home/bnetadmin/networkinglabs/bgp-otc/configs/peer.cfg:/etc/frr/frr.conf
+        - ../bgp-otc/daemons:/etc/frr/daemons
+        - ../bgp-otc/configs/peer.cfg:/etc/frr/frr.conf
   links:
     - endpoints: ["isp1:eth1", "igw:eth1"]
     - endpoints: ["isp2:eth1", "igw:eth2"]
